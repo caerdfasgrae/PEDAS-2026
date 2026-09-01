@@ -77,12 +77,16 @@ class BaselineModelTrainer:
         else:
             raise ValueError(f"Unsupported model_type: {self.model_type}. Choose from 'lightgbm', 'xgboost', 'catboost', 'rf'.")
 
+        self.models: List[Any] = []
+
     def cross_validate(
         self,
         X: pd.DataFrame,
         y: np.ndarray | pd.Series,
+        urls: List[str] | pd.Series | None = None,
+        use_group_kfold: bool = False,
     ) -> Tuple[Dict[str, Any], pd.DataFrame, np.ndarray]:
-        """Performs Stratified K-Fold Cross Validation.
+        """Performs Stratified K-Fold or Stratified Group K-Fold Cross Validation.
 
         Returns:
             Tuple of (overall_metrics, feature_importance_df, oof_probabilities)
@@ -90,23 +94,32 @@ class BaselineModelTrainer:
         X_df = X.copy()
         y_arr = np.array(y)
 
-        # Impute any missing values safely (e.g. median)
+        # Impute any missing values safely
         X_clean = X_df.fillna(0.0)
         feature_names = list(X_clean.columns)
 
-        skf = StratifiedKFold(n_splits=self.n_splits, shuffle=True, random_state=self.random_state)
+        if use_group_kfold and urls is not None:
+            from src.models.validation import DomainGroupSplitter
+            splitter = DomainGroupSplitter(n_splits=self.n_splits, random_state=self.random_state)
+            splits_generator = splitter.split(urls, y_arr)
+        else:
+            skf = StratifiedKFold(n_splits=self.n_splits, shuffle=True, random_state=self.random_state)
+            splits_generator = skf.split(X_clean, y_arr)
+
         oof_probs = np.zeros(len(y_arr))
         oof_preds = np.zeros(len(y_arr))
         feature_importances = np.zeros(len(feature_names))
+        self.models = []
 
         fold_metrics = []
 
-        for fold, (train_idx, val_idx) in enumerate(skf.split(X_clean, y_arr), 1):
+        for fold, (train_idx, val_idx) in enumerate(splits_generator, 1):
             X_train, y_train = X_clean.iloc[train_idx], y_arr[train_idx]
             X_val, y_val = X_clean.iloc[val_idx], y_arr[val_idx]
 
             model = self._get_model_instance()
             model.fit(X_train, y_train)
+            self.models.append(model)
 
             # Predict probabilities
             if hasattr(model, "predict_proba"):
@@ -137,3 +150,20 @@ class BaselineModelTrainer:
         }).sort_values(by="importance", ascending=False).reset_index(drop=True)
 
         return overall_metrics, fi_df, oof_probs
+
+    def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
+        """Predicts probabilities on unseen data by averaging across all K fold models."""
+        if not self.models:
+            raise ValueError("No models trained yet. Call cross_validate first.")
+
+        X_clean = X.copy().fillna(0.0)
+        fold_probs = []
+
+        for model in self.models:
+            if hasattr(model, "predict_proba"):
+                p = model.predict_proba(X_clean)[:, 1]
+            else:
+                p = model.predict(X_clean)
+            fold_probs.append(p)
+
+        return np.mean(fold_probs, axis=0)

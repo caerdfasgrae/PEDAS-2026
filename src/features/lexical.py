@@ -141,19 +141,26 @@ def extract_lexical_features(url: str, suspicious_tokens: set[str] | None = None
     # Subdomain Analysis
     subdomain_parts = [s for s in subdomain.split(".") if s and s != "www"]
     subdomain_count = len(subdomain_parts)
+    subdomain_entropy = calculate_shannon_entropy(subdomain)
     has_www = 1 if "www" in subdomain.split(".") else 0
     has_misplaced_www = 1 if ("www" in domain or "www" in path) and not has_www else 0
 
     # Path & Query Structure
     path_segments = [p for p in path.split("/") if p]
     path_depth = len(path_segments)
+    path_to_url_ratio = path_len / url_len if url_len > 0 else 0.0
     query_params_count = len(parse_qs(query)) if query else 0
+
+    # Sensitive / Malicious File Extension Detection (e.g. .apk banking malware, .php phishing gates)
+    path_lower = path.lower()
+    has_sensitive_ext = 1 if any(path_lower.endswith(ext) or f"{ext}?" in path_lower for ext in (".apk", ".php", ".exe", ".zip", ".bin", ".rar")) else 0
 
     # 5. Indonesian TLD Indicators (.id ecosystem)
     is_id_tld = 1 if suffix == "id" or suffix.endswith(".id") else 0
     is_regulated_tld = 1 if suffix in REGULATED_ID_TLDS else 0
     is_commercial_tld = 1 if suffix in COMMERCIAL_ID_TLDS else 0
     is_cheap_tld = 1 if suffix in CHEAP_ID_TLDS else 0
+    is_idn = 1 if "xn--" in netloc else 0
 
     # 6. Suspicious Keyword & Social Engineering Analysis
     url_lower = url_clean.lower()
@@ -168,8 +175,10 @@ def extract_lexical_features(url: str, suspicious_tokens: set[str] | None = None
         "domain_len": domain_len,
         "path_len": path_len,
         "query_len": query_len,
+        "path_to_url_ratio": round(path_to_url_ratio, 4),
         "url_entropy": round(url_entropy, 4),
         "domain_entropy": round(domain_entropy, 4),
+        "subdomain_entropy": round(subdomain_entropy, 4),
         "path_entropy": round(path_entropy, 4),
         "digit_count": digits_count,
         "digit_ratio": round(digit_ratio, 4),
@@ -188,10 +197,12 @@ def extract_lexical_features(url: str, suspicious_tokens: set[str] | None = None
         "ampersand_count": ampersand_count,
         "is_https": is_https,
         "is_ip": has_ip,
+        "is_idn": is_idn,
         "has_at_symbol": has_at_symbol,
         "has_double_slash_path": has_double_slash,
         "has_hex_encoding": has_hex,
         "has_non_standard_port": has_port,
+        "has_sensitive_ext": has_sensitive_ext,
         "subdomain_count": subdomain_count,
         "has_www": has_www,
         "has_misplaced_www": has_misplaced_www,
@@ -210,13 +221,14 @@ def _empty_feature_dict() -> Dict[str, Any]:
     """Returns default zeroed features for empty/corrupt URLs."""
     dummy_keys = [
         "url_len", "netloc_len", "domain_len", "path_len", "query_len",
-        "url_entropy", "domain_entropy", "path_entropy", "digit_count",
-        "digit_ratio", "letter_ratio", "symbol_ratio", "domain_digit_ratio",
-        "hyphen_count_url", "hyphen_count_domain", "hyphen_count_subdomain",
-        "dot_count_url", "dot_count_netloc", "underscore_count", "slash_count_url",
-        "question_count", "equal_count", "ampersand_count", "is_https", "is_ip",
-        "has_at_symbol", "has_double_slash_path", "has_hex_encoding",
-        "has_non_standard_port", "subdomain_count", "has_www", "has_misplaced_www",
+        "path_to_url_ratio", "url_entropy", "domain_entropy", "subdomain_entropy",
+        "path_entropy", "digit_count", "digit_ratio", "letter_ratio", "symbol_ratio",
+        "domain_digit_ratio", "hyphen_count_url", "hyphen_count_domain",
+        "hyphen_count_subdomain", "dot_count_url", "dot_count_netloc",
+        "underscore_count", "slash_count_url", "question_count", "equal_count",
+        "ampersand_count", "is_https", "is_ip", "is_idn", "has_at_symbol",
+        "has_double_slash_path", "has_hex_encoding", "has_non_standard_port",
+        "has_sensitive_ext", "subdomain_count", "has_www", "has_misplaced_www",
         "path_depth", "query_params_count", "is_id_tld", "is_regulated_tld",
         "is_commercial_tld", "is_cheap_tld", "suspicious_token_count",
         "has_suspicious_token"

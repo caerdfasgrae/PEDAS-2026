@@ -74,6 +74,7 @@ class IndonesianBrandDetector:
                 "is_unauthorized_brand_domain": 0,
                 "max_brand_similarity": 1.0,
                 "is_brand_combosquatting": 0,
+                "has_brand_subdomain_hijack": 0,
             }
 
         # Check brand presence in domain, subdomain, path
@@ -113,6 +114,17 @@ class IndonesianBrandDetector:
         # e.g., 'bca-secure-login' contains 'bca' and hyphens
         is_combosquatting = 1 if (brand_in_domain and ("-" in domain or len(domain_tokens) > 1)) else 0
 
+        # Subdomain Hijacking / Reverse Domain Spoofing:
+        # Check if any OFFICIAL domain string appears in the subdomain (e.g. 'klikbca.com.attacker.my.id')
+        has_subdomain_hijack = 0
+        for b_name, officials in self.official_domains.items():
+            for off_dom in officials:
+                if off_dom in subdomain or off_dom in url_lower.replace(f"{domain}.{suffix}", ""):
+                    has_subdomain_hijack = 1
+                    break
+            if has_subdomain_hijack:
+                break
+
         return {
             "brand_in_domain": brand_in_domain,
             "brand_in_subdomain": brand_in_subdomain,
@@ -120,6 +132,7 @@ class IndonesianBrandDetector:
             "is_unauthorized_brand_domain": is_unauthorized_brand_domain,
             "max_brand_similarity": round(max_similarity, 4),
             "is_brand_combosquatting": is_combosquatting,
+            "has_brand_subdomain_hijack": has_subdomain_hijack,
         }
 
 
