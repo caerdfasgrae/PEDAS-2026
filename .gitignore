@@ -1,0 +1,39 @@
+# Python & Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Model Checkpoints & Artifacts
+models/*.pkl
+models/*.joblib
+models/*.bin
+models/*.onnx
+
+# Data (Raw large datasets if exceeding GitHub limits)
+data/raw/*.zip
+data/raw/*.tar.gz
+!data/benchmark/sample_phishing_id.csv
+
+# Logs & Temporary Files
+logs/
+*.log
+catboost_info/
+scratch/
+tmp/
