@@ -26,6 +26,7 @@ brands:
     - bankbri
   - name: mandiri
     official_domains:
+    - mandiri.co.id
     - bankmandiri.co.id
     - livinbymandiri.id
     - mandirikartukredit.com
@@ -49,6 +50,7 @@ brands:
     - tarif
   - name: cimb
     official_domains:
+    - cimb.co.id
     - cimbniaga.co.id
     - octoclicks.co.id
     keywords:

@@ -1,6 +1,7 @@
 """CLI runner for baseline and ensemble model training and evaluation."""
 
 import argparse
+import numpy as np
 import pandas as pd
 from src.features.extractor import PhishingFeatureExtractor
 from src.models.baseline import BaselineModelTrainer
@@ -45,6 +46,11 @@ def main():
         type=str,
         default=None,
         help="Path to dataset CSV (defaults to benchmark_expanded_id.csv if present)",
+    )
+    parser.add_argument(
+        "--save-predictions",
+        action="store_true",
+        help="Export Out-of-Fold predictions and probabilities to data/processed/oof_predictions.csv",
     )
     args = parser.parse_args()
 
@@ -119,6 +125,26 @@ def main():
         print("\n[*] Top 10 Most Discriminative Features:")
         for idx, row in fi_df.head(10).iterrows():
             print(f"  {idx+1:2d}. {row['feature']:<30} (importance: {row['importance']:.4f})")
+
+        final_oof_probs = oof_probs
+        final_thresh = best_t if args.threshold_tuning else 0.5
+        final_preds = (final_oof_probs >= final_thresh).astype(int)
+
+    if args.save_predictions:
+        from src.utils.config import PROCESSED_DATA_DIR
+        out_df = pd.DataFrame({
+            "url": urls,
+            "actual_label": y,
+            "predicted_label": res["metrics_at_optimal_threshold"]["true_positives"] if False else (res["blended_oof_probabilities"] >= res["optimal_threshold"]).astype(int) if args.model == "ensemble" else final_preds,
+            "phishing_probability": np.round(res["blended_oof_probabilities"] if args.model == "ensemble" else final_oof_probs, 4),
+        })
+        out_df["is_correct"] = out_df["actual_label"] == out_df["predicted_label"]
+
+        out_path = PROCESSED_DATA_DIR / "oof_predictions.csv"
+        out_df.to_csv(out_path, index=False)
+        print(f"\n[+] Predictions exported successfully to: {out_path}")
+        print(f"    Total Evaluated : {len(out_df)}")
+        print(f"    Correct Count   : {sum(out_df['is_correct'])} / {len(out_df)} ({sum(out_df['is_correct'])/len(out_df)*100:.2f}%)")
 
 
 if __name__ == "__main__":
