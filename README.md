@@ -3,7 +3,7 @@
 > *Membangun Solusi Cerdas Deteksi Phishing untuk Internet Indonesia yang Aman*
 
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
@@ -25,8 +25,9 @@ PEDAS-2026/
 │   └── indonesian_brands.yaml      # Kamus brand perbankan, fintech, & kata kunci phishing Indonesia
 ├── data/
 │   ├── benchmark/
-│   │   └── sample_phishing_id.csv  # Dataset uji coba awal phishing vs legitimate .id
-│   ├── processed/                  # Fitur hasil ekstraksi siap latih
+│   │   ├── sample_phishing_id.csv  # Dataset uji coba awal phishing vs legitimate .id
+│   │   └── benchmark_expanded_id.csv # Dataset benchmark ekspansi Hermes Agent (212 baris)
+│   ├── processed/                  # Fitur hasil ekstraksi & file oof_predictions.csv
 │   └── raw/                        # Tempat penyimpanan dataset resmi PANDI
 ├── notebooks/
 │   └── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Notebook Colab-ready untuk EDA & baseline training
@@ -36,16 +37,23 @@ PEDAS-2026/
 │   │   ├── domain_brand.py         # Deteksi brand impersonation, combosquatting, & typosquatting
 │   │   ├── dns_lookup.py           # Ekstraktor record DNS (A, AAAA, MX, NS, TXT)
 │   │   ├── whois_parser.py         # Parser usia domain & status kedaluwarsa WHOIS
+│   │   ├── nlp_stacking.py         # Out-of-Fold Char N-Gram TF-IDF Stacking
 │   │   └── extractor.py            # Master Feature Extractor pipeline (Batch & DataFrame)
 │   ├── models/
 │   │   ├── metrics.py              # Metrik evaluasi (F1-Score, ROC-AUC, FPR, Precision, Recall)
-│   │   └── baseline.py             # Stratified K-Fold CV & GBDT Trainer (LightGBM/XGBoost/CatBoost)
+│   │   ├── validation.py           # DomainGroupSplitter & NestedThresholdOptimizer
+│   │   ├── ensemble.py             # WeightedBlender Multi-GBDT (LGBM + CatBoost + XGBoost)
+│   │   └── baseline.py             # Stratified K-Fold CV & GBDT Trainer (Bagged Predict)
 │   └── utils/
 │       └── config.py               # Konfigurasi path, environment Colab/Local, & random seed
 ├── tests/
-│   └── test_features.py            # Unit tests untuk validasi kebenaran fitur & pipeline
+│   ├── test_features.py            # Unit tests validasi fitur leksikal & brand
+│   └── test_optimizations.py     # Unit tests GroupKFold, N-Gram Stacking, Threshold, & Ensemble
+├── run_baseline.py                 # CLI runner cepat untuk melatih & mengevaluasi model
 ├── requirements.txt                # Kunci dependensi Python
 ├── .gitignore                      # Mengabaikan file cache, virtualenv, dan model biner
+├── HERMES.md                       # Petunjuk pipeline untuk Hermes Agent
+├── AGENTS.md                       # SOP umum multi-agent
 └── README.md                       # Dokumentasi resmi proyek
 ```
 
@@ -55,14 +63,9 @@ PEDAS-2026/
 
 ### Opsi A: Google Colab (Format Pengumpulan PeDaS)
 Sesuai tradisi dan format pengumpulan PeDaS, seluruh alur pemodelan dapat langsung dijalankan di Google Colab:
-1. Buka Google Colab dan buat notebook baru (atau buka berkas `notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb`).
-2. Clone repository dan pasang dependensi di cell pertama Colab:
-   ```python
-   # Colab Setup Cell
-   !git clone https://github.com/<username>/PEDAS-2026.git
-   %cd PEDAS-2026
-   !pip install -r requirements.txt
-   ```
+1. Klik badge **Open in Colab** di atas atau buka tautan:
+   👉 [Buka di Google Colab](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb)
+2. Notebook akan otomatis melakukan clone repositori `https://github.com/caerdfasgrae/PEDAS-2026.git` dan menginstal dependensi.
 3. Jalankan pipeline ekstraksi fitur dan cross-validation secara berurutan.
 
 ### Opsi B: Lingkungan Lokal
