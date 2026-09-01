@@ -1,173 +1,289 @@
-# Kamus Brand, Layanan Populer, dan Kata Kunci Sensitif Target Phishing di Indonesia
-# Digunakan untuk ekstraksi fitur brand impersonation, combosquatting, dan typosquatting.
-
 brands:
   banking:
-    - name: bca
-      official_domains: ["bca.co.id", "klikbca.com", "mybca.bca.co.id"]
-      keywords: ["bca", "klikbca", "mybca", "blu"]
-    - name: bri
-      official_domains: ["bri.co.id", "ib.bri.co.id", "brimo.bri.co.id"]
-      keywords: ["bri", "brimo", "ibbri", "bankbri"]
-    - name: mandiri
-      official_domains: ["bankmandiri.co.id", "livinbymandiri.id", "mandirikartukredit.com"]
-      keywords: ["mandiri", "livin", "livinbymandiri", "bankmandiri"]
-    - name: bni
-      official_domains: ["bni.co.id", "bni-life.co.id"]
-      keywords: ["bni", "bniexperience", "wondr", "bankbni"]
-    - name: cimb
-      official_domains: ["cimbniaga.co.id", "octoclicks.co.id"]
-      keywords: ["cimb", "cimbniaga", "octo", "octoclicks", "octomobile"]
-    - name: permata
-      official_domains: ["permatabank.com", "permatanet.com"]
-      keywords: ["permata", "permatanet", "permatamobile"]
-    - name: bsi
-      official_domains: ["bankbsi.co.id"]
-      keywords: ["bsi", "bankbsi", "bsimobile"]
-    - name: danamon
-      official_domains: ["danamon.co.id", "danamonline.com"]
-      keywords: ["danamon", "dbank"]
-    - name: jago
-      official_domains: ["jago.com"]
-      keywords: ["jago", "bankjago"]
-    - name: seabank
-      official_domains: ["seabank.co.id"]
-      keywords: ["seabank"]
-
+  - name: bca
+    official_domains:
+    - bca.co.id
+    - klikbca.com
+    - mybca.bca.co.id
+    keywords:
+    - bca
+    - klikbca
+    - mybca
+    - blu
+    - transfer
+    - rekening
+    - pembayaran
+    - tagihan
+  - name: bri
+    official_domains:
+    - bri.co.id
+    - ib.bri.co.id
+    - brimo.bri.co.id
+    keywords:
+    - bri
+    - brimo
+    - ibbri
+    - bankbri
+  - name: mandiri
+    official_domains:
+    - bankmandiri.co.id
+    - livinbymandiri.id
+    - mandirikartukredit.com
+    keywords:
+    - mandiri
+    - livin
+    - livinbymandiri
+    - bankmandiri
+  - name: bni
+    official_domains:
+    - bni.co.id
+    - bni-life.co.id
+    keywords:
+    - bni
+    - bniexperience
+    - wondr
+    - bankbni
+    - transfer
+    - rekening
+    - pengiriman
+    - tarif
+  - name: cimb
+    official_domains:
+    - cimbniaga.co.id
+    - octoclicks.co.id
+    keywords:
+    - cimb
+    - cimbniaga
+    - octo
+    - octoclicks
+    - octomobile
+  - name: permata
+    official_domains:
+    - permatabank.com
+    - permatanet.com
+    keywords:
+    - permata
+    - permatanet
+    - permatamobile
+  - name: bsi
+    official_domains:
+    - bankbsi.co.id
+    keywords:
+    - bsi
+    - bankbsi
+    - bsimobile
+  - name: danamon
+    official_domains:
+    - danamon.co.id
+    - danamonline.com
+    keywords:
+    - danamon
+    - dbank
+  - name: jago
+    official_domains:
+    - jago.com
+    keywords:
+    - jago
+    - bankjago
+  - name: seabank
+    official_domains:
+    - seabank.co.id
+    keywords:
+    - seabank
   fintech_ewallet:
-    - name: dana
-      official_domains: ["dana.id"]
-      keywords: ["dana", "danakaget", "dompetdana"]
-    - name: gopay
-      official_domains: ["gopay.co.id", "gojek.com"]
-      keywords: ["gopay", "gojek"]
-    - name: ovo
-      official_domains: ["ovo.id"]
-      keywords: ["ovo", "ovoid"]
-    - name: shopeepay
-      official_domains: ["shopee.co.id"]
-      keywords: ["shopeepay", "spaylater"]
-    - name: linkaja
-      official_domains: ["linkaja.id"]
-      keywords: ["linkaja"]
-
+  - name: dana
+    official_domains:
+    - dana.id
+    keywords:
+    - dana
+    - danakaget
+    - dompetdana
+  - name: gopay
+    official_domains:
+    - gopay.co.id
+    - gojek.com
+    keywords:
+    - gopay
+    - gojek
+  - name: ovo
+    official_domains:
+    - ovo.id
+    keywords:
+    - ovo
+    - ovoid
+  - name: shopeepay
+    official_domains:
+    - shopee.co.id
+    keywords:
+    - shopeepay
+    - spaylater
+  - name: linkaja
+    official_domains:
+    - linkaja.id
+    keywords:
+    - linkaja
   ecommerce_marketplace:
-    - name: shopee
-      official_domains: ["shopee.co.id"]
-      keywords: ["shopee", "shopeegames", "shopeecare"]
-    - name: tokopedia
-      official_domains: ["tokopedia.com"]
-      keywords: ["tokopedia", "tokped"]
-    - name: blibli
-      official_domains: ["blibli.com"]
-      keywords: ["blibli"]
-    - name: bukalapak
-      official_domains: ["bukalapak.com"]
-      keywords: ["bukalapak"]
-    - name: lazada
-      official_domains: ["lazada.co.id"]
-      keywords: ["lazada"]
-    - name: tiktokshop
-      official_domains: ["tiktok.com"]
-      keywords: ["tiktokshop", "ttshop"]
-
+  - name: shopee
+    official_domains:
+    - shopee.co.id
+    keywords:
+    - shopee
+    - shopeegames
+    - shopeecare
+  - name: tokopedia
+    official_domains:
+    - tokopedia.com
+    keywords:
+    - tokopedia
+    - tokped
+  - name: blibli
+    official_domains:
+    - blibli.com
+    keywords:
+    - blibli
+  - name: bukalapak
+    official_domains:
+    - bukalapak.com
+    keywords:
+    - bukalapak
+  - name: lazada
+    official_domains:
+    - lazada.co.id
+    keywords:
+    - lazada
+  - name: tiktokshop
+    official_domains:
+    - tiktok.com
+    keywords:
+    - tiktokshop
+    - ttshop
   logistics:
-    - name: jne
-      official_domains: ["jne.co.id"]
-      keywords: ["jne", "jnetracking"]
-    - name: jnt
-      official_domains: ["jet.co.id"]
-      keywords: ["jnt", "jtexpress"]
-    - name: sicepat
-      official_domains: ["sicepat.com"]
-      keywords: ["sicepat"]
-
+  - name: jne
+    official_domains:
+    - jne.co.id
+    keywords:
+    - jne
+    - jnetracking
+  - name: jnt
+    official_domains:
+    - jet.co.id
+    keywords:
+    - jnt
+    - jtexpress
+  - name: sicepat
+    official_domains:
+    - sicepat.com
+    keywords:
+    - sicepat
   government_public:
-    - name: pajak
-      official_domains: ["pajak.go.id"]
-      keywords: ["pajak", "djp", "efaktur", "ebilling"]
-    - name: bpjs
-      official_domains: ["bpjs-kesehatan.go.id", "bpjsketenagakerjaan.go.id"]
-      keywords: ["bpjs", "bpjskesehatan", "bpjstk"]
-    - name: pln
-      official_domains: ["pln.co.id"]
-      keywords: ["pln", "tokenpln", "stimuluspln"]
-    - name: kominfo
-      official_domains: ["kominfo.go.id"]
-      keywords: ["kominfo", "kemenkominfo"]
-    - name: bssn
-      official_domains: ["bssn.go.id"]
-      keywords: ["bssn"]
-    - name: kemkes
-      official_domains: ["kemkes.go.id", "satusehat.kemkes.go.id"]
-      keywords: ["kemkes", "satusehat", "pedulilindungi"]
-
-# Kata Kunci Manipulasi Psikologis / Call-to-Action Penipuan (Social Engineering Keywords)
+  - name: pajak
+    official_domains:
+    - pajak.go.id
+    keywords:
+    - pajak
+    - djp
+    - efaktur
+    - ebilling
+  - name: bpjs
+    official_domains:
+    - bpjs-kesehatan.go.id
+    - bpjsketenagakerjaan.go.id
+    keywords:
+    - bpjs
+    - bpjskesehatan
+    - bpjstk
+  - name: pln
+    official_domains:
+    - pln.co.id
+    keywords:
+    - pln
+    - tokenpln
+    - stimuluspln
+  - name: kominfo
+    official_domains:
+    - kominfo.go.id
+    keywords:
+    - kominfo
+    - kemenkominfo
+  - name: bssn
+    official_domains:
+    - bssn.go.id
+    keywords:
+    - bssn
+  - name: kemkes
+    official_domains:
+    - kemkes.go.id
+    - satusehat.kemkes.go.id
+    keywords:
+    - kemkes
+    - satusehat
+    - pedulilindungi
 suspicious_keywords:
   security_verification:
-    - "login"
-    - "masuk"
-    - "secure"
-    - "security"
-    - "verifikasi"
-    - "verification"
-    - "verify"
-    - "autentikasi"
-    - "auth"
-    - "validasi"
-    - "update"
-    - "perbarui"
-    - "aktivasi"
-    - "activate"
-    - "reaktivasi"
-    - "pemulihan"
-    - "recovery"
-    - "reset"
-    - "unblock"
-    - "buka-blokir"
-    - "blokir"
-    - "konfirmasi"
-    - "confirm"
-    - "otp"
-    - "pin"
-    - "password"
-    - "rekening"
-
+  - login
+  - masuk
+  - secure
+  - security
+  - verifikasi
+  - verification
+  - verify
+  - autentikasi
+  - auth
+  - validasi
+  - update
+  - perbarui
+  - aktivasi
+  - activate
+  - reaktivasi
+  - pemulihan
+  - recovery
+  - reset
+  - unblock
+  - buka-blokir
+  - blokir
+  - konfirmasi
+  - confirm
+  - otp
+  - pin
+  - password
+  - rekening
   lures_incentives:
-    - "hadiah"
-    - "reward"
-    - "undian"
-    - "gebyar"
-    - "pemenang"
-    - "winner"
-    - "klaim"
-    - "claim"
-    - "bansos"
-    - "bantuan"
-    - "subsidi"
-    - "prakerja"
-    - "pulsa"
-    - "kuota"
-    - "gratis"
-    - "free"
-    - "saldo"
-    - "kaget"
-    - "cashback"
-    - "voucher"
-    - "promo"
-    - "tarif"
-    - "kenaikan"
-
-# Ekstensi Domain .id Populer
+  - hadiah
+  - reward
+  - undian
+  - gebyar
+  - pemenang
+  - winner
+  - klaim
+  - claim
+  - bansos
+  - bantuan
+  - subsidi
+  - prakerja
+  - pulsa
+  - kuota
+  - gratis
+  - free
+  - saldo
+  - kaget
+  - cashback
+  - voucher
+  - promo
+  - tarif
+  - kenaikan
+  - referral-bonus
+  - dana-tambahan
+  - poin-extra
+  - keuntungan-tertentu
 id_tlds:
-  - "id"
-  - "co.id"
-  - "web.id"
-  - "my.id"
-  - "biz.id"
-  - "net.id"
-  - "org.id"
-  - "ac.id"
-  - "sch.id"
-  - "go.id"
-  - "mil.id"
+- id
+- co.id
+- web.id
+- my.id
+- biz.id
+- net.id
+- org.id
+- ac.id
+- sch.id
+- go.id
+- mil.id

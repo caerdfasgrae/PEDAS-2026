@@ -40,9 +40,21 @@ def main():
         action="store_true",
         help="Perform nested threshold search to maximize F1-Macro",
     )
+    parser.add_argument(
+        "--data-path",
+        type=str,
+        default=None,
+        help="Path to dataset CSV (defaults to benchmark_expanded_id.csv if present)",
+    )
     args = parser.parse_args()
 
-    data_path = BENCHMARK_DATA_DIR / "sample_phishing_id.csv"
+    if args.data_path:
+        from pathlib import Path
+        data_path = Path(args.data_path)
+    else:
+        expanded_path = BENCHMARK_DATA_DIR / "benchmark_expanded_id.csv"
+        data_path = expanded_path if expanded_path.exists() else (BENCHMARK_DATA_DIR / "sample_phishing_id.csv")
+
     print(f"[*] Loading benchmark data from {data_path}...")
     df = pd.read_csv(data_path)
     print(f"[*] Loaded {len(df)} samples ({sum(df['label'] == 1)} Phishing, {sum(df['label'] == 0)} Legitimate).")
