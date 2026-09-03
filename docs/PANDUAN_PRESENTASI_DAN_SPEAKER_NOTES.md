@@ -26,8 +26,8 @@ Untuk menjawab ekspektasi tinggi Dewan Juri PANDI dan Akademisi, ruang lingkup (
 ### 3. Prinsip Tata Kelola: Human-in-the-Loop (HITL) AI
 SANTARA-SHIELD dirancang sebagai **Decision Support System (DSS)**, bukan algo pemblokir sepihak:
 - **Resiko Tinggi (> 90%)**: Penahanan sementara (*pending delegation*) + Notifikasi darurat ke analis PANDI.
-- **Resiko Sedang (20% – 90%)**: Karantina triase + Prioritas perayapan mendalam bagi crawler BIMA AI.
-- **Resiko Rendah (< 20%)**: Delegasi DNS aktif normal tanpa hambatan birokrasi.
+- **Resiko Sedang (\tau^* s/d 90%)**: Karantina triase + Prioritas perayapan mendalam bagi crawler BIMA AI.
+- **Resiko Rendah (< \tau^*)**: Delegasi DNS aktif normal tanpa hambatan birokrasi.
 
 ---
 
@@ -144,7 +144,7 @@ SANTARA-SHIELD dirancang sebagai **Decision Support System (DSS)**, bukan algo p
 - **Sitasi / Sumber Valid di Pojok Slide**:
   - *Ref: Provost & Fawcett, 'Analysis and Interpretation of ROC and PR Curves for Imbalanced Domains', Machine Learning Journal.*
 - **Skrip Pembicara (Durasi: 55 detik)**:
-  > *"Inilah terobosan terbesar kami. Dalam kasus imbalanced data keamanan siber, memakai ambang batas default 0.50 membiarkan banyak phishing lolos. Melalui Nested Threshold Optimization, kami mengalibrasi ambang batas ke tau = 0.20. Hasilnya luar biasa: Recall penangkapan phishing melonjak ke 98.68%, artinya 149 dari 151 serangan berhasil dicegat seketika, sementara angka False Positive tetap terkunci aman di bawah 5%. Inilah titik keseimbangan operasional terbaik untuk PANDI."*
+  > *"Inilah terobosan terbesar kami. Dalam kasus imbalanced data keamanan siber, memakai ambang batas default 0.50 membiarkan banyak phishing lolos. Melalui Nested Threshold Optimization, kami mengalibrasi ambang batas ke tau* terkalibrasi. Hasilnya luar biasa: Recall penangkapan phishing melonjak ke 98.68%, artinya 149 dari 151 serangan berhasil dicegat seketika, sementara angka False Positive tetap terkunci aman di bawah 5%. Inilah titik keseimbangan operasional terbaik untuk PANDI."*
 
 ---
 
