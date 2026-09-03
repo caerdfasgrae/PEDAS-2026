@@ -37,3 +37,7 @@ logs/
 catboost_info/
 scratch/
 tmp/
+
+# Internal Agent Instructions & Competition Slides
+.hermes/
+*.pdf

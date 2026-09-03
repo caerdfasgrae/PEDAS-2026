@@ -52,8 +52,6 @@ PEDAS-2026/
 ├── run_baseline.py                 # CLI runner cepat untuk melatih & mengevaluasi model
 ├── requirements.txt                # Kunci dependensi Python
 ├── .gitignore                      # Mengabaikan file cache, virtualenv, dan model biner
-├── HERMES.md                       # Petunjuk pipeline untuk Hermes Agent
-├── AGENTS.md                       # SOP umum multi-agent
 └── README.md                       # Dokumentasi resmi proyek
 ```
 
