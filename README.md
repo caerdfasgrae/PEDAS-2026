@@ -62,13 +62,27 @@ flowchart TD
     end
     
     D --> E["Calibrated Probabilities"]
-    E --> F["Nested Threshold Calibration (tau* = 0.20)"]
+    E --> F["Nested Threshold Calibration (tau* Terkalibrasi Dinamis)"]
     
     subgraph Decision ["Keputusan & Dampak Industri"]
         F --> G1["Vonis: PHISHING (Peringatan & Takedown IDADX)"]
         F --> G2["Vonis: AMAN (Delegasi DNS Normal)"]
     end
 ```
+
+### 2.1 Metodologi 7-Langkah Machine Learning Lifecycle (Standar Industri & CRISP-DM)
+
+Framework **SANTARA-SHIELD** dibangun di atas kerangka metodologi siklus hidup *machine learning* 7 langkah yang terstruktur, disiplin, dan dapat direproduksi (*fully reproducible*):
+
+| No | Tahapan ML Lifecycle | Implementasi Nyata pada SANTARA-SHIELD | Lokasi Modul / Bukti |
+|:---:|---|---|---|
+| **1** | **Problem Definition & Framing** | Merumuskan dilema operasional PANDI (*False Positive* vs *False Negative*), menetapkan batasan scope, dan memilih metrik penentu: **F1-Macro & Recall**. | [`README.md`](#1-urgensi-masalah--studi-kasus-pandi), Slide 2 PPT |
+| **2** | **Data Collection & Ingestion** | Mengumpulkan 212 URL kasus phishing Indonesia (BCA, BRI, PLN, Tilang ETLE, APK WhatsApp) dan menyiapkan slot otomatisasi data resmi PANDI. | [`data/benchmark/`](data/benchmark/), [`data/raw/`](data/raw/) |
+| **3** | **Data Preprocessing & Cleaning** | Normalisasi skema URL, penanganan format korup, deduplikasi domain induk, dan audit keabsahan label situs perbankan resmi. | [`src/features/lexical.py`](src/features/lexical.py) |
+| **4** | **EDA & Feature Engineering** | Analisis sebaran sektor dan perekayasaan **52 fitur komprehensif** (Leksikal, Brand Spoofing, Entropi Shannon, N-Gram Stacking). | [`src/features/`](src/features/), Notebook Bab 3–5 |
+| **5** | **Model Selection & Training** | Pelatihan 3 model pohon terbaik dunia (**LightGBM, CatBoost, XGBoost**) dengan validasi anti-bocor **StratifiedGroupKFold** dan pembobotan **SLSQP**. | [`src/models/`](src/models/), Notebook Bab 6 |
+| **6** | **Model Evaluation & Tuning** | Evaluasi mendalam metrik F1 (0.9772), Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas $\tau^*$. | Notebook Bab 6.1 & 6.2 |
+| **7** | **Deployment & Decision Support** | Penyediaan API inspeksi interaktif `santara_inspect` (SOC Cyber-Card), generator submission otomatis, dan rekomendasi kebijakan PANDI. | Notebook Bab 7 & 8 |
 
 ---
 

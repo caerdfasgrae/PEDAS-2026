@@ -29,6 +29,16 @@ SANTARA-SHIELD dirancang sebagai **Decision Support System (DSS)**, bukan algo p
 - **Resiko Sedang (\tau^* s/d 90%)**: Karantina triase + Prioritas perayapan mendalam bagi crawler BIMA AI.
 - **Resiko Rendah (< \tau^*)**: Delegasi DNS aktif normal tanpa hambatan birokrasi.
 
+### 4. Metodologi 7-Langkah Machine Learning Lifecycle (CRISP-DM Standard)
+Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara terstruktur:
+1. **Problem Definition & Framing**: Memetakan dilema operasional PANDI (*False Positive* vs *False Negative*) & metrik penentu (F1-Macro & Recall).
+2. **Data Collection & Ingestion**: Pengumpulan 212 data benchmark phishing lokal (Hermes) & automated raw data slot untuk data resmi PANDI.
+3. **Data Preprocessing & Cleaning**: Normalisasi format URL, penanganan format korup, dan audit keabsahan label domain bank resmi.
+4. **EDA & Feature Engineering**: Visualisasi sebaran sektor & perekayasaan 52 fitur komprehensif (Leksikal, Brand YAML, Shannon Entropy, N-Gram Stacking).
+5. **Model Selection & Development**: Pelatihan Multi-GBDT (LightGBM, CatBoost, XGBoost) + validasi anti-bocor *StratifiedGroupKFold* & SLSQP Blending.
+6. **Model Evaluation & Tuning**: Evaluasi komparatif melalui Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis $\tau^*$.
+7. **Deployment & Decision Support**: Pembuatan API inspeksi interaktif `santara_inspect` (SOC Cyber-Card), generator submission otomatis, & rekomendasi kebijakan integrasi PANDI/IDADX.
+
 ---
 
 # BAGIAN 2: Glosarium Istilah Teknis (Dari Vibe Coding ke Pakar)
@@ -46,9 +56,9 @@ SANTARA-SHIELD dirancang sebagai **Decision Support System (DSS)**, bukan algo p
 - **Apa itu?**: Menggabungkan LightGBM, CatBoost, dan XGBoost menggunakan kalkulus optimasi bobot (SLSQP).
 - **Analogi**: Tiga dokter spesialis siber. CatBoost ahli membaca nama brand, XGBoost ahli membaca entropi numerik, LightGBM super cepat. SLSQP mencari persentase suara paling akurat (47% CatBoost + 53% XGBoost).
 
-### 4. Nested Threshold Optimization ($\tau^* = 0.20$)
-- **Apa itu?**: Menggeser ambang batas vonis dari 0.50 menjadi 0.20 untuk menaikkan Recall.
-- **Analogi**: Satpam bank cukup melihat 20% gelagat mencurigakan untuk langsung bersiaga, sehingga 98.7% penjahat tertangkap tanpa salah menangkap nasabah legal.
+### 4. Nested Threshold Optimization ($\tau^*$ Adaptif)
+- **Apa itu?**: Menggeser ambang batas vonis dari 0.50 menjadi titik potong optimal ($\tau^*$) untuk memaksimalkan F1-Score dan Recall.
+- **Analogi**: Satpam bank tidak menunggu sampai 50% tanda bahaya baru bertindak. Cukup melihat indikasi di atas ambang batas optimal (misal: 46%), satpam langsung bersiaga, sehingga 98.0% penjahat tertangkap tanpa salah menangkap nasabah legal.
 
 ---
 
@@ -191,4 +201,17 @@ SANTARA-SHIELD dirancang sebagai **Decision Support System (DSS)**, bukan algo p
 ### Pertanyaan 3 (Dari Juri Panitia):
 *“Bagaimana Anda menjamin bahwa hasil di Google Colab dan GitHub Anda akan identik saat kami uji ulang?”*
 - **Jawaban Anda**:
-  > *"Kami mengunci seluruh seed acak pada `RANDOM_STATE = 42` di seluruh split StratifiedGroupKFold, LightGBM, CatBoost, dan XGBoost. Sel 1 dan 2 pada notebook kami di GitHub telah dilengkapi sistem auto-clone dan defensive path resolution otomatis. Dewan juri cukup menekan satu tombol 'Run All' di Google Colab, dan seluruh grafik, metrik F1-Score 0.9711, dan kurva PR akan muncul dengan nilai yang persis sama hingga desimal terakhir."*
+  > *"Kami mengunci seluruh seed acak pada `RANDOM_STATE = 42` di seluruh split StratifiedGroupKFold, LightGBM, CatBoost, dan XGBoost. Sel 1 dan 2 pada notebook kami di GitHub telah dilengkapi sistem auto-clone dan defensive path resolution otomatis. Dewan juri cukup menekan satu tombol 'Run All' di Google Colab, dan seluruh grafik, metrik F1-Score 0.9772, dan kurva PR akan muncul dengan nilai yang persis sama hingga desimal terakhir."*
+
+### Pertanyaan 4 (Dari Juri Akademisi APTIKOM / Software Engineer):
+*“Bisa jelaskan alur kerja metodologis (Machine Learning Lifecycle) yang Anda terapkan dalam riset ini dari hulu ke hilir?”*
+- **Jawaban Anda**:
+  > *"Terima kasih atas pertanyaannya. Riset SANTARA-SHIELD dirancang secara disiplin mengikuti kerangka standar 7-Langkah Machine Learning Lifecycle (CRISP-DM Compliant):*
+  > *1. **Problem Framing**: Memetakan trade-off bisnis PANDI antara False Positive (resiko komplain hukum) vs False Negative (resiko rekening korban jebol), dan menetapkan metrik objektif F1-Macro & Recall.*
+  > *2. **Data Sourcing**: Mengumpulkan data benchmark representatif 212 URL kasus nyata Indonesia dan menyiapkan slot pipeline data resmi.*
+  > *3. **Data Preprocessing & Cleaning**: Normalisasi format skema URL, penanganan format korup, dan audit keabsahan label domain bank resmi.*
+  > *4. **EDA & Feature Engineering**: Mengekstrak 52 fitur komprehensif (Leksikal, Brand Spoofing lokal, Shannon Entropy, dan Char N-Gram Stacking).*
+  > *5. **Model Development**: Melatih 3 model Multi-GBDT (LightGBM, CatBoost, XGBoost) menggunakan validasi anti-bocor StratifiedGroupKFold dan penggabungan bobot optimal SLSQP.*
+  > *6. **Model Evaluation & Tuning**: Validasi mendalam via Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis tau*.*
+  > *7. **Deployment & Decision Support**: Menyediakan modul interaktif santara_inspect untuk IDADX, generator submission otomatis, serta rekomendasi kebijakan Pre-delegation Gatekeeper untuk PANDI."*
+
