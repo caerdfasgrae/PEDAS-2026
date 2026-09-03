@@ -25,7 +25,8 @@ DEFAULT_SUSPICIOUS_TOKENS = {
     "konfirmasi", "confirm", "otp", "pin", "password", "rekening", "hadiah", "reward",
     "undian", "gebyar", "pemenang", "winner", "klaim", "claim", "bansos", "bantuan",
     "subsidi", "prakerja", "pulsa", "kuota", "gratis", "free", "saldo", "kaget",
-    "cashback", "voucher", "promo", "tarif", "kenaikan"
+    "cashback", "voucher", "promo", "tarif", "kenaikan", "etle", "tilang", "undangan",
+    "kurir", "resi", "surat-tilang"
 }
 
 # TLDs under PANDI (.id ecosystem)

@@ -10,10 +10,6 @@ brands:
     - klikbca
     - mybca
     - blu
-    - transfer
-    - rekening
-    - pembayaran
-    - tagihan
   - name: bri
     official_domains:
     - bri.co.id
@@ -44,10 +40,6 @@ brands:
     - bniexperience
     - wondr
     - bankbni
-    - transfer
-    - rekening
-    - pengiriman
-    - tarif
   - name: cimb
     official_domains:
     - cimb.co.id
@@ -100,6 +92,8 @@ brands:
     - dana
     - danakaget
     - dompetdana
+    - undangan
+    - resi
   - name: gopay
     official_domains:
     - gopay.co.id
@@ -107,12 +101,16 @@ brands:
     keywords:
     - gopay
     - gojek
+    - undangan
+    - resi
   - name: ovo
     official_domains:
     - ovo.id
     keywords:
     - ovo
     - ovoid
+    - undangan
+    - resi
   - name: shopeepay
     official_domains:
     - shopee.co.id
@@ -220,6 +218,17 @@ brands:
     - kemkes
     - satusehat
     - pedulilindungi
+  - name: etle_polri
+    official_domains:
+    - polri.go.id
+    - korlantas.polri.go.id
+    - etle-pmj.info
+    keywords:
+    - etle
+    - tilang
+    - korlantas
+    - surat-tilang
+    - tilang-elektronik
 suspicious_keywords:
   security_verification:
   - login
@@ -277,6 +286,23 @@ suspicious_keywords:
   - dana-tambahan
   - poin-extra
   - keuntungan-tertentu
+  apk_social_engineering_lures:
+  - undangan
+  - undangan-nikah
+  - undangan-pernikahan
+  - surat-undangan
+  - etle
+  - tilang
+  - surat-tilang
+  - bukti-tilang
+  - pelanggaran
+  - resi
+  - resi-paket
+  - kurir
+  - paket-tertahan
+  - lacak-paket
+  - dokumen-pdf
+  - apk
 id_tlds:
 - id
 - co.id
