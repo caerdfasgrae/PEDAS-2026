@@ -99,7 +99,32 @@ Model kami bukan *black-box*. Berdasarkan analisis atribusi fitur (*Feature Impo
 
 ---
 
-## 🗂️ 5. Struktur Repositori
+## 💻 5. Tech Stack & Ekosistem Teknologi
+
+Sistem **SANTARA-SHIELD** dibangun menggunakan arsitektur perangkat lunak berbasis Python murni (*Python-native stack*) yang dipilih secara presisi untuk menjamin efisiensi inferensi tinggi, kepatuhan regulasi kompetisi, serta stabilitas matematis di tingkat enterprise.
+
+| Kategori Stack | Pustaka / Komponen | Versi | Peran & Alasan Pemilihan Arsitektur |
+|---|---|---|---|
+| **Machine Learning (GBDT)** | **CatBoost** | `1.2+` | Menangani fitur kategorikal (brand target & kategori TLD) secara *native* tanpa ledakan dimensi one-hot encoding, serta sangat tangguh terhadap overfitting. |
+| | **XGBoost** | `2.0+` | Mesin boosting histogram berkecepatan tinggi dengan regulasi L1/L2 ketat untuk membedah fitur numerik kontinu (*Shannon entropy*, rasio path, panjang URL). |
+| | **LightGBM** | `4.0+` | Algoritma *leaf-wise tree splitting* yang sangat hemat memori, ideal untuk kebutuhan pemindaian throughput tinggi di gateway registrar PANDI (~5 ms/domain). |
+| | **scikit-learn** | `1.3+` | Menyediakan fondasi validasi anti-kebocoran (`StratifiedGroupKFold`), metrik evaluasi kompetisi (`F1-Score`, `PR-Curve`, `ROC-AUC`), dan ekstraksi teks N-Gram. |
+| | **SciPy (SLSQP)** | `1.11+` | Solver *Sequential Least Squares Programming* untuk menyelesaikan optimasi konvergen bobot ensemble blending pada probabilitas Out-of-Fold. |
+| **Domain & Threat Intel** | **tldextract** | `5.0+` | Memisahkan komponen URL, subdomain, registered domain (FQDN), dan SLD Indonesia (`.id`, `.co.id`, `.my.id`, `.biz.id`) secara presisi tanpa koneksi internet. |
+| | **PyYAML** | `6.0+` | Parser konfigurasi berbasis deklaratif untuk memetakan 30+ entitas brand perbankan, fintech, logistik, dan kepolisian (`indonesian_brands.yaml`). |
+| | **dnspython** | `2.4+` | Resolusi record DNS (A, AAAA, MX, NS, TXT) dengan mekanisme *timeout & fallback* yang aman dari kegagalan jaringan. |
+| | **python-whois** | `0.9+` | Ekstraksi telemetri usia domain (`domain_age_days`) dan waktu kedaluwarsa untuk mendeteksi domain baru pancingan penipuan (*burner domains*). |
+| **Data Engine & Math** | **Python** | `3.11 - 3.13` | Bahasa pemrograman utama (100% patuh pada aturan resmi PeDaS 2026 Slide 8 Poin 12: *Python only*). |
+| | **NumPy & Pandas** | `1.26+ / 2.1+` | Manipulasi matriks berkecepatan tinggi, operasi vektorisasi cepat, kalkulasi Shannon Entropy logaritma biner, dan manajemen dataframe. |
+| **Visualisasi & Demo** | **Matplotlib & Seaborn** | `3.8+ / 0.13+` | Pembuatan visualisasi data standar publikasi ilmiah (Diagram Bar EDA, Grouped Bar Threshold, Precision-Recall Curve, dan Matriks Dampak PANDI). |
+| | **IPython / HTML** | `8.0+` | Rendering antarmuka kartu diagnosis visual interaktif `santara_inspect` langsung di lingkungan notebook Jupyter dan Google Colab. |
+| **Quality Assurance** | **pytest** | `7.4+` | Rangkaian pengujian unit otomatis (10 test cases) yang memverifikasi integritas matematika, fitur leksikal, brand detector, dan GroupKFold dalam < 3 detik. |
+| | **Google Colab** | *Cloud Native* | Lingkungan eksekusi satu-klik tanpa setup rumit, terintegrasi dengan clone repositori GitHub otomatis. |
+| | **Git & GitHub** | *VCS* | Kontrol versi terbuka, audit trail transparan, dan determinisme penuh (`RANDOM_STATE = 42`). |
+
+---
+
+## 🗂️ 6. Struktur Repositori
 
 ```text
 PEDAS-2026/
@@ -112,7 +137,7 @@ PEDAS-2026/
 │   ├── processed/                    # Output prediksi model (oof_predictions.csv & submission.csv)
 │   └── raw/                          # Tempat penyimpanan dataset resmi PANDI (12 September)
 ├── notebooks/
-│   └── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Notebook Colab interaktif lengkap dengan visualisasi EDA, PR-Curve, & Generator Submission
+│   └── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Notebook Colab interaktif lengkap dengan visualisasi EDA, PR-Curve, Generator Submission, & santara_inspect
 ├── src/
 │   ├── features/
 │   │   ├── lexical.py                # 40+ Fitur leksikal, entropi, ekstensi file .apk
@@ -139,13 +164,13 @@ PEDAS-2026/
 
 ---
 
-## 🚀 6. Panduan Menjalankan
+## 🚀 7. Panduan Menjalankan
 
 ### Opsi A: Google Colab (Cukup 1 Klik!)
 Sesuai format pengumpulan PeDaS, seluruh alur kerja dapat dieksekusi secara interaktif di Google Colab:
 1. Klik badge 👉 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb)
 2. Klik menu **Runtime -> Run all** (`Ctrl + F9`).
-3. Notebook akan otomatis melakukan *clone* repositori, memasang dependensi, menjalankan ekstraksi fitur, melatih ensemble, menampilkan seluruh diagram batang & kurva evaluasi, serta menyiapkan file submission.
+3. Notebook akan otomatis melakukan *clone* repositori, memasang dependensi, menjalankan ekstraksi fitur, melatih ensemble, menampilkan seluruh diagram batang & kurva evaluasi, serta menyiapkan file submission dan live demo `santara_inspect`.
 
 ### Opsi B: Lingkungan Lokal (Terminal / PowerShell)
 ```powershell
@@ -172,7 +197,7 @@ File hasil prediksi baris-per-baris akan tersimpan di [`data/processed/oof_predi
 
 ---
 
-## 💡 7. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
+## 💡 8. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
 
 Sebagai luaran nyata (*actionable policy insights*), model ini siap diintegrasikan ke dalam ekosistem PANDI:
 
@@ -185,7 +210,7 @@ Sebagai luaran nyata (*actionable policy insights*), model ini siap diintegrasik
 
 ---
 
-## ⚖️ 8. Kepatuhan Regulasi Resmi PeDaS 2026
+## ⚖️ 9. Kepatuhan Regulasi Resmi PeDaS 2026
 - **Python Only (Slide 8 Poin 12)**: 100% ditulis dalam bahasa pemrograman Python murni tanpa dependensi non-standar.
 - **Reproducibility Terjamin (Slide 8 Poin 8)**: Seluruh pemisahan lipatan (*fold*) dan model dikunci pada `RANDOM_STATE = 42`. Hasil notebook Google Colab dijamin identik persis dengan kode GitHub saat diverifikasi oleh Dewan Juri.
 - **Double Blind Ready (Slide 8 Poin 7)**: Repositori dan notebook disusun secara netral tanpa melanggar ketentuan anonimitas institusi.
