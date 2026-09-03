@@ -21,6 +21,17 @@ SRC_DIR = PROJECT_ROOT / "src"
 # Deterministic Seed for Reproducibility (Crucial for Finalist Code Verification)
 RANDOM_STATE = 42
 
+def seed_everything(seed: int = RANDOM_STATE):
+    """Sets random seeds across Python, NumPy, and environment for 100% reproducibility."""
+    import random
+    import numpy as np
+    random.seed(seed)
+    np.random.seed(seed)
+    os.environ["PYTHONHASHSEED"] = str(seed)
+
+# Automatically enforce global determinism across the entire framework
+seed_everything(RANDOM_STATE)
+
 # Ensure directories exist
 for d in [DATA_DIR, RAW_DATA_DIR, PROCESSED_DATA_DIR, BENCHMARK_DATA_DIR, CONFIG_DIR, MODELS_DIR]:
     d.mkdir(parents=True, exist_ok=True)

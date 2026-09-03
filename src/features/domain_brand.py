@@ -37,8 +37,8 @@ class IndonesianBrandDetector:
                     self.brand_keywords[kw_lower] = b_name
                     self.all_keywords.append(kw_lower)
 
-        # De-duplicate keywords
-        self.all_keywords = list(set(self.all_keywords))
+        # De-duplicate keywords deterministically
+        self.all_keywords = sorted(list(set(self.all_keywords)))
 
     def detect(self, url: str) -> Dict[str, Any]:
         """Extracts brand impersonation features for a given URL."""

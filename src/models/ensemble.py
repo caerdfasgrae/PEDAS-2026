@@ -53,7 +53,9 @@ class WeightedBlender:
                 random_state=self.random_state,
             )
             # BaselineModelTrainer.cross_validate returns (metrics, fi_df, oof_probs)
-            metrics, fi_df, oof_probs = trainer.cross_validate(X, y_arr)
+            metrics, fi_df, oof_probs = trainer.cross_validate(
+                X, y_arr, urls=urls, use_group_kfold=use_group_kfold
+            )
             self.fitted_trainers[name] = trainer
             self.oof_predictions[name] = oof_probs
 
