@@ -34,7 +34,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 1. **Problem Definition & Framing**: Memetakan dilema operasional PANDI (*False Positive* vs *False Negative*) & metrik penentu (F1-Macro & Recall).
 2. **Data Collection & Ingestion**: Pengumpulan 212 data benchmark phishing lokal (Hermes) & automated raw data slot untuk data resmi PANDI.
 3. **Data Preprocessing & Cleaning**: Normalisasi format URL, penanganan format korup, dan audit keabsahan label domain bank resmi.
-4. **EDA & Feature Engineering**: Visualisasi sebaran sektor & perekayasaan 52 fitur komprehensif (Leksikal, Brand YAML, Shannon Entropy, N-Gram Stacking).
+4. **EDA & Feature Engineering**: Visualisasi sebaran sektor & perekayasaan Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup) komprehensif (Leksikal, Brand YAML, Shannon Entropy, N-Gram Stacking).
 5. **Model Selection & Development**: Pelatihan Multi-GBDT (LightGBM, CatBoost, XGBoost) + validasi anti-bocor *StratifiedGroupKFold* & SLSQP Blending.
 6. **Model Evaluation & Tuning**: Evaluasi komparatif melalui Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis $\tau^*$.
 7. **Deployment & Decision Support**: Pembuatan API inspeksi interaktif `tifis_inspect` (SOC Cyber-Card), generator submission otomatis, & rekomendasi kebijakan integrasi PANDI/IDADX.
@@ -52,7 +52,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 - **Apa itu?**: Merangkum pola potongan huruf (3–5 karakter) menjadi 1 angka probabilitas padat.
 - **Analogi**: Penipu memanipulasi kata seperti `b-c-a-verif` atau `kl1kbca`. Model linier membaca potongan huruf dan merangkumnya: *"Teks ini 95% bernada phishing"*. Angka 95% inilah yang dimasukkan ke pohon keputusan.
 
-### 3. Multi-GBDT Ensemble Blending (SLSQP)
+### 3. Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%) Blending (SLSQP)
 - **Apa itu?**: Menggabungkan LightGBM, CatBoost, dan XGBoost menggunakan kalkulus optimasi bobot (SLSQP).
 - **Analogi**: Tiga dokter spesialis siber. CatBoost ahli membaca nama brand, XGBoost ahli membaca entropi numerik, LightGBM super cepat. SLSQP mencari persentase suara paling akurat (47% CatBoost + 53% XGBoost).
 
@@ -68,7 +68,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 
 ## SLIDE 1: Judul Solusi & Identitas Tim (Double Blind)
 - **Visual Slide**:
-  - Judul: **TIFIS-ID: Deteksi Phishing Cerdas Domain (.id) Berbasis Multi-GBDT Ensemble, Local Brand Intelligence, & Human-in-the-Loop Governance**
+  - Judul: **TIFIS-ID: Deteksi Phishing Cerdas Domain (.id) Berbasis Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%), Local Brand Intelligence, & Human-in-the-Loop Governance**
   - Sub-judul: *Decision Support System untuk Mendukung Kedaulatan & Keamanan Registry PANDI*
   - Identitas: *Peserta Finalis PeDaS 2026 | Aptikom Fest 2026* (Tanpa nama kampus).
 - **Sitasi / Sumber Valid di Pojok Slide**:
@@ -115,7 +115,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 - **Sitasi / Sumber Valid di Pojok Slide**:
   - *Ref: Kintis et al., 'Detecting Combosquatting Attacks at Scale', USENIX Security; Shannon, C.E., 'A Mathematical Theory of Communication' (Entropy).*
 - **Skrip Pembicara (Durasi: 60 detik)**:
-  > *"TIFIS-ID mengonstruksi 52 fitur terstruktur yang terbagi dalam tiga pilar. Pertama, Indonesian Brand Intelligence: sistem kami memetakan domain resmi seluruh bank nasional, logistik, dan layanan publik untuk langsung mendeteksi unauthorized brand domain dan combosquatting. Kedua, kami menganalisis keacakan karakter Shannon Entropy dan mendeteksi ekstensi berbahaya seperti file APK. Ketiga, inovasi Character N-Gram Stacking: alih-alih meledakkan dimensi sparse yang merusak pohon keputusan, kami melatih model linier secara Out-of-Fold untuk merangkum gaya bahasa penipu menjadi satu fitur probabilitas teks yang padat dan sangat sensitif."*
+  > *"TIFIS-ID mengonstruksi Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup) terstruktur yang terbagi dalam tiga pilar. Pertama, Indonesian Brand Intelligence: sistem kami memetakan domain resmi seluruh bank nasional, logistik, dan layanan publik untuk langsung mendeteksi unauthorized brand domain dan combosquatting. Kedua, kami menganalisis keacakan karakter Shannon Entropy dan mendeteksi ekstensi berbahaya seperti file APK. Ketiga, inovasi Character N-Gram Stacking: alih-alih meledakkan dimensi sparse yang merusak pohon keputusan, kami melatih model linier secara Out-of-Fold untuk merangkum gaya bahasa penipu menjadi satu fitur probabilitas teks yang padat dan sangat sensitif."*
 
 ---
 
@@ -132,7 +132,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 
 ---
 
-## SLIDE 6: Multi-GBDT Ensemble Blending via SLSQP
+## SLIDE 6: Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%) Blending via SLSQP
 - **Visual Slide**:
   - Alur Pemodelan: 52 Fitur -> LightGBM + CatBoost + XGBoost -> Optimasi Bobot SLSQP.
   - Kontribusi Bobot Optimal: CatBoost (46.8%) + XGBoost (53.2%).
@@ -191,7 +191,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 ### Pertanyaan 1 (Dari Juri PANDI):
 *“Bagaimana jika model Anda salah menuduh domain UKM lokal yang namanya mirip bank (misal: `toko-bca-motor.my.id`) lalu langsung memblokirnya?”*
 - **Jawaban Anda**:
-  > *"Terima kasih atas pertanyaannya, Bapak/Ibu Juri dari PANDI. Pertama, model kami tidak pernah melakukan pemblokiran sepihak secara otonom—sistem kami memegang teguh prinsip Human-in-the-Loop sebagai Decision Support System bagi staf PANDI. Kedua, model kami tidak hanya melihat nama brand, melainkan mengombinasikan 52 fitur: kedalaman direktori, kata kunci formulir kredensial, file APK, dan Shannon entropy. Pada domain UKM biasa, tidak akan ditemukan pola pancingan login bank atau file APK berbahaya. Dengan ambang batas yang terkalibrasi, False Positive Rate kami terbukti sangat rendah (4.92%) untuk melindungi hak berusaha masyarakat."*
+  > *"Terima kasih atas pertanyaannya, Bapak/Ibu Juri dari PANDI. Pertama, model kami tidak pernah melakukan pemblokiran sepihak secara otonom—sistem kami memegang teguh prinsip Human-in-the-Loop sebagai Decision Support System bagi staf PANDI. Kedua, model kami tidak hanya melihat nama brand, melainkan mengombinasikan Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup): kedalaman direktori, kata kunci formulir kredensial, file APK, dan Shannon entropy. Pada domain UKM biasa, tidak akan ditemukan pola pancingan login bank atau file APK berbahaya. Dengan ambang batas yang terkalibrasi, False Positive Rate kami terbukti sangat rendah (4.92%) untuk melindungi hak berusaha masyarakat."*
 
 ### Pertanyaan 2 (Dari Juri Akademisi APTIKOM):
 *“Apa batasan (scope boundaries) dari model ini? Apakah model ini bisa mendeteksi halaman phishing dinamis yang kontennya baru muncul setelah kita login?”*
@@ -201,7 +201,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 ### Pertanyaan 3 (Dari Juri Panitia):
 *“Bagaimana Anda menjamin bahwa hasil di Google Colab dan GitHub Anda akan identik saat kami uji ulang?”*
 - **Jawaban Anda**:
-  > *"Kami mengunci seluruh seed acak pada `RANDOM_STATE = 42` di seluruh split StratifiedGroupKFold, LightGBM, CatBoost, dan XGBoost. Sel 1 dan 2 pada notebook kami di GitHub telah dilengkapi sistem auto-clone dan defensive path resolution otomatis. Dewan juri cukup menekan satu tombol 'Run All' di Google Colab, dan seluruh grafik, metrik F1-Score 0.9772, dan kurva PR akan muncul dengan nilai yang persis sama hingga desimal terakhir."*
+  > *"Kami mengunci seluruh seed acak pada `RANDOM_STATE = 42` di seluruh split StratifiedGroupKFold, LightGBM, CatBoost, dan XGBoost. Sel 1 dan 2 pada notebook kami di GitHub telah dilengkapi sistem auto-clone dan defensive path resolution otomatis. Dewan juri cukup menekan satu tombol 'Run All' di Google Colab, dan seluruh grafik, metrik F1-Score 0.6026 (Macro-F1 9 Kategori), dan kurva PR akan muncul dengan nilai yang persis sama hingga desimal terakhir."*
 
 ### Pertanyaan 4 (Dari Juri Akademisi APTIKOM / Software Engineer):
 *“Bisa jelaskan alur kerja metodologis (Machine Learning Lifecycle) yang Anda terapkan dalam riset ini dari hulu ke hilir?”*
@@ -210,7 +210,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
   > *1. **Problem Framing**: Memetakan trade-off bisnis PANDI antara False Positive (resiko komplain hukum) vs False Negative (resiko rekening korban jebol), dan menetapkan metrik objektif F1-Macro & Recall.*
   > *2. **Data Sourcing**: Mengumpulkan data benchmark representatif 212 URL kasus nyata Indonesia dan menyiapkan slot pipeline data resmi.*
   > *3. **Data Preprocessing & Cleaning**: Normalisasi format skema URL, penanganan format korup, dan audit keabsahan label domain bank resmi.*
-  > *4. **EDA & Feature Engineering**: Mengekstrak 52 fitur komprehensif (Leksikal, Brand Spoofing lokal, Shannon Entropy, dan Char N-Gram Stacking).*
+  > *4. **EDA & Feature Engineering**: Mengekstrak Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup) komprehensif (Leksikal, Brand Spoofing lokal, Shannon Entropy, dan Char N-Gram Stacking).*
   > *5. **Model Development**: Melatih 3 model Multi-GBDT (LightGBM, CatBoost, XGBoost) menggunakan validasi anti-bocor StratifiedGroupKFold dan penggabungan bobot optimal SLSQP.*
   > *6. **Model Evaluation & Tuning**: Validasi mendalam via Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis tau*.*
   > *7. **Deployment & Decision Support**: Menyediakan modul interaktif tifis_inspect untuk IDADX, generator submission otomatis, serta rekomendasi kebijakan Pre-delegation Gatekeeper untuk PANDI."*

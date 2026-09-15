@@ -12,11 +12,28 @@ Usage:
 """
 
 import sys
+import os
 import time
 import argparse
 import hashlib
 import warnings
+import subprocess
 from pathlib import Path
+
+# Auto-relaunch inside local .venv if dependencies are not found in current environment
+try:
+    import numpy as np
+    import pandas as pd
+except ImportError:
+    repo_dir = Path(__file__).resolve().parent
+    venv_py_win = repo_dir / ".venv" / "Scripts" / "python.exe"
+    venv_py_nix = repo_dir / ".venv" / "bin" / "python"
+    target_py = venv_py_win if venv_py_win.exists() else (venv_py_nix if venv_py_nix.exists() else None)
+    if target_py and Path(sys.executable).resolve() != target_py.resolve():
+        cmd = [str(target_py)] + sys.argv
+        sys.exit(subprocess.call(cmd))
+    else:
+        raise
 
 # Suppress harmless convergence/split warnings for clean CLI output
 warnings.filterwarnings("ignore")
@@ -25,9 +42,6 @@ warnings.filterwarnings("ignore")
 REPO_ROOT = Path(__file__).resolve().parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
-
-import numpy as np
-import pandas as pd
 
 from src.cleaner import load_cleaned_datasets, CANONICAL_CLASSES
 from src.models.hybrid_blender import HybridProbabilisticBlender
