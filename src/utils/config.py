@@ -19,7 +19,7 @@ MODELS_DIR = PROJECT_ROOT / "models"
 SRC_DIR = PROJECT_ROOT / "src"
 
 # Deterministic Seed for Reproducibility (Crucial for Finalist Code Verification)
-RANDOM_STATE = 42
+RANDOM_STATE = 2026
 
 def seed_everything(seed: int = RANDOM_STATE):
     """Sets random seeds across Python, NumPy, and environment for 100% reproducibility."""

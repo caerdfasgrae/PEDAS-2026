@@ -2,7 +2,8 @@
 
 > **Kompetisi**: Pesta Data Nasional (PeDaS 2026) - APTIKOM Fest x PANDI  
 > **Target**: Juara 1 Nasional + Best Analysis + Best Visualization di Munas VII APTIKOM Yogyakarta  
-> **Format Final**: Sinkronus Daring (3 Oktober 2026), Double Blind, 7-10 Menit Presentasi + Tanya Jawab  
+> **Format Final**: Sinkronus Daring (3 Oktober 2026), Double Blind (Tim: **TIFIS TIFIS** | Solusi: **Tifis-ID**)  
+> **Durasi Presentasi**: 7–10 Menit Presentasi + Tanya Jawab  
 > **Pendekatan Strategis**: *Human-in-the-Loop Decision Support System for National Registry (PANDI)*
 
 ---
@@ -13,10 +14,10 @@ Untuk menjawab ekspektasi tinggi Dewan Juri PANDI dan Akademisi, ruang lingkup (
 
 ### 1. In-Scope (Kapabilitas Utama Sistem):
 - **Pre-Delegation Early Warning**: Deteksi dini saat pendaftaran domain di level *Registrar API* sebelum nama domain terdaftar aktif di DNS root.
-- **Automated Triage for IDADX**: Penyortiran otomatis ribuan laporan publik yang masuk ke portal `idadx.id` berdasarkan skor probabilitas resiko.
-- **Local Threat & Brand Intelligence**: Mendeteksi pencatutan nama entitas perbankan (BCA, BRI, Mandiri, BNI, CIMB), fintech (DANA, OVO, GoPay), logistik (JNE, J&T), dan instansi publik (ETLE Polri, Pajak, BPJS, PLN).
-- **Social Engineering & Malware APK Lures**: Mengenali pola pancingan rekayasa sosial lokal (*surat tilang, undangan nikah, resi paket, kaget, bansos, kenaikan tarif*).
-- **Structural URL Obfuscation**: Menganalisis kedalaman direktori, pemalsuan subdomain, dan keacakan Shannon Entropy.
+- **Automated Triage for IDADX**: Penyortiran otomatis ribuan laporan publik yang masuk ke portal `idadx.id` ke dalam 9 kategori ancaman kanonikal berdasarkan skor probabilitas terkalibrasi.
+- **Local Threat & Brand Intelligence**: Mendeteksi pencatutan nama entitas perbankan (BCA, BRI, Mandiri, BNI, CIMB), fintech (DANA, OVO, GoPay), logistik, dan instansi publik (ETLE Polri, Pajak, BPJS, PLN).
+- **Dual-Stream Signal Extraction**: Menggabungkan 15.000 fitur teks sub-kata (*character 3–5 n-grams*) dengan 56 fitur tabular terstruktur (usia domain, registrar, SLD, dan anomali leksikal).
+- **Zero Data Leakage**: Seluruh ekstraksi fitur, scaling, kalibrasi Platt, dan optimasi batas Bayes dipelajari strictly di dalam training fold.
 
 ### 2. Out-of-Scope (Batasan Sistem yang Dikelola Subsistem Lain):
 - **Deep Web Crawling di Balik Login/Password**: Analisis konten halaman web yang dienkripsi atau memerlukan autentikasi login (tugas ini diserahkan kepada perayap berkala **BIMA AI**).
@@ -26,163 +27,98 @@ Untuk menjawab ekspektasi tinggi Dewan Juri PANDI dan Akademisi, ruang lingkup (
 ### 3. Prinsip Tata Kelola: Human-in-the-Loop (HITL) AI
 TIFIS-ID dirancang sebagai **Decision Support System (DSS)**, bukan algo pemblokir sepihak:
 - **Resiko Tinggi (> 90%)**: Penahanan sementara (*pending delegation*) + Notifikasi darurat ke analis PANDI.
-- **Resiko Sedang (\tau^* s/d 90%)**: Karantina triase + Prioritas perayapan mendalam bagi crawler BIMA AI.
-- **Resiko Rendah (< \tau^*)**: Delegasi DNS aktif normal tanpa hambatan birokrasi.
+- **Resiko Sedang (Ambang Bayes s/d 90%)**: Karantina triase + Prioritas perayapan mendalam bagi crawler BIMA AI.
+- **Resiko Rendah**: Delegasi DNS aktif normal tanpa hambatan birokrasi bagi UKM legal.
 
 ### 4. Metodologi 7-Langkah Machine Learning Lifecycle (CRISP-DM Standard)
 Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara terstruktur:
-1. **Problem Definition & Framing**: Memetakan dilema operasional PANDI (*False Positive* vs *False Negative*) & metrik penentu (F1-Macro & Recall).
-2. **Data Collection & Ingestion**: Pengumpulan 212 data benchmark phishing lokal (Hermes) & automated raw data slot untuk data resmi PANDI.
-3. **Data Preprocessing & Cleaning**: Normalisasi format URL, penanganan format korup, dan audit keabsahan label domain bank resmi.
-4. **EDA & Feature Engineering**: Visualisasi sebaran sektor & perekayasaan Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup) komprehensif (Leksikal, Brand YAML, Shannon Entropy, N-Gram Stacking).
-5. **Model Selection & Development**: Pelatihan Multi-GBDT (LightGBM, CatBoost, XGBoost) + validasi anti-bocor *StratifiedGroupKFold* & SLSQP Blending.
-6. **Model Evaluation & Tuning**: Evaluasi komparatif melalui Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis $\tau^*$.
-7. **Deployment & Decision Support**: Pembuatan API inspeksi interaktif `tifis_inspect` (SOC Cyber-Card), generator submission otomatis, & rekomendasi kebijakan integrasi PANDI/IDADX.
+1. **Problem Framing**: Memetakan 9 kategori ancaman IDADX PANDI, mengatasi ketimpangan kelas ekstrem (*gambling* 5.447 vs *fakeshop* 5), dan memilih metrik penentu: **Macro-F1**.
+2. **Data Ingestion & Cleaning**: Normalisasi URL, perbaikan format korup, dan sintesis representasi teks komposit (`url + brand + sld + registrar`).
+3. **Dual-Stream Feature Engineering**: Ekstraksi 56 fitur tabular terstruktur dan TF-IDF karakter 3–5 n-gram secara 100% offline.
+4. **Hybrid Model Development**: Memadukan **LinearSVC (60%)** untuk ruang n-gram teks dan **LightGBM (40%)** untuk pola tabular non-linear.
+5. **Probabilistic Calibration**: Menerapkan **Multiclass Platt Scaling** agar output skor SVM menjadi probabilitas murni $[0, 1]$ yang jumlahnya pas 1.0.
+6. **Bayes Thresholding & Evidence Guard**: Optimasi pergeseran batas potong Bayes ($\arg\max (P_k + \Delta_k)$) terisolasi fold untuk kelas minoritas, dipagari **Evidence Guard** anti salah vonis.
+7. **Deployment & Live Tools**: Menyediakan runner 1-klik (`run.bat`), penguji bobot (`test_weights.bat`), inspektur domain langsung (`inspect.bat`), dan master notebook Colab.
 
 ---
 
-# BAGIAN 2: Glosarium Istilah Teknis (Dari Vibe Coding ke Pakar)
-*Gunakan analogi sederhana ini saat juri bertanya agar Anda terdengar menguasai sistem secara mendalam.*
+# BAGIAN 2: Glosarium Istilah Teknis (Dari Bahasa Awam ke Pakar)
 
-### 1. StratifiedGroupKFold & Domain Group Leakage
-- **Apa itu?**: Membagi data latih dan validasi agar domain induk yang sama tidak bocor ke kedua sisi.
-- **Analogi**: Jika ada satu pelaku membuat 5 URL di `penipu.my.id/bca`, K-Fold biasa akan membocorkan nama domain induk ke ruang ujian. Dengan `StratifiedGroupKFold`, seluruh domain `penipu.my.id` diisolasi di ruang ujian untuk menguji kemampuan menangkal penipu baru (*zero-day generalization*).
+### 1. Hybrid Probabilistic Blender (60:40)
+- **Apa itu?**: Menggabungkan LinearSVC (60%) dan LightGBM (40%) pada probabilitas terkalibrasi.
+- **Analogi**: *"Dokter bedah teks dan detektif metadata yang berduet."* LinearSVC membaca potongan teks URL yang sangat banyak (15.000 kombinasi huruf), sedangkan LightGBM membaca pola usia domain dan registrar. Titik 60:40 terbukti secara matematis meningkatkan Macro-F1 dari 0.57-0.58 menjadi **0.6026**.
 
-### 2. Character N-Gram TF-IDF Stacking
-- **Apa itu?**: Merangkum pola potongan huruf (3–5 karakter) menjadi 1 angka probabilitas padat.
-- **Analogi**: Penipu memanipulasi kata seperti `b-c-a-verif` atau `kl1kbca`. Model linier membaca potongan huruf dan merangkumnya: *"Teks ini 95% bernada phishing"*. Angka 95% inilah yang dimasukkan ke pohon keputusan.
+### 2. Multiclass Platt Scaling
+- **Apa itu?**: Regresi logistik terkalibrasi fold untuk mengonversi margin keputusan LinearSVC menjadi probabilitas sejati.
+- **Analogi**: Mengubah jarak mentah menjadi persentase keyakinan murni $[0, 1]$ yang jumlahnya pas 1.0, sehingga nilainya valid dipakai sistem triase PANDI.
 
-### 3. Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%) Blending (SLSQP)
-- **Apa itu?**: Menggabungkan LightGBM, CatBoost, dan XGBoost menggunakan kalkulus optimasi bobot (SLSQP).
-- **Analogi**: Tiga dokter spesialis siber. CatBoost ahli membaca nama brand, XGBoost ahli membaca entropi numerik, LightGBM super cepat. SLSQP mencari persentase suara paling akurat (47% CatBoost + 53% XGBoost).
+### 3. Cost-Sensitive Bayes Decision Thresholding
+- **Apa itu?**: Menggeser ambang batas vonis ($\arg\max (P_k + \Delta_k)$) agar kelas minoritas tertangkap tanpa merusak kelas mayoritas.
+- **Analogi**: Menyesuaikan kepekaan detektor untuk ancaman langka seperti Fake Shop, dengan kelas mayoritas (judi/phishing) dikunci sebagai jangkar acuan ($\Delta_0 = 0.0$).
 
-### 4. Nested Threshold Optimization ($\tau^*$ Adaptif)
-- **Apa itu?**: Menggeser ambang batas vonis dari 0.50 menjadi titik potong optimal ($\tau^*$) untuk memaksimalkan F1-Score dan Recall.
-- **Analogi**: Satpam bank tidak menunggu sampai 50% tanda bahaya baru bertindak. Cukup melihat indikasi di atas ambang batas optimal (misal: 46%), satpam langsung bersiaga, sehingga 98.0% penjahat tertangkap tanpa salah menangkap nasabah legal.
+### 4. Evidence Guard (Anti-Hallucination Guardrail)
+- **Apa itu?**: Lapisan deterministik berbasis regex yang memverifikasi bukti leksikal nyata sebelum vonis dijatuhkan.
+- **Analogi**: Jaring pengaman agar model tidak salah tuduh—vonis kelas langka hanya boleh diberikan jika bukti nyata (seperti token `shop`/`toko`) benar-benar ada di URL.
 
----
-
-# BAGIAN 3: Struktur 9 Slide PPT, Sitasi Sumber Valid, & Skrip Pembicara
-
----
-
-## SLIDE 1: Judul Solusi & Identitas Tim (Double Blind)
-- **Visual Slide**:
-  - Judul: **TIFIS-ID: Deteksi Phishing Cerdas Domain (.id) Berbasis Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%), Local Brand Intelligence, & Human-in-the-Loop Governance**
-  - Sub-judul: *Decision Support System untuk Mendukung Kedaulatan & Keamanan Registry PANDI*
-  - Identitas: *Peserta Finalis PeDaS 2026 | Aptikom Fest 2026* (Tanpa nama kampus).
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Panduan Teknis & Regulasi PeDaS 2026 (Slide 8 Ketentuan Double Blind), APTIKOM & PANDI, 2026.*
-- **Skrip Pembicara (Durasi: 30 detik)**:
-  > *"Selamat pagi Dewan Juri yang terhormat, perwakilan APTIKOM dan PANDI. Kami mempersembahkan **TIFIS-ID**, sebuah framework deteksi phishing komprehensif yang dirancang sebagai Decision Support System cerdas untuk melindungi ekosistem domain `.id`. Solusi kami mengintegrasikan kecerdasan brand lokal, validasi bebas kebocoran, dan tata kelola Human-in-the-Loop yang siap diterapkan secara nyata di PANDI."*
+### 5. StratifiedGroupKFold & Domain Group Leakage
+- **Apa itu?**: Membagi data evaluasi berdasarkan domain induk (FQDN) agar domain yang sama tidak bocor ke data latih dan data uji.
+- **Analogi**: Memastikan soal ujian tidak bocor dari bahan latihan, membuktikan model mampu menangkal serangan penipu baru (*zero-day generalization*).
 
 ---
 
-## SLIDE 2: Urgensi Masalah & Incident Response Latency di PANDI
-- **Visual Slide**:
-  - Diagram Dilema Operasional PANDI:
-    - *Incident Response Latency Window (Jeda 6–24 Jam)* antara pendaftaran domain, serangan terjadi, hingga laporan masuk.
-    - *False Positive Risk*: Gugatan hukum / kerugian ekonomi bisnis legal.
-    - *False Negative Risk*: Rekening masyarakat terkuras & reputasi `.id` turun di CleanDNS.
-  - Fakta: Maraknya eksploitasi SLD murah (`.my.id`, `.biz.id`) untuk modus APK WhatsApp (Surat Tilang ETLE, Resi Kurir, Undangan Pernikahan).
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Laporan Tahunan Domain Abuse PANDI & IDADX (2024/2025); Laporan Ancaman Siber Sektor Keuangan BSSN (2025); CleanDNS & Anti-Phishing Working Group (APWG) Metrics.*
-- **Skrip Pembicara (Durasi: 55 detik)**:
-  > *"Sebagai pengelola domain nasional, PANDI telah memiliki infrastruktur monitoring hebat melalui portal IDADX dan crawler BIMA AI. Namun, di industri registry domain global, tantangan terbesar adalah Incident Response Latency: ada jeda waktu antara saat domain didaftarkan, serangan diluncurkan, hingga laporan masyarakat masuk ke IDADX. Di Indonesia, pelaku penipuan hanya butuh 3 hingga 6 jam menggunakan domain murah `.my.id` untuk menyebarkan file APK palsu seperti surat tilang ETLE atau undangan pernikahan sebelum domain tersebut dibuang.*  
-  > *Di sisi lain, PANDI menghadapi resiko hukum jika salah memblokir domain sah. Oleh karena itu, kita membutuhkan radar awal di gerbang registrasi yang mampu menekan False Negative hingga mendekati nol, sekaligus menjaga False Positive tetap sangat rendah."*
+# BAGIAN 3: Panduan 10 Slide Master Presentasi & Skrip Pembicara
 
----
+Dokumen ini selaras 100% dengan berkas PowerPoint master: [`docs/TIFIS_ID_PRESENTASI.pptx`](TIFIS_ID_PRESENTASI.pptx) dan naskah [`docs/SLIDE_DECK_DAN_SPEAKER_NOTES.md`](SLIDE_DECK_DAN_SPEAKER_NOTES.md).
 
-## SLIDE 3: Exploratory Data Analysis & Pemetaan Ancaman Siber Indonesia
-- **Visual Slide**:
-  - Pasang **Diagram Bar EDA** dari notebook:
-    - Sebaran Kategori (Legitimate vs Phishing).
-    - Sebaran Sektor Sasaran Serangan (Banking 53%, E-Wallet 30%, Government/ETLE/Bansos 15%, Logistik 2%).
-  - Highlight: 83%+ serangan menargetkan sektor finansial dengan memanfaatkan manipulasi nama brand lokal.
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Data Benchmark Siber Terverifikasi PeDaS 2026; Statistik Tren Penipuan Rekayasa Sosial OJK & Kominfo (2024-2026).*
-- **Skrip Pembicara (Durasi: 50 detik)**:
-  > *"Dari hasil eksplorasi data, lebih dari 83% serangan phishing di domain `.id` menyasar sektor perbankan dan dompet digital nasional. Penyerang mengeksploitasi nama-nama besar seperti BCA, Mandiri, BRI, BNI, dan DANA. Selain itu, temuan terbaru kami mengidentifikasi lonjakan tren phishing berkedok layanan publik seperti surat tilang ETLE kepolisian dan pelacakan resi kurir pengiriman. Temuan ini menegaskan bahwa model deteksi tidak bisa hanya mengandalkan fitur teks bahasa Inggris generik, melainkan wajib ditopang oleh kecerdasan ancaman lokal Indonesia."*
+### SLIDE 1: Judul Solusi & Identitas Tim (Double Blind)
+- **Visual Slide**: Judul **Tifis-ID**, Nama Tim: **TIFIS TIFIS**, Pesta Data Nasional 2026.
+- **Skrip Pembicara (35 detik)**:
+  > *"Selamat pagi Dewan Juri yang terhormat, perwakilan APTIKOM dan PANDI. Kami dari Tim TIFIS TIFIS mempersembahkan Tifis-ID—kerangka kerja AI terpadu untuk deteksi dini dan klasifikasi 9 kategori ancaman siber pada ekosistem domain tingkat tinggi `.id`. Solusi kami dibangun di atas metodologi yang terjelaskan (*explainable*), divalidasi tanpa kebocoran data, dan siap diterapkan sebagai sistem pendukung keputusan di gerbang registrasi PANDI."*
 
----
+### SLIDE 2: Urgensi Masalah & Kerugian Nasional Phishing Domain Murah
+- **Visual Slide**: Eksploitasi SLD murah `.my.id` dan `.biz.id`, 3 modus kejahatan lokal (perbankan, APK malware, judi slot).
+- **Skrip Pembicara (45 detik)**:
+  > *"Domain `.id` adalah simbol kedaulatan internet bangsa kita. Namun, maraknya pendaftaran domain murah tanpa verifikasi ketat—khususnya `.my.id` dan `.biz.id`—telah dimanfaatkan pelaku kejahatan siber untuk menyebarkan malware APK dan phishing perbankan yang menguras tabungan masyarakat. Lebih licik lagi, pelaku menyusupkan tautan ilegal ke dalam direktori institusi pendidikan `.ac.id` dan pemerintahan `.go.id`. Reputasi domain kebanggaan kita dipertaruhkan jika tidak ditindak tegas di detik pertama."*
 
-## SLIDE 4: Arsitektur 52 Fitur & Inovasi Rekayasa Fitur
-- **Visual Slide**:
-  - Diagram 3 Pilar Fitur:
-    1. *Indonesian Brand & Threats Intelligence*: Kamus YAML memetakan 30+ entitas finansial, logistik, dan kepolisian (deteksi combosquatting dan unauthorized brand).
-    2. *Lexical & Structural Dynamics*: Shannon entropy, kedalaman direktori, rasio path, deteksi ekstensi bahaya `.apk`.
-    3. *Character N-Gram Stacking*: Rangkuman probabilitas teks 3-5 gram Out-of-Fold untuk menangkap variasi manipulasi huruf.
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Kintis et al., 'Detecting Combosquatting Attacks at Scale', USENIX Security; Shannon, C.E., 'A Mathematical Theory of Communication' (Entropy).*
-- **Skrip Pembicara (Durasi: 60 detik)**:
-  > *"TIFIS-ID mengonstruksi Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup) terstruktur yang terbagi dalam tiga pilar. Pertama, Indonesian Brand Intelligence: sistem kami memetakan domain resmi seluruh bank nasional, logistik, dan layanan publik untuk langsung mendeteksi unauthorized brand domain dan combosquatting. Kedua, kami menganalisis keacakan karakter Shannon Entropy dan mendeteksi ekstensi berbahaya seperti file APK. Ketiga, inovasi Character N-Gram Stacking: alih-alih meledakkan dimensi sparse yang merusak pohon keputusan, kami melatih model linier secara Out-of-Fold untuk merangkum gaya bahasa penipu menjadi satu fitur probabilitas teks yang padat dan sangat sensitif."*
+### SLIDE 3: Celah Operasional IDADX & BIMA AI Saat Ini
+- **Visual Slide**: Diagram perbandingan: IDADX (Reaktif), BIMA AI (Crawling berkala lambat), TIFIS-ID (Proaktif di gerbang pendaftaran).
+- **Skrip Pembicara (45 detik)**:
+  > *"PANDI saat ini memiliki dua sistem hebat: IDADX dan BIMA AI. Namun secara operasional, IDADX bersifat reaktif—menunggu laporan masyarakat setelah korban tertipu. Sementara BIMA AI membutuhkan waktu lama untuk merayapi jutaan website aktif. Tifis-ID hadir mengisi celah kritis tersebut sebagai 'Radar Gerbang Pendaftaran': menganalisis niat jahat pendaftar dalam hitungan milidetik saat formulir registrasi domain diisi di Registrar, menahan domain sebelum sempat online memakan korban."*
 
----
+### SLIDE 4: Metodologi Riset: 7-Langkah Machine Learning Lifecycle (CRISP-DM)
+- **Visual Slide**: Alur 7 tahap CRISP-DM: Problem Framing $\to$ Data Cleaning $\to$ Feature Engineering $\to$ Hybrid Modeling $\to$ Platt Calibration $\to$ Bayes Threshold $\to$ Deployment.
+- **Skrip Pembicara (45 detik)**:
+  > *"Riset kami tidak dibangun secara instan, melainkan disiplin mengikuti standar industri 7-Langkah Machine Learning Lifecycle: mulai dari perumusan trade-off bisnis PANDI, pembersihan data teks komposit, ekstraksi fitur dual-stream 100% offline, perancangan hybrid blender LinearSVC dan LightGBM, kalibrasi probabilitas Platt, optimasi threshold Bayes, hingga pembuatan runner produksi mandiri."*
 
-## SLIDE 5: Metodologi Validasi Anti-Leakage (Integritas Akademik)
-- **Visual Slide**:
-  - Perbandingan Visual:
-    - ❌ *Random K-Fold (Bocor)*: URL subdomain sama ada di Train dan Test.
-    - ✅ *StratifiedGroupKFold (Kami)*: Dikelompokkan berdasarkan FQDN/Domain Induk.
-  - Scope & Determinisme: `RANDOM_STATE = 42`, Python Murni, Zero Data Leakage.
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Kaufman et al., 'Leakage in Data Mining: Formulation, Detection, and Avoidance', ACM Transactions on KDD; Pedregosa et al., scikit-learn GroupKFold Guidelines.*
-- **Skrip Pembicara (Durasi: 50 detik)**:
-  > *"Di hadapan Dewan Juri Akademisi, kami menegaskan integritas ilmiah pemodelan kami. Banyak peneliti terjebak menggunakan Random K-Fold biasa, di mana subdomain dari penyerang yang sama terpecah ke data latih dan uji—menghasilkan skor tinggi yang palsu akibat data leakage. Framework kami menerapkan StratifiedGroupKFold berbasis domain induk. Saat model dievaluasi, ia benar-benar diuji pada domain yang 100% belum pernah dilihat saat pelatihan, membuktikan kemampuan adaptasi model dalam menangkal serangan zero-day di dunia nyata."*
+### SLIDE 5: Rekayasa Fitur Dual-Stream: N-Gram Sub-Word & Siklus Hidup Domain
+- **Visual Slide**: Stream 1 (15.000 n-gram TF-IDF) dan Stream 2 (56 Fitur Tabular: leksikal, brand perbankan, usia domain, top 15 registrar).
+- **Skrip Pembicara (50 detik)**:
+  > *"Kunci ketajaman Tifis-ID terletak pada arsitektur Dual-Stream Feature Engineering. Stream pertama mengekstrak 15.000 karakter n-gram (3-5 gram) untuk menangkap manipulasi ketikan seperti `kl1kbca` atau `b-c-a-verif`. Stream kedua mengekstrak 56 fitur tabular: usia domain baru pancingan, anomali registrar, rasio angka, dan kamus 30+ brand perbankan lokal. Seluruh fitur diekstraksi secara deterministik 100% offline tanpa perlu koneksi internet."*
 
----
+### SLIDE 6: Arsitektur Utama: Explainable Hybrid Probabilistic Blender
+- **Visual Slide**: Sinergi LinearSVC (60%) + LightGBM (40%) + Platt Scaling + Bayes Thresholds.
+- **Skrip Pembicara (50 detik)**:
+  > *"Model tunggal memiliki kelemahan: Pohon GBDT payah membaca ruang teks sparse, sedangkan Model Linier buta terhadap interaksi usia domain dan registrar. Solusi kami adalah memadukan keduanya: LinearSVC memegang 60% suara untuk membaca teks, dan LightGBM memegang 40% suara untuk membaca metadata. Skor margin SVM dikalibrasi menggunakan Multiclass Platt Scaling menjadi probabilitas murni, lalu disempurnakan oleh pergeseran ambang batas Bayes untuk menyelamatkan kelas minoritas."*
 
-## SLIDE 6: Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%) Blending via SLSQP
-- **Visual Slide**:
-  - Alur Pemodelan: 52 Fitur -> LightGBM + CatBoost + XGBoost -> Optimasi Bobot SLSQP.
-  - Kontribusi Bobot Optimal: CatBoost (46.8%) + XGBoost (53.2%).
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Prokhorenkova et al., 'CatBoost: unbiased boosting with categorical features', NeurIPS; Chen & Guestrin, 'XGBoost: A Scalable Tree Boosting System', ACM KDD.*
-- **Skrip Pembicara (Durasi: 45 detik)**:
-  > *"Untuk klasifikasi, kami memadukan tiga algoritma Gradient Boosting terbaik di dunia: LightGBM, CatBoost, dan XGBoost. Menggunakan optimasi matematis SLSQP pada Out-of-Fold probability, kami menemukan perpaduan bobot optimal: CatBoost unggul dalam mengevaluasi fitur kategorikal brand, sementara XGBoost sangat tajam dalam memproses fitur numerik dan rasio struktural."*
+### SLIDE 7: Hasil Evaluasi Empiris: 5-Fold Macro-F1 & Audit Strict Group-KFold
+- **Visual Slide**: Tabel pemindaian bobot (Puncak 60:40 di Macro-F1 = 0.6026), Generalization Gap 2.95% pada Strict Group-KFold.
+- **Skrip Pembicara (55 detik)**:
+  > *"Secara empiris pada 8.400 data latih resmi, pembobotan 60:40 terbukti sebagai puncak global optimal dengan Macro-F1 0.6026—meningkat +2.07% di atas model tunggal. Lebih penting lagi, pada audit ketat Strict Domain Group-KFold di mana model diuji pada domain yang 100% belum pernah dilihat, skor mencapai 0.5731 dengan gap hanya 2.95%. Ini membuktikan model kami bebas dari penghafalan domain dan memiliki daya generalisasi zero-day yang sangat tangguh."*
 
----
+### SLIDE 8: Inovasi Safety: Evidence Guardrail & Live Demo Inspector
+- **Visual Slide**: Demo terminal `inspect.bat`, alur intervensi Evidence Guard pencegah salah vonis.
+- **Skrip Pembicara (50 detik)**:
+  > *"Keunggulan Tifis-ID bukan hanya akurasi, melainkan keamanannya. Kami memasang Evidence Guard: aturan deterministik yang memastikan vonis kelas langka hanya dijatuhkan jika ada bukti token nyata di URL, mencegah salah vonis pada domain legal. Sistem ini dilengkapi alat inspeksi langsung `inspect.bat` yang mampu mendiagnosis URL apa pun dalam hitungan detik secara transparan."*
 
-## SLIDE 7: The Breakthrough: Threshold Optimization & Hasil Evaluasi
-- **Visual Slide**:
-  - Pasang **Grouped Bar Chart** & **Precision-Recall Curve** dari notebook:
-    - Titik Ambang Batas Optimal $\tau^* = 0.20$.
-  - Tabel Metrik Utama:
-    - **Recall Phishing**: **98.68%** (Menangkap 149 dari 151 phishing!).
-    - **F1-Macro**: **0.9711** | **ROC-AUC**: **0.9887**.
-    - **False Positive Rate**: **0.0492 (< 5%)**.
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Provost & Fawcett, 'Analysis and Interpretation of ROC and PR Curves for Imbalanced Domains', Machine Learning Journal.*
-- **Skrip Pembicara (Durasi: 55 detik)**:
-  > *"Inilah terobosan terbesar kami. Dalam kasus imbalanced data keamanan siber, memakai ambang batas default 0.50 membiarkan banyak phishing lolos. Melalui Nested Threshold Optimization, kami mengalibrasi ambang batas ke tau* terkalibrasi. Hasilnya luar biasa: Recall penangkapan phishing melonjak ke 98.68%, artinya 149 dari 151 serangan berhasil dicegat seketika, sementara angka False Positive tetap terkunci aman di bawah 5%. Inilah titik keseimbangan operasional terbaik untuk PANDI."*
+### SLIDE 9: Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
+- **Visual Slide**: 3 Rekomendasi Operasional: Pre-Delegation Gatekeeper, Otomatisasi Triase IDADX, Whitelist Finansial Terpusat.
+- **Skrip Pembicara (50 detik)**:
+  > *"Sebagai luaran nyata, kami merekomendasikan 3 kebijakan strategis: Pertama, memasang Tifis-ID sebagai filter pra-delegasi pada pendaftaran domain murah `.my.id` dan `.biz.id`. Kedua, otomatisasi triase laporan publik di portal IDADX. Ketiga, pembentukan whitelist finansial terpusat bersama perbankan nasional. Tifis-ID menjadi asisten cerdas bagi analis PANDI dalam kerangka Human-in-the-Loop."*
 
----
-
-## SLIDE 8: Explainable AI & Live Demo Inspector (`tifis_inspect`)
-- **Visual Slide**:
-  - Diagram Batang Horizontal Top Feature Importance:
-    - `is_unauthorized_brand_domain` (53.8%)
-    - `ngram_phish_prob` (18.8%)
-  - Tangkapan layar kartu diagnosis interaktif `tifis_inspect` (Vonis, Skor Resiko, & Rekomendasi).
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Lundberg & Lee, 'A Unified Approach to Interpreting Model Predictions (SHAP)', Advances in Neural Information Processing Systems (NeurIPS).*
-- **Skrip Pembicara (Durasi: 50 detik)**:
-  > *"Model kami bukan black-box. Berdasarkan analisis Explainable AI, keputusan model 53.8% ditentukan oleh pencatutan brand tidak sah dan 18.8% oleh fitur teks N-gram. Untuk membuktikan kesiapan produk, kami melengkapi notebook dengan fungsi interaktif `tifis_inspect`. Hanya dalam 5 milidetik, sistem mampu mengurai URL apa saja yang diuji dewan juri, menampilkan skor probabilitas, sinyal pelanggaran, dan rekomendasi tindakan operasional."*
-
----
-
-## SLIDE 9: Integrasi Strategis Human-in-the-Loop untuk PANDI / IDADX
-- **Visual Slide**:
-  - Alur Integrasi PANDI:
-    - *Layer 1 (Pre-Delegation)*: Cek pendaftaran `.my.id` & `.biz.id` di Registrar API.
-    - *Layer 2 (Automated Triage)*: Triase laporan masuk portal `idadx.id`.
-    - *Layer 3 (Human-in-the-Loop)*: Staf analis PANDI memvalidasi domain di antrean prioritas tinggi.
-  - Penegasan Kepatuhan Regulasi & Link GitHub Repository.
-- **Sitasi / Sumber Valid di Pojok Slide**:
-  - *Ref: Permenkominfo No. 5 Tahun 2020 tentang PSE Lingkup Privat; Registry-Registrar Agreement (RRA) PANDI; BSSN National CSIRT Framework.*
-- **Skrip Pembicara (Durasi: 50 detik)**:
-  > *"Sebagai penutup, TIFIS-ID siap menjadi perisai kedaulatan domain nasional dengan arsitektur Human-in-the-Loop. Kami merekomendasikan integrasi model ini sebagai radar awal saat pendaftaran domain di Registrar API serta sistem triase cerdas di portal IDADX. Model menyaring ribuan domain pendaftaran baru, lalu menyodorkan domain beresiko tinggi ke meja analis manusia PANDI untuk ditindaklanjuti secara akurat dan sah secara hukum.*  
-  > *Kode kami 100% deterministik, open-source di GitHub, dan siap diuji kapan saja. Mari kita wujudkan ruang siber Indonesia yang bersih, aman, dan berdaulat. Terima kasih!"*
+### SLIDE 10: Kesimpulan, Kepatuhan Regulasi, & Integritas Submisi Resmi
+- **Visual Slide**: Verifikasi file submission (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 1.500 baris, 0 NaN), eksekusi ~10.47 detik (<45s SLA), seed terkunci 2026.
+- **Skrip Pembicara (40 detik)**:
+  > *"Sebagai penutup, seluruh submisi resmi kami telah tervalidasi 100% bebas cacat dengan checksum MD5 identik, selesai dieksekusi dalam 10.47 detik—jauh di bawah batas toleransi SLA 45 detik Pasal 12 Juknis. Kode kami bersih, bebas spaghetti, open-source, dan 100% deterministik. Kami siap menjawab pertanyaan Dewan Juri. Terima kasih!"*
 
 ---
 
@@ -191,27 +127,19 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 ### Pertanyaan 1 (Dari Juri PANDI):
 *“Bagaimana jika model Anda salah menuduh domain UKM lokal yang namanya mirip bank (misal: `toko-bca-motor.my.id`) lalu langsung memblokirnya?”*
 - **Jawaban Anda**:
-  > *"Terima kasih atas pertanyaannya, Bapak/Ibu Juri dari PANDI. Pertama, model kami tidak pernah melakukan pemblokiran sepihak secara otonom—sistem kami memegang teguh prinsip Human-in-the-Loop sebagai Decision Support System bagi staf PANDI. Kedua, model kami tidak hanya melihat nama brand, melainkan mengombinasikan Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup): kedalaman direktori, kata kunci formulir kredensial, file APK, dan Shannon entropy. Pada domain UKM biasa, tidak akan ditemukan pola pancingan login bank atau file APK berbahaya. Dengan ambang batas yang terkalibrasi, False Positive Rate kami terbukti sangat rendah (4.92%) untuk melindungi hak berusaha masyarakat."*
+  > *"Terima kasih atas pertanyaannya, Bapak/Ibu Juri dari PANDI. Pertama, sistem kami memegang teguh prinsip Human-in-the-Loop: model tidak memblokir sepihak, melainkan memberi rekomendasi triase bagi analis PANDI. Kedua, sistem kami dilengkapi Evidence Guard: vonis penipuan memerlukan konvergensi bukti ganda—tidak hanya nama brand, tetapi juga pola pancingan login, parameter query, dan riwayat registrar. Pada domain UKM biasa, tidak akan ditemukan kombinasi pancingan tersebut, sehingga terlindungi secara aman."*
 
 ### Pertanyaan 2 (Dari Juri Akademisi APTIKOM):
-*“Apa batasan (scope boundaries) dari model ini? Apakah model ini bisa mendeteksi halaman phishing dinamis yang kontennya baru muncul setelah kita login?”*
+*“Kenapa Anda memilih kombinasi LinearSVC 60% dan LightGBM 40%, bukan model deep learning atau GBDT murni?”*
 - **Jawaban Anda**:
-  > *"Pertanyaan yang sangat esensial. Secara metodologis, kami memetakan batasan model kami secara jelas: TIFIS-ID fokus pada deteksi dini di tingkat URL leksikal, brand intelligence, dan metadata pendaftaran (Pre-delegation & First-line Triage). Untuk konten dinamis yang tersembunyi di balik login berlapis, itu berada di luar lingkup inspeksi instan 5 milidetik kami dan diserahkan kepada subsistem perayap mendalam berkala seperti BIMA AI milik PANDI. Pembagian tugas ini memastikan sistem kami sangat ringan dan dapat dipasang di gerbang registrasi tanpa membebani server PANDI."*
+  > *"Pertanyaan yang sangat tajam. Berdasarkan pengujian empiris 5-Fold Cross-Validation pada 8.400 data resmi, model pohon GBDT murni hanya mencapai F1 0.5819 karena pohon keputusan kesulitan memproses 15.000 fitur sparse n-gram teks. Sebaliknya, LinearSVC sangat kuat pada n-gram teks tetapi buta pada interaksi non-linear usia domain dan registrar (F1 0.5749). Ketika keduanya digabungkan dengan rasio 60:40 dan dikalibrasi via Platt Scaling, keduanya saling menutupi titik buta dan mendongkrak Macro-F1 ke puncak 0.6026 (+2.07% gain). Selain itu, hybrid model ini selesai dilatih dan diinferensi hanya dalam 10.47 detik, 100% patuh pada SLA <45 detik kompetisi."*
 
 ### Pertanyaan 3 (Dari Juri Panitia):
 *“Bagaimana Anda menjamin bahwa hasil di Google Colab dan GitHub Anda akan identik saat kami uji ulang?”*
 - **Jawaban Anda**:
-  > *"Kami mengunci seluruh seed acak pada `RANDOM_STATE = 42` di seluruh split StratifiedGroupKFold, LightGBM, CatBoost, dan XGBoost. Sel 1 dan 2 pada notebook kami di GitHub telah dilengkapi sistem auto-clone dan defensive path resolution otomatis. Dewan juri cukup menekan satu tombol 'Run All' di Google Colab, dan seluruh grafik, metrik F1-Score 0.6026 (Macro-F1 9 Kategori), dan kurva PR akan muncul dengan nilai yang persis sama hingga desimal terakhir."*
+  > *"Kami mengunci seluruh seed acak pada `RANDOM_STATE = 2026` di seluruh pemodelan, LinearSVC, LightGBM, dan pemisahan lipatan. Berkas submission resmi kami di GitHub memiliki checksum MD5 permanen `ebd39c0c00675b8cae481251b6da23e5`. Dewan juri cukup menekan tombol 'Run All' di Google Colab atau menjalankan `run.bat` di terminal lokal, dan seluruh tabel, grafik, serta hasil submisi akan tergenerasi secara persis hingga karakter terakhir."*
 
-### Pertanyaan 4 (Dari Juri Akademisi APTIKOM / Software Engineer):
-*“Bisa jelaskan alur kerja metodologis (Machine Learning Lifecycle) yang Anda terapkan dalam riset ini dari hulu ke hilir?”*
+### Pertanyaan 4 (Dari Juri Akademisi APTIKOM):
+*“Bagaimana model Anda mengatasi ketimpangan kelas ekstrem di dataset PANDI, di mana judi ada 5.447 sampel sedangkan fakeshop hanya ada 5 sampel?”*
 - **Jawaban Anda**:
-  > *"Terima kasih atas pertanyaannya. Riset TIFIS-ID dirancang secara disiplin mengikuti kerangka standar 7-Langkah Machine Learning Lifecycle (CRISP-DM Compliant):*
-  > *1. **Problem Framing**: Memetakan trade-off bisnis PANDI antara False Positive (resiko komplain hukum) vs False Negative (resiko rekening korban jebol), dan menetapkan metrik objektif F1-Macro & Recall.*
-  > *2. **Data Sourcing**: Mengumpulkan data benchmark representatif 212 URL kasus nyata Indonesia dan menyiapkan slot pipeline data resmi.*
-  > *3. **Data Preprocessing & Cleaning**: Normalisasi format skema URL, penanganan format korup, dan audit keabsahan label domain bank resmi.*
-  > *4. **EDA & Feature Engineering**: Mengekstrak Dual-Stream (15.000 N-Gram + 56 Fitur Siklus Hidup) komprehensif (Leksikal, Brand Spoofing lokal, Shannon Entropy, dan Char N-Gram Stacking).*
-  > *5. **Model Development**: Melatih 3 model Multi-GBDT (LightGBM, CatBoost, XGBoost) menggunakan validasi anti-bocor StratifiedGroupKFold dan penggabungan bobot optimal SLSQP.*
-  > *6. **Model Evaluation & Tuning**: Validasi mendalam via Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis tau*.*
-  > *7. **Deployment & Decision Support**: Menyediakan modul interaktif tifis_inspect untuk IDADX, generator submission otomatis, serta rekomendasi kebijakan Pre-delegation Gatekeeper untuk PANDI."*
-
+  > *"Jika menggunakan aturan keputusan argmax standar, model secara matematis akan selalu menebak kelas mayoritas dan memusnahkan kelas minoritas (Recall fakeshop menjadi 0%). Solusi metodologis kami adalah menerapkan Teori Keputusan Bayes melalui Cost-Sensitive Decision Thresholding: kami menggeser ambang batas vonis ($\arg\max (P_k + \Delta_k)$) terisolasi strictly di dalam training fold, dengan kelas mayoritas dikunci sebagai jangkar acuan ($\Delta_0 = 0.0$). Pendekatan ini dipadukan dengan Evidence Guard agar pergeseran batas tersebut tidak memicu lonjakan false positive."*
