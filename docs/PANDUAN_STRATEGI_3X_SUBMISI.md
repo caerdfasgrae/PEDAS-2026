@@ -14,6 +14,7 @@
 4. [Tabel Komparasi Strategis 3 Berkas Submisi](#4-tabel-komparasi-strategis-3-berkas-submisi)
 5. [SOP & Rencana Taktis Eksekusi di Hari Penjurian](#5-sop--rencana-taktis-eksekusi-di-hari-penjurian)
 6. [Audit Tata Kelola Berkas Git & Repositori Bersih](#6-audit-tata-kelola-berkas-git--repositori-bersih)
+7. [Catatan Audit Saintifik, Temuan ML Tanpa Batas Waktu, & Keputusan Submisi 1](#7-catatan-audit-saintifik-temuan-ml-tanpa-batas-waktu--keputusan-submisi-1)
 
 ---
 
@@ -138,3 +139,34 @@ Untuk menjaga integritas rekayasa perangkat lunak (*software engineering governa
 3. **Cache & Temporary Files**: `catboost_info/`, `.pytest_cache/`, `__pycache__/`, `*.log`, `tmp/`, `~$*.pptx`.
 4. **Instruksi Agen Internal / Rahasia Tim**: `.hermes/` (disembunyikan dari repositori publik).
 5. **PDF Buku Materi**: `*.pdf` (ukurannya besar dan tidak diperlukan untuk kompilasi model).
+
+---
+
+## 7. Catatan Audit Saintifik, Temuan ML Tanpa Batas Waktu, & Keputusan Submisi 1
+
+### A. Koreksi Faktual Terhadap Batasan Waktu 45 Detik
+Setelah penelusuran dokumen asli [`Juknis_Penyisihan_PeDaS_2026.docx`](../archive/scratch/taufiksutanto_pedas_repo/docs/Juknis_Penyisihan_PeDaS_2026.docx) Bab 12:
+* **Fakta**: Panitia **TIDAK PERNAH** menuliskan klausul aturan *"SLA running pipeline < 45 detik"*.
+* Persyaratan resmi Bab 12 hanya menuntut: kode Python/notebook dapat dijalankan berurutan (*reproducible*), langkah-langkah jelas, dan kebutuhan komputasinya wajar (*reasonable compute*).
+* Munculnya angka "45 detik" di dokumen awal adalah kesalahan atribusi teks internal dari target efisiensi demonstrasi live CLI runner dan alokasi waktu bicara slide presentasi tim.
+
+### B. Keputusan Tegas untuk Submisi 1 (The Golden Anchor)
+Meskipun batasan waktu semu telah dicabut, **Submisi 1 (`official/submission_TIFIS_TIFIS.csv`) TETAP DIKUNCI DAN DIPERTAHANKAN APA ADANYA**.
+* **Alasan Portofolio**: Submisi 1 adalah "Lantai Pengaman" (*Safety Floor*). Model hibrida (LinearSVC 60% + LightGBM 40%) menjamin presisi 98% pada kelas mayoritas (judi dan phishing) dengan akurasi OOF 96,64% dan generalization gap hanya 2,95%.
+* **Alasan Diagnostik**: Skor Submisi 1 menjadi *ground-truth benchmark* tim di papan peringkat. Mengubahnya dengan model eksperimen spekulatif akan menghilangkan titik jangkar diagnostik tim.
+
+### C. Rangkuman Temuan ML Lanjutan (/ml-best-practices)
+Jika komputasi penuh (5–30 menit) dieksplorasi untuk iterasi Submisi 2/3 atau Babak Final:
+1. **5 Peluang Emas Nyata**:
+   - **Multi-Seed Bagging Ensemble (50 Model)**: 10 seeds x 5-fold CV mereduksi varians estimasi probabilitas kelas minoritas.
+   - **CatBoost Native Text (1.000 Iterasi)**: Mengaktifkan `text_features=['composite_text']` untuk interaksi non-linear teks-tabular sejati.
+   - **Constrained Convex Blending (SLSQP)**: Optimasi bobot per-kelas pada Dirichlet simplex tanpa jebakan multikolinearitas.
+   - **Heavy Structural URI Parsing**: Entropi Shannon per segmen path, rasio vokal-konsonan, dan kedalaman direktori.
+   - **Transductive Pseudo-Labeling ($P \ge 0.99$)**: Adaptasi domain registrar/SLD baru pada data uji panitia.
+2. **5 Jebakan Berbahaya yang Tetap Harus Dihindari**:
+   - ❌ **Deep Transformers (IndoBERT)**: Gradient starvation pada rasio 5.447 vs 1 dan penghafalan noise token URL.
+   - ❌ **TruncatedSVD + GBDT**: Terbukti empiris menjatuhkan Macro-F1 ke 0.5700 (-3,26%) karena melenyapkan token langka.
+   - ❌ **Stacking Logistic Regression**: Terbukti empiris menjatuhkan Macro-F1 ke 0.5620 (-4,06%) akibat multikolinearitas.
+   - ❌ **SMOTE Sintetis**: Menciptakan domain *chimera* tidak logis yang memicu False Positive masif.
+   - ❌ **Threshold Bebas pada Kelas N=1**: Berisiko fatal $F1 = 0,00$ jika data uji panitia tidak memiliki sampel kelas terkait.
+

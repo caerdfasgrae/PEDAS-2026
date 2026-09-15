@@ -5,7 +5,7 @@ PANDI x APTIKOM Hackathon - Operational Domain Threat Classification Pipeline.
 Deterministic, leak-free, explainable hybrid probabilistic blender (LinearSVC + LightGBM)
 with cost-sensitive Bayes decision thresholding and evidence guard.
 
-Designed for instant live evaluation in Babak Final (Juknis Pasal 12: < 45 seconds).
+Designed for instant live evaluation in Babak Final (Juknis Bab 12: Fast & Reproducible Compute).
 
 Usage:
     python run_pedas_pipeline.py --train official/training.csv --predict official/predict.csv --output official/submission_final.csv

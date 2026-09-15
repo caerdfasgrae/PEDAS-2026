@@ -116,9 +116,9 @@ Dokumen ini selaras 100% dengan berkas PowerPoint master: [`docs/TIFIS_ID_PRESEN
   > *"Sebagai luaran nyata, kami merekomendasikan 3 kebijakan strategis: Pertama, memasang Tifis-ID sebagai filter pra-delegasi pada pendaftaran domain murah `.my.id` dan `.biz.id`. Kedua, otomatisasi triase laporan publik di portal IDADX. Ketiga, pembentukan whitelist finansial terpusat bersama perbankan nasional. Tifis-ID menjadi asisten cerdas bagi analis PANDI dalam kerangka Human-in-the-Loop."*
 
 ### SLIDE 10: Kesimpulan, Kepatuhan Regulasi, & Integritas Submisi Resmi
-- **Visual Slide**: Verifikasi file submission (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 1.500 baris, 0 NaN), eksekusi ~10.47 detik (<45s SLA), seed terkunci 2026.
+- **Visual Slide**: Verifikasi file submission (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 1.500 baris, 0 NaN), eksekusi instan ~10.47 detik (memenuhi kesiapan komputasi Bab 12 Juknis), seed terkunci 2026.
 - **Skrip Pembicara (40 detik)**:
-  > *"Sebagai penutup, seluruh submisi resmi kami telah tervalidasi 100% bebas cacat dengan checksum MD5 identik, selesai dieksekusi dalam 10.47 detik—jauh di bawah batas toleransi SLA 45 detik Pasal 12 Juknis. Kode kami bersih, bebas spaghetti, open-source, dan 100% deterministik. Kami siap menjawab pertanyaan Dewan Juri. Terima kasih!"*
+  > *"Sebagai penutup, seluruh submisi resmi kami telah tervalidasi 100% bebas cacat dengan checksum MD5 identik, selesai dieksekusi dalam ~10 detik di laptop standar—memenuhi seluruh kriteria kesiapan komputasi Bab 12 Juknis. Kode kami bersih, bebas spaghetti, open-source, dan 100% deterministik. Kami siap menjawab pertanyaan Dewan Juri. Terima kasih!"*
 
 ---
 
@@ -132,7 +132,7 @@ Dokumen ini selaras 100% dengan berkas PowerPoint master: [`docs/TIFIS_ID_PRESEN
 ### Pertanyaan 2 (Dari Juri Akademisi APTIKOM):
 *“Kenapa Anda memilih kombinasi LinearSVC 60% dan LightGBM 40%, bukan model deep learning atau GBDT murni?”*
 - **Jawaban Anda**:
-  > *"Pertanyaan yang sangat tajam. Berdasarkan pengujian empiris 5-Fold Cross-Validation pada 8.400 data resmi, model pohon GBDT murni hanya mencapai F1 0.5819 karena pohon keputusan kesulitan memproses 15.000 fitur sparse n-gram teks. Sebaliknya, LinearSVC sangat kuat pada n-gram teks tetapi buta pada interaksi non-linear usia domain dan registrar (F1 0.5749). Ketika keduanya digabungkan dengan rasio 60:40 dan dikalibrasi via Platt Scaling, keduanya saling menutupi titik buta dan mendongkrak Macro-F1 ke puncak 0.6026 (+2.07% gain). Selain itu, hybrid model ini selesai dilatih dan diinferensi hanya dalam 10.47 detik, 100% patuh pada SLA <45 detik kompetisi."*
+  > *"Pertanyaan yang sangat tajam. Berdasarkan pengujian empiris 5-Fold Cross-Validation pada 8.400 data resmi, model pohon GBDT murni hanya mencapai F1 0.5819 karena pohon keputusan kesulitan memproses 15.000 fitur sparse n-gram teks. Sebaliknya, LinearSVC sangat kuat pada n-gram teks tetapi buta pada interaksi non-linear usia domain dan registrar (F1 0.5749). Ketika keduanya digabungkan dengan rasio 60:40 dan dikalibrasi via Platt Scaling, keduanya saling menutupi titik buta dan mendongkrak Macro-F1 ke puncak 0.6026 (+2.07% gain). Selain itu, hybrid model ini selesai dilatih dan diinferensi hanya dalam 10.47 detik, membuktikan kesiapan komputasi yang sangat efisien dan ringan sesuai Bab 12 Juknis."*
 
 ### Pertanyaan 3 (Dari Juri Panitia):
 *“Bagaimana Anda menjamin bahwa hasil di Google Colab dan GitHub Anda akan identik saat kami uji ulang?”*

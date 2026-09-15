@@ -80,7 +80,7 @@ Model kita bertindak sebagai **Pre-Delegation & First-Line Triage Gatekeeper**:
 ### Kriteria Penilaian Utama:
 1. **Kebenaran & Kualitas Prediksi (Macro-F1 Score)**: Bobot nilai terbesar. Menilai keseimbangan deteksi pada seluruh 9 kategori ancaman.
 2. **Ketahanan Generalisasi (Anti-Leakage)**: Menguji apakah model mampu mendeteksi domain baru yang belum pernah muncul di data latih (*unseen zero-day domains*).
-3. **Efisiensi Komputasi (SLA Pasal 12 Juknis)**: Waktu inferensi wajib di bawah 45 detik di mesin lokal biasa.
+3. **Efisiensi Komputasi (Kesiapan Bab 12 Juknis)**: Beban komputasi ringan dan dapat dieksekusi instan di laptop biasa tanpa GPU.
 4. **Presentasi & Nilai Strategis Kebijakan (*Best Analysis*)**: Kejelasan penyampaian alur rekayasa dan rekomendasi operasional untuk PANDI.
 
 ---
@@ -139,7 +139,7 @@ Seluruh keputusan arsitektur TIFIS-ID dirumuskan secara bertahap dan teruji (*ev
 * **Akurasi Riil Out-of-Fold (OOF)**: **`96.64%`** (8.118 dari 8.400 baris terprediksi tepat).
 * **Stratified 5-Fold CV Macro-F1 (OOF)**: **`0.6026`** (Puncak optimal bobot 60:40).
 * **Strict Domain Group-KFold (100% Unseen Domains)**: **`0.5731`** (Generalization gap hanya **2.95%**, membuktikan model bebas memorisasi domain).
-* **Kecepatan Inferensi**: **~10.47 detik** untuk seluruh 8.400 data latih + 1.500 data uji (SLA Juknis Pasal 12: < 45 detik).
+* **Kecepatan Inferensi**: **~10.47 detik** untuk seluruh 8.400 data latih + 1.500 data uji (Memenuhi kesiapan komputasi wajar Bab 12 Juknis).
 * **Integritas Submisi**: 1.500 baris tervalidasi bebas cacat (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 100% lolos verifikasi evaluator resmi PANDI).
 * **Determinisme Penuh**: Random seed terkunci permanen pada `RANDOM_STATE = 2026`.
 

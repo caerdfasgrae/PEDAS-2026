@@ -16,7 +16,7 @@
 > **Berkas Submission Final**: [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv)  
 > **Checksum MD5**: `ebd39c0c00675b8cae481251b6da23e5` (1.500 baris tervalidasi bebas cacat / Zero-Defect).  
 > **Evaluator Resmi PANDI**: `1500 valid, 0 invalid` (Lolos verifikasi format panitia).  
-> **Babak Final Live CLI Runner**: [`run_pedas_pipeline.py`](run_pedas_pipeline.py) (Waktu eksekusi: **~10,47 detik** di mesin lokal, SLA Juknis Pasal 12: < 45 detik).  
+> **Babak Final Live CLI Runner**: [`run_pedas_pipeline.py`](run_pedas_pipeline.py) (Waktu eksekusi: **~10,47 detik** di mesin lokal, memenuhi syarat kesiapan komputasi wajar Bab 12 Juknis).  
 > **Arsitektur Utama**: *Explainable Hybrid Probabilistic Blender* (LinearSVC Character N-Grams 60% + LightGBM Domain Lifecycle 40% + Multiclass Platt Scaling + Bayes Thresholds + Evidence Guard).
 
 ### Cara Menjalankan Pipeline Babak Final (1-Klik)

@@ -132,7 +132,7 @@
   - Kotak Metrik Produksi & Audit Generalisasi:
     - *Akurasi Riil Out-of-Fold (OOF)*: **`96.64%`** (8.118 dari 8.400 baris tepat).
     - *Skor pada 100% Unseen Domains (Strict Group-KFold)*: **`0.5731`** (Generalization Gap hanya **`2.95%`**, membuktikan model bebas memorisasi domain).
-    - *Kecepatan Inferensi Penuh*: **10.47 Detik** (Jauh melampaui SLA Juknis PeDaS < 45 Detik).
+    - *Kecepatan Inferensi Penuh*: **10.47 Detik** (Ringan & efisien, memenuhi kesiapan komputasi Bab 12 Juknis).
 * **Sitasi / Sumber Valid**:
   - *Ref: Repositori Resmi Workshop PeDaS 2026 (taufiksutanto/PeDaS-2026 Sesi 2); Hasil Evaluasi CV dan Stress-Test Group-KFold Repositori TIFIS-ID.*
 * **Naskah Pembicara (Speaker Script)**:
