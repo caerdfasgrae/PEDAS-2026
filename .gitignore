@@ -36,7 +36,9 @@ logs/
 *.log
 catboost_info/
 scratch/
+archive/scratch/
 tmp/
+~$*.pptx
 
 # Internal Agent Instructions & Competition Slides
 .hermes/

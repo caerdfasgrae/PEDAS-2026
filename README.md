@@ -1,46 +1,62 @@
-# TIFIS-ID: Deteksi Phishing Cerdas Domain (.id)
+# TIFIS-ID: Deteksi & Klasifikasi Ancaman Domain (.id)
 > **Pesta Data Nasional (PeDaS 2026) | APTIKOM Fest 2026 x PANDI**  
-> *Sistem Deteksi Phishing Berbasis Multi-GBDT Ensemble, Local Brand Intelligence, & Anti-Leakage Validation untuk Kedaulatan Internet Indonesia*
+> *Sistem Klasifikasi 9 Kategori Ancaman Domain Cerdas Berbasis Explainable Hybrid Probabilistic Blender, Brand Intelligence, & Zero-Leakage Validation*  
+> **Identitas Tim**: Tim TIFIS TIFIS (100% Netral Double-Blind)
 
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb)
-[![Dataset](https://img.shields.io/badge/Dataset-Verified%20Benchmark-success.svg)](data/benchmark/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/02_tifis_id_official_pipeline.ipynb)
+[![Dataset](https://img.shields.io/badge/Dataset-Official%20PANDI%208400-success.svg)](official/)
 [![Validation](https://img.shields.io/badge/Validation-StratifiedGroupKFold-orange.svg)](#-5-metodologi-validasi-bebas-kebocoran-anti-leakage)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-## 🎯 PeDaS 2026: Official Hackathon Submission & 1-Click Live CLI
+## 🎯 PeDaS 2026: Official Submission & 1-Click Live CLI
 
-> **Golden Submission**: [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv) (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 1.500 baris tervalidasi bebas cacat).  
-> **Babak Final Live CLI Runner**: [`run_pedas_pipeline.py`](run_pedas_pipeline.py) (Waktu eksekusi: **12,43 detik** di mesin lokal biasa, SLA Juknis Pasal 12: < 45 detik).  
+> **Berkas Submission Final**: [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv)  
+> **Checksum MD5**: `ebd39c0c00675b8cae481251b6da23e5` (1.500 baris tervalidasi bebas cacat / Zero-Defect).  
+> **Evaluator Resmi PANDI**: `1500 valid, 0 invalid` (Lolos verifikasi format panitia).  
+> **Babak Final Live CLI Runner**: [`run_pedas_pipeline.py`](run_pedas_pipeline.py) (Waktu eksekusi: **~10,47 detik** di mesin lokal, SLA Juknis Pasal 12: < 45 detik).  
 > **Arsitektur Utama**: *Explainable Hybrid Probabilistic Blender* (LinearSVC Character N-Grams 60% + LightGBM Domain Lifecycle 40% + Multiclass Platt Scaling + Bayes Thresholds + Evidence Guard).
 
 ### Cara Menjalankan Pipeline Babak Final (1-Klik)
 ```powershell
-python run_pedas_pipeline.py --train official/training.csv --predict official/predict.csv --output official/submission_final.csv
+# Jalankan runner CLI resmi
+python run_pedas_pipeline.py --train official/training.csv --predict official/predict.csv --output official/submission_TIFIS_TIFIS.csv
+
+# Atau gunakan pintasan 1-klik Windows
+.\run.bat
 ```
 
 ### Ringkasan Hasil Validasi & Benchmark Resmi
-- **Stratified 5-Fold CV Macro-F1**: **`0.6026`**
+- **Stratified 5-Fold CV Macro-F1 (OOF)**: **`0.6026`** (Puncak optimal bobot 60:40)
 - **Strict Domain Group-KFold (100% Unseen Domains)**: **`0.5731`**
 - **Generalization Gap**: **`2.95%`** (Terkontrol aman di bawah ambang batas 3.0%, membuktikan model bebas memorisasi domain).
-- **Test Suite Status**: **28 Unit Tests Passed (15.31s)** (`pytest -o pythonpath=. tests/`).
+- **Test Suite Status**: **21 Unit Tests Passed (13.56s)** (`pytest tests/`).
 
 ---
 
-## 🏆 Ringkasan Eksekutif & Hasil Tolok Ukur (Benchmark Highlights)
+## 🏆 Ringkasan Eksekutif & Hasil Tolok Ukur
 
-**TIFIS-ID** dirancang untuk menjawab tantangan nyata **PANDI** (Pengelola Nama Domain Internet Indonesia) dalam menanggulangi maraknya kejahatan siber berbasis domain `.id`, khususnya eksploitasi Second-Level Domain (SLD) murah seperti `.my.id` dan `.biz.id` untuk phishing perbankan, penipuan dompet digital, dan pancingan malware APK WhatsApp.
+**TIFIS-ID** dirancang untuk menjawab tantangan nyata **PANDI** (Pengelola Nama Domain Internet Indonesia) dalam menanggulangi maraknya kejahatan siber berbasis domain `.id`, khususnya eksploitasi Second-Level Domain (SLD) murah seperti `.my.id` dan `.biz.id` untuk phishing perbankan, penipuan dompet digital, judi online, dan pancingan malware APK.
 
-| Metrik Evaluasi | Model Baseline (Default $\tau=0.50$) | **TIFIS-ID (Optimal $\tau^*=0.20$)** | Peningkatan (*Gain*) | Target Industri PANDI |
-|---|---|---|---|---|
-| **Recall (Tingkat Tangkap Phishing)** | 0.9735 (97.35%) | **0.9868 (98.68%)** | **+1.33%** | Membabat False Negative ✅ |
-| **F1-Macro Score** | 0.9599 | **0.9711** | **+0.0112** | Keseimbangan Deteksi ✅ |
-| **F1-Binary Score** | 0.9767 | **0.9835** | **+0.0068** | Presisi Target Kelas Phishing ✅ |
-| **False Positive Rate (FPR)** | 0.0492 (4.92%) | **0.0492 (4.92%)** | **Terkontrol Stabil** | Melindungi Domain Sah (< 5%) ✅ |
-| **ROC-AUC** | 0.9887 | **0.9887** | **Sangat Sempurna** | Daya Pisah Ekstrem ✅ |
-| **Kecepatan Inferensi** | - | **~5.2 ms / domain** | **Real-Time Ready** | Siap Pasang di Gateway PANDI ✅ |
+```
+=================================================================
+  PEMINDAIAN BOBOT ENSEMBLE (5-FOLD CV OOF PADA 8.400 DATA LATIH)
+=================================================================
+  Bobot LinearSVC    | Bobot LightGBM     | Macro-F1 OOF    | Keterangan
+  ---------------------------------------------------------------
+         0.0         |        1.0         |     0.5819      | (Pure LightGBM)
+         0.2         |        0.8         |     0.5849      |
+         0.4         |        0.6         |     0.5905      |
+         0.6         |        0.4         |     0.6026      | <-- TIFIS-ID (PUNCAK OPTIMAL)
+         0.8         |        0.2         |     0.5761      |
+         1.0         |        0.0         |     0.5749      | (Pure LinearSVC)
+=================================================================
+```
+
+* **Dua Dunia Saling Melengkapi**: Model linier (`LinearSVC`) unggul membaca ruang n-gram teks berdimensi tinggi (15.000 fitur sub-kata), sedangkan pohon keputusan (`LightGBM`) unggul membaca interaksi non-linear fitur tabular terstruktur (56 fitur leksikal, usia domain, pola registrar).
+* **Sinergi 60:40**: Menggabungkan keduanya menghasilkan peningkatan performa dari 0.57-0.58 menjadi **0.6026** (+2.07% di atas model tunggal).
 
 ---
 
@@ -50,12 +66,12 @@ Sebagai *Registry* penanggung jawab kedaulatan domain `.id`, PANDI mengelola jut
 
 ### Dilema Nyata Operasional PANDI:
 - **Resiko *False Positive* (Salah Tuduh)**: Jika sistem filter terlalu agresif memblokir situs, pelaku usaha legal atau instansi publik bisa salah divonis dan diblokir, memicu kerugian ekonomi dan gugatan hukum terhadap PANDI.
-- **Resiko *False Negative* (Phishing Lolos)**: Jika sistem terlalu longgar, masyarakat menjadi korban pencurian kredensial rekening bank / OTP, dan reputasi domain `.id` tercemar di lembaga pemantau global (CleanDNS & APWG).
+- **Resiko *False Negative* (Ancaman Lolos)**: Jika sistem terlalu longgar, masyarakat menjadi korban pencurian kredensial rekening bank / OTP, dan reputasi domain `.id` tercemar di lembaga pemantau global (CleanDNS & APWG).
 
-### Modus Operandi Phishing di Ekosistem (.id):
-1. **Brand Combosquatting & Typosquatting**: Menggabungkan nama bank nasional (BCA, BRI, Mandiri, BNI) atau fintech (DANA, GoPay, OVO) ke dalam domain pihak ketiga (contoh: `bca-secure-login.id` atau `dana-kaget-saldo-150rb.biz.id`).
-2. **Pancingan APK Malware Berkedok Layanan Publik**: Menggunakan domain `.my.id` untuk menyebarkan file `.apk` penyadap SMS berkedok surat undangan pernikahan, resi kurir paket, atau surat tilang ETLE kepolisian.
-3. **Compromised Web Injections**: Menyusupkan tautan phishing ke dalam direktori website legal `.ac.id` atau `.go.id` yang memiliki kerentanan CMS.
+### Modus Operandi Ancaman di Ekosistem (.id):
+1. **Pencatutan Bank & Fintech (Combo-Squatting)**: Menggabungkan nama bank nasional (BCA, BRI, Mandiri, BNI) atau fintech (DANA, GoPay, OVO) ke dalam domain pihak ketiga (contoh: `bca-klik-layanan.my.id`).
+2. **Judi Online & Defacement**: Injeksi massal direktori judi pada website institusi atau penggunaan domain acak.
+3. **Pancingan APK Malware Berkedok Layanan Publik**: Menggunakan domain `.biz.id` untuk menyebarkan file `.apk` penyadap SMS berkedok surat undangan pernikahan atau surat tilang ETLE kepolisian.
 
 ---
 
@@ -63,190 +79,148 @@ Sebagai *Registry* penanggung jawab kedaulatan domain `.id`, PANDI mengelola jut
 
 ```mermaid
 flowchart TD
-    A["Raw Domain / URL Input (.id)"] --> B["Multi-Layer Feature Engineering"]
+    A["Raw Domain + Metadata Input"] --> B["src/cleaner.py<br/>URL Normalization & Composite Text Synthesis"]
     
-    subgraph FE ["Ekstraksi 52 Fitur Diskriminatif"]
-        B --> B1["Indonesian Brand Spoofing Detector (Kamus YAML)"]
-        B --> B2["Lexical & Structural Dynamics (Entropy, Path Depth, APK)"]
-        B --> B3["Character N-Gram Stacking (TF-IDF 3-5 Gram OOF Prob)"]
+    subgraph FE ["Ekstraksi Fitur Dual-Stream (src/pedas_features.py)"]
+        B --> B1["Stream 1: 56 Tabular Engineered Features<br/>(Lexical, Entropy, Registrar One-Hot, Age, Brand Flags)"]
+        B --> B2["Stream 2: 15.000 Character N-Grams<br/>(TF-IDF Sub-Word 3-5 N-Grams)"]
     end
     
-    FE --> C["Anti-Leakage Validation: StratifiedGroupKFold"]
-    
-    subgraph Modeling ["Multi-GBDT Ensemble Blending"]
-        C --> M1["LightGBM Classifier"]
-        C --> M2["CatBoost Classifier (Kategorikal & Brand)"]
-        C --> M3["XGBoost Classifier (Numerik & Entropi)"]
-        M1 & M2 & M3 --> D["SLSQP Bounded Weight Optimization"]
+    subgraph Blender ["Explainable Hybrid Probabilistic Blender (src/models/)"]
+        B1 --> M1["LightGBM Classifier (Tabular Non-Linear)"]
+        B2 --> M2["LinearSVC Classifier (Sparse High-Dimensional Text)"]
+        M2 --> CAL["Multiclass Platt Scaling (Calibrator)"]
+        M1 & CAL --> COMB["Weighted Probability Blending (60% SVC + 40% LGB)"]
     end
     
-    D --> E["Calibrated Probabilities"]
-    E --> F["Nested Threshold Calibration (tau* Terkalibrasi Dinamis)"]
-    
-    subgraph Decision ["Keputusan & Dampak Industri"]
-        F --> G1["Vonis: PHISHING (Peringatan & Takedown IDADX)"]
-        F --> G2["Vonis: AMAN (Delegasi DNS Normal)"]
+    subgraph DecisionEngine ["Decision & Safety Net"]
+        COMB --> THRESH["Cost-Sensitive Bayes Threshold Optimizer"]
+        THRESH --> GUARD["Evidence Guard (Anti-Hallucination Guardrail)"]
+        GUARD --> OUT["Final Validated Prediction<br/>(official/submission_TIFIS_TIFIS.csv)"]
     end
 ```
 
-### 2.1 Metodologi 7-Langkah Machine Learning Lifecycle (Standar Industri & CRISP-DM)
+### 2.1 Metodologi 7-Langkah Machine Learning Lifecycle (CRISP-DM Standard)
 
 Framework **TIFIS-ID** dibangun di atas kerangka metodologi siklus hidup *machine learning* 7 langkah yang terstruktur, disiplin, dan dapat direproduksi (*fully reproducible*):
 
 | No | Tahapan ML Lifecycle | Implementasi Nyata pada TIFIS-ID | Lokasi Modul / Bukti |
 |:---:|---|---|---|
-| **1** | **Problem Definition & Framing** | Merumuskan dilema operasional PANDI (*False Positive* vs *False Negative*), menetapkan batasan scope, dan memilih metrik penentu: **F1-Macro & Recall**. | [`README.md`](#1-urgensi-masalah--studi-kasus-pandi), Slide 2 PPT |
-| **2** | **Data Collection & Ingestion** | Mengumpulkan 212 URL kasus phishing Indonesia (BCA, BRI, PLN, Tilang ETLE, APK WhatsApp) dan menyiapkan slot otomatisasi data resmi PANDI. | [`data/benchmark/`](data/benchmark/), [`data/raw/`](data/raw/) |
-| **3** | **Data Preprocessing & Cleaning** | Normalisasi skema URL, penanganan format korup, deduplikasi domain induk, dan audit keabsahan label situs perbankan resmi. | [`src/features/lexical.py`](src/features/lexical.py) |
-| **4** | **EDA & Feature Engineering** | Analisis sebaran sektor dan perekayasaan **52 fitur komprehensif** (Leksikal, Brand Spoofing, Entropi Shannon, N-Gram Stacking). | [`src/features/`](src/features/), Notebook Bab 3–5 |
-| **5** | **Model Selection & Training** | Pelatihan 3 model pohon terbaik dunia (**LightGBM, CatBoost, XGBoost**) dengan validasi anti-bocor **StratifiedGroupKFold** dan pembobotan **SLSQP**. | [`src/models/`](src/models/), Notebook Bab 6 |
-| **6** | **Model Evaluation & Tuning** | Evaluasi mendalam metrik F1 (0.9772), Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas $\tau^*$. | Notebook Bab 6.1 & 6.2 |
-| **7** | **Deployment & Decision Support** | Penyediaan API inspeksi interaktif `tifis_inspect` (SOC Cyber-Card), generator submission otomatis, dan rekomendasi kebijakan PANDI. | Notebook Bab 7 & 8 |
+| **1** | **Problem Definition & Framing** | Memetakan 9 kategori ancaman IDADX PANDI, mengatasi ketimpangan kelas ekstrem (*gambling* 5.447 vs *fakeshop* 5), dan memilih metrik penentu: **Macro-F1**. | [`docs/BRIEFING_LOMBA_DAN_TIM.md`](docs/BRIEFING_LOMBA_DAN_TIM.md), Slide 2 |
+| **2** | **Data Ingestion & Cleaning** | Normalisasi skema URL, penanganan format korup, sintesis teks komposit (`url + brand + sld + registrar`), audit keabsahan data resmi PANDI. | [`src/cleaner.py`](src/cleaner.py) |
+| **3** | **Feature Engineering** | Ekstraksi 56 fitur numerik leksikal, siklus hidup usia domain, pola registrar, dan TF-IDF karakter 3–5 n-gram secara 100% offline. | [`src/pedas_features.py`](src/pedas_features.py) |
+| **4** | **Hybrid Model Development** | Mengawinkan **LinearSVC (60%)** dan **LightGBM (40%)** untuk menyeimbangkan representasi teks bebas dan konteks tabular terstruktur. | [`src/models/hybrid_blender.py`](src/models/hybrid_blender.py) |
+| **5** | **Probabilistic Calibration** | Menerapkan **Multiclass Platt Scaling** agar output skor SVM menjadi probabilitas sejati $[0, 1]$ yang jumlahnya tepat 1.0. | [`src/models/probabilistic_calibrator.py`](src/models/probabilistic_calibrator.py) |
+| **6** | **Bayes Thresholds & Evidence Guard** | Optimasi batas potong Bayes ($\arg\max (P_k + \Delta_k)$) terisolasi fold untuk kelas langka, dipagari **Evidence Guard** anti salah vonis. | [`src/models/threshold_optimizer.py`](src/models/threshold_optimizer.py), [`src/models/evidence_guard.py`](src/models/evidence_guard.py) |
+| **7** | **Deployment & Live Tools** | Runner CLI 1-klik (`run.bat`), pemindai bobot (`test_weights.bat`), inspektur ancaman interaktif (`inspect.bat`), dan notebook Colab master. | [`run_pedas_pipeline.py`](run_pedas_pipeline.py), [`scripts/inspect_domain.py`](scripts/inspect_domain.py) |
 
 ---
 
-## 🔬 3. Empat Pilar Inovasi Kunci
-
-### A. Indonesian Brand & Threats Intelligence
-Model dilengkapi kamus cerdas [`config/indonesian_brands.yaml`](config/indonesian_brands.yaml) yang memetakan lebih dari 30 entitas perbankan, fintech, e-commerce, BUMN, dan layanan publik Indonesia. Fitur ini secara otomatis menghitung *Levenshtein similarity* dan mendeteksi apakah nama brand resmi dicatut pada domain yang tidak sah (*combosquatting / subdomain spoofing*).
-
-### B. Character N-Gram TF-IDF Stacking
-Penyerang siber sering memanipulasi susunan huruf (misal: `kl1kbca` atau `b-c-a-verifikasi`). Memasukkan ribuan kolom sparse TF-IDF langsung ke pohon GBDT akan merusak performa pohon. Kami menggunakan teknik **N-Gram Stacking**: melatih model linier Out-of-Fold pada karakter 3–5 gram untuk merangkum gaya bahasa URL menjadi **satu fitur probabilitas teks padat (`ngram_phish_prob`)**.
-
-### C. Anti-Leakage Validation (`StratifiedGroupKFold`)
-Memisahkan data Train-Validation menggunakan K-Fold acak biasa pada data URL adalah kesalahan fatal (*Domain Group Leakage*), karena subdomain dari penyerang yang sama bisa bocor ke kedua sisi. Framework kami mengelompokkan data berdasarkan **FQDN/Domain Induk**, sehingga data validasi menguji kemampuan model mendeteksi *zero-day phishing domains*.
-
-### D. Nested Threshold Optimization ($\tau^* = 0.20$)
-Alih-alih memakai ambang batas default 0.50 yang menyisakan banyak korban penipuan, sistem mengalibrasi ambang batas optimal secara Out-of-Fold. Menurunkan threshold ke $\tau^* = 0.20$ **meningkatkan Recall penangkapan phishing ke 98.68%** tanpa menaikkan False Positive Rate.
-
----
-
-## 📊 4. Interpretabilitas Model (Explainable AI / XAI)
-
-Model kami bukan *black-box*. Berdasarkan analisis atribusi fitur (*Feature Importance*), keputusan model didominasi oleh sinyal-sinyal yang logis dan dapat dipertanggungjawabkan:
-
-1. **`is_unauthorized_brand_domain` (53.79%)**: Bukti bahwa pencatutan nama entitas resmi pada domain pihak ketiga adalah sinyal phishing terkuat di Indonesia.
-2. **`ngram_phish_prob` (18.77%)**: Bukti bahwa sintaksis potongan huruf N-Gram berhasil menangkap kata pancingan (*lures*).
-3. **`slash_count_url` & `path_to_url_ratio` (3.98%)**: Karakteristik direktori penipuan yang dalam dan tersembunyi.
-4. **`domain_entropy` & `url_entropy` (3.30%)**: Deteksi keacakan nama domain hasil *Domain Generation Algorithm (DGA)*.
-
----
-
-## 💻 5. Tech Stack & Ekosistem Teknologi
-
-Sistem **TIFIS-ID** dibangun menggunakan arsitektur perangkat lunak berbasis Python murni (*Python-native stack*) yang dipilih secara presisi untuk menjamin efisiensi inferensi tinggi, kepatuhan regulasi kompetisi, serta stabilitas matematis di tingkat enterprise.
-
-| Kategori Stack | Pustaka / Komponen | Versi | Peran & Alasan Pemilihan Arsitektur |
-|---|---|---|---|
-| **Machine Learning (GBDT)** | **CatBoost** | `1.2+` | Menangani fitur kategorikal (brand target & kategori TLD) secara *native* tanpa ledakan dimensi one-hot encoding, serta sangat tangguh terhadap overfitting. |
-| | **XGBoost** | `2.0+` | Mesin boosting histogram berkecepatan tinggi dengan regulasi L1/L2 ketat untuk membedah fitur numerik kontinu (*Shannon entropy*, rasio path, panjang URL). |
-| | **LightGBM** | `4.0+` | Algoritma *leaf-wise tree splitting* yang sangat hemat memori, ideal untuk kebutuhan pemindaian throughput tinggi di gateway registrar PANDI (~5 ms/domain). |
-| | **scikit-learn** | `1.3+` | Menyediakan fondasi validasi anti-kebocoran (`StratifiedGroupKFold`), metrik evaluasi kompetisi (`F1-Score`, `PR-Curve`, `ROC-AUC`), dan ekstraksi teks N-Gram. |
-| | **SciPy (SLSQP)** | `1.11+` | Solver *Sequential Least Squares Programming* untuk menyelesaikan optimasi konvergen bobot ensemble blending pada probabilitas Out-of-Fold. |
-| **Domain & Threat Intel** | **tldextract** | `5.0+` | Memisahkan komponen URL, subdomain, registered domain (FQDN), dan SLD Indonesia (`.id`, `.co.id`, `.my.id`, `.biz.id`) secara presisi tanpa koneksi internet. |
-| | **PyYAML** | `6.0+` | Parser konfigurasi berbasis deklaratif untuk memetakan 30+ entitas brand perbankan, fintech, logistik, dan kepolisian (`indonesian_brands.yaml`). |
-| | **dnspython** | `2.4+` | Resolusi record DNS (A, AAAA, MX, NS, TXT) dengan mekanisme *timeout & fallback* yang aman dari kegagalan jaringan. |
-| | **python-whois** | `0.9+` | Ekstraksi telemetri usia domain (`domain_age_days`) dan waktu kedaluwarsa untuk mendeteksi domain baru pancingan penipuan (*burner domains*). |
-| **Data Engine & Math** | **Python** | `3.11 - 3.13` | Bahasa pemrograman utama (100% patuh pada aturan resmi PeDaS 2026 Slide 8 Poin 12: *Python only*). |
-| | **NumPy & Pandas** | `1.26+ / 2.1+` | Manipulasi matriks berkecepatan tinggi, operasi vektorisasi cepat, kalkulasi Shannon Entropy logaritma biner, dan manajemen dataframe. |
-| **Visualisasi & Demo** | **Matplotlib & Seaborn** | `3.8+ / 0.13+` | Pembuatan visualisasi data standar publikasi ilmiah (Diagram Bar EDA, Grouped Bar Threshold, Precision-Recall Curve, dan Matriks Dampak PANDI). |
-| | **IPython / HTML** | `8.0+` | Rendering antarmuka kartu diagnosis visual interaktif `tifis_inspect` langsung di lingkungan notebook Jupyter dan Google Colab. |
-| **Quality Assurance** | **pytest** | `7.4+` | Rangkaian pengujian unit otomatis (10 test cases) yang memverifikasi integritas matematika, fitur leksikal, brand detector, dan GroupKFold dalam < 3 detik. |
-| | **Google Colab** | *Cloud Native* | Lingkungan eksekusi satu-klik tanpa setup rumit, terintegrasi dengan clone repositori GitHub otomatis. |
-| | **Git & GitHub** | *VCS* | Kontrol versi terbuka, audit trail transparan, dan determinisme penuh (`RANDOM_STATE = 42`). |
-
----
-
-## 🗂️ 6. Struktur Repositori
+## 🗂️ 3. Struktur Repositori Bersih (*Clean Architecture*)
 
 ```text
 PEDAS-2026/
 ├── config/
-│   └── indonesian_brands.yaml        # Kamus brand resmi, domain sah, & kata kunci penipuan
-├── data/
-│   ├── benchmark/
-│   │   ├── sample_phishing_id.csv    # Dataset pemanasan awal (50 URL)
-│   │   └── benchmark_expanded_id.csv # Dataset tolok ukur representatif terverifikasi (212 URL unik)
-│   ├── processed/                    # Output prediksi model (oof_predictions.csv & submission.csv)
-│   └── raw/                          # Tempat penyimpanan dataset resmi PANDI (12 September)
+│   └── indonesian_brands.yaml        # Basis pengetahuan 30+ brand resmi Indonesia (perbankan, fintech, BUMN)
+├── official/
+│   ├── training.csv                  # 8.400 baris data latih resmi
+│   ├── predict.csv                   # 1.500 baris data uji resmi
+│   ├── submission-template.csv       # Template resmi panitia
+│   └── submission_TIFIS_TIFIS.csv    # Berkas submisi final terverifikasi (MD5: ebd39c0c00675b8cae481251b6da23e5)
 ├── notebooks/
-│   └── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Notebook Colab interaktif lengkap dengan visualisasi EDA, PR-Curve, Generator Submission, & tifis_inspect
-├── src/
-│   ├── features/
-│   │   ├── lexical.py                # 40+ Fitur leksikal, entropi, ekstensi file .apk
-│   │   ├── domain_brand.py           # Deteksi combosquatting, typosquatting, subdomain hijack
-│   │   ├── dns_lookup.py             # Parser DNS record (A, AAAA, MX, NS, TXT) dengan cache aman
-│   │   ├── whois_parser.py           # Ekstraktor umur domain & tanggal kedaluwarsa WHOIS
-│   │   ├── nlp_stacking.py           # Out-of-Fold Char N-Gram TF-IDF Stacking
-│   │   └── extractor.py              # Master Feature Extractor pipeline terintegrasi
-│   ├── models/
-│   │   ├── metrics.py                # Metrik klasifikasi (F1-Macro, ROC-AUC, FPR, FNR, PR-Curve)
-│   │   ├── validation.py             # DomainGroupSplitter & NestedThresholdOptimizer
-│   │   ├── ensemble.py               # WeightedBlender Multi-GBDT (LGBM + CatBoost + XGBoost)
-│   │   └── baseline.py               # Fold model trainer dengan bagged probability
-│   └── utils/
-│       └── config.py                 # Manajemen path terpusat & determinisme RANDOM_STATE = 42
-├── tests/
-│   ├── test_features.py              # 6 Unit tests fitur leksikal, entropi, & brand detector
-│   └── test_optimizations.py         # 4 Unit tests GroupKFold, N-Gram stacker, optimizer, blender
-├── run_baseline.py                   # Runner CLI cepat untuk evaluasi lokal & ekspor prediksi
+│   ├── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Rekam jejak eksperimen awal (Fase 1 Warmup)
+│   └── 02_tifis_id_official_pipeline.ipynb     # Master Notebook 7 Tahap CRISP-DM (Colab-Ready)
+├── src/                              # MESIN PRODUKSI AKTIF TIFIS-ID
+│   ├── cleaner.py                    # Pembersih teks & sintesis representasi
+│   ├── pedas_features.py             # Ekstraktor 56 fitur tabular + TF-IDF n-gram 3-5
+│   ├── evaluator.py                  # Cross-validation StratifiedGroupKFold (anti-leakage)
+│   ├── submission.py                 # Validator format & eksportir CSV resmi
+│   └── models/
+│       ├── hybrid_blender.py         # Otak model: LinearSVC (60%) + LightGBM (40%)
+│       ├── probabilistic_calibrator.py # Platt Scaling (kalibrasi probabilitas murni)
+│       ├── threshold_optimizer.py    # Bayes Thresholding untuk kelas langka
+│       └── evidence_guard.py         # Safety-net anti-halusinasi berbasis regex
+├── scripts/                          # ALAT UJI & PENDUKUNG AKTIF
+│   ├── test_hybrid_cv.py             # Penguji bobot 5-Fold Cross-Validation
+│   ├── inspect_domain.py             # CLI inspeksi ancaman domain interaktif
+│   ├── evaluate_official.py          # Skrip verifikator resmi panitia PANDI
+│   ├── audit_group_kfold.py          # Audit kebocoran domain (leakage checker)
+│   └── benchmark.py                  # Benchmark latensi dan throughput inferensi
+├── tests/                            # 21 UNIT TESTS (100% Lulus dalam ~13 detik)
+│   ├── test_calibrated_pipeline.py
+│   ├── test_evidence_guard.py
+│   ├── test_hybrid_blender.py
+│   ├── test_pedas_features.py
+│   ├── test_pipeline_cli.py
+│   └── test_probabilistic_calibrator.py
+├── docs/                             # DOKUMEN PRESENTASI & STRATEGI TIM
+│   ├── TIFIS_ID_PRESENTASI.pptx      # 10 Slide Master Presentasi Tim
+│   ├── SLIDE_DECK_DAN_SPEAKER_NOTES.md # Naskah presentasi slide-by-slide
+│   ├── PANDUAN_PRESENTASI_DAN_SPEAKER_NOTES.md # Strategi tanya-jawab dewan juri
+│   └── BRIEFING_LOMBA_DAN_TIM.md     # Onboarding tim & pembagian peran
+├── archive/                          # ARSIP MODUL & EKSPERIMEN LAMA
+│   ├── legacy_src/                   # Modul DNS/WHOIS/GBDT lama
+│   ├── legacy_scripts/               # Skrip pendahulu
+│   └── legacy_submissions/           # Riwayat generasi CSV awal
+├── run_pedas_pipeline.py             # Entrypoint CLI produksi (Auto-venv launcher)
+├── run.bat / run.ps1                 # Pintasan 1-klik eksekusi pipeline
+├── test_weights.bat / .ps1           # Pintasan 1-klik penguji bobot
+├── inspect.bat                       # Pintasan 1-klik inspektur domain
 ├── requirements.txt                  # Kunci dependensi Python
-├── .gitignore                        # Mengabaikan virtualenv, model checkpoint, dan file internal
 └── README.md                         # Dokumentasi teknis proyek
 ```
 
 ---
 
-## 🚀 7. Panduan Menjalankan
+## 🚀 4. Panduan Menjalankan & Alat Pengujian Mandiri
 
-### Opsi A: Google Colab (Cukup 1 Klik!)
-Sesuai format pengumpulan PeDaS, seluruh alur kerja dapat dieksekusi secara interaktif di Google Colab:
-1. Klik badge 👉 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb)
-2. Klik menu **Runtime -> Run all** (`Ctrl + F9`).
-3. Notebook akan otomatis melakukan *clone* repositori, memasang dependensi, menjalankan ekstraksi fitur, melatih ensemble, menampilkan seluruh diagram batang & kurva evaluasi, serta menyiapkan file submission dan live demo `tifis_inspect`.
-
-### Opsi B: Lingkungan Lokal (Terminal / PowerShell)
+### A. Menjalankan Pipeline Lengkap (Generate Submission)
 ```powershell
-# 1. Clone repository
-git clone https://github.com/caerdfasgrae/PEDAS-2026.git
-cd PEDAS-2026
+# Menggunakan batch launcher (Otomatis mendeteksi .venv)
+.\run.bat
 
-# 2. Buat & aktifkan virtual environment
-python -m venv .venv
-.\.venv\Scripts\activate   # Untuk Windows
-# source .venv/bin/activate # Untuk Linux/macOS
-
-# 3. Pasang pustaka dependensi
-pip install -r requirements.txt
-
-# 4. Jalankan pengujian unit otomatis (100% Passed)
-pytest tests/ -v
-
-# 5. Jalankan evaluasi model ensemble dan ekspor prediksi
-python run_baseline.py --model ensemble --ngram-stacking --save-predictions
+# Atau via Python langsung
+python run_pedas_pipeline.py
 ```
+Output: Berkas [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv) tergenerasi otomatis dalam ~10.5 detik dengan verifikasi skema lengkap.
 
-File hasil prediksi baris-per-baris akan tersimpan di [`data/processed/oof_predictions.csv`](data/processed/oof_predictions.csv).
+### B. Menguji Bobot Model Secara Empiris (5-Fold CV Scanner)
+```powershell
+.\test_weights.bat
+```
+Output: Menjalankan 5-fold cross-validation pada 8.400 baris data resmi dan menampilkan tabel pemindaian bobot $w \in [0.0, 1.0]$ yang membuktikan keunggulan titik 60:40.
+
+### C. Menguji Domain Secara Bebas (Live Domain Inspector)
+```powershell
+.\inspect.bat "klikbca-undian-berhadiah.id"
+```
+Output: Menampilkan fitur leksikal aktif, grafik bar probabilitas 9 kelas terkalibrasi, intervensi Evidence Guard, dan vonis akhir kategori ancaman.
+
+### D. Menjalankan Rangkaian Unit Test
+```powershell
+pytest tests/
+```
+Output: Memvalidasi integritas matematis, determinisme, dan penanganan nilai kosong dalam waktu ~13 detik (21 passed).
 
 ---
 
-## 💡 8. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
+## 💡 5. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
 
-Sebagai luaran nyata (*actionable policy insights*), model ini siap diintegrasikan ke dalam ekosistem PANDI:
+Sebagai luaran nyata (*actionable policy insights*), model ini siap diintegrasikan ke dalam operasional PANDI:
 
 1. **Pre-Delegation DNS Gatekeeper pada SLD Murah (`.my.id` & `.biz.id`)**:
-   PANDI dapat memasang modul *Brand Combosquatting Scanner* pada gerbang registrasi registrar. Pendaftaran domain murah baru yang mencatut brand perbankan ditahan sementara (*pending delegation*) hingga pendaftar memverifikasi identitas resmi.
+   PANDI dapat memasang modul *Tifis-ID* pada gerbang registrasi registrar. Pendaftaran domain murah baru yang mencatut brand perbankan atau memuat pola ancaman ditahan sementara (*pending delegation*) hingga pendaftar memverifikasi identitas resmi.
 2. **Otomatisasi Triase Laporan Abuse IDADX & BIMA AI**:
-   Laporan publik yang masuk ke portal `idadx.id` disaring otomatis oleh model. Domain dengan probabilitas phishing > 0.90 langsung dialirkan ke antrean suspensi prioritas darurat, memutus rantai korban penipuan dalam hitungan menit pertama.
+   Laporan publik yang masuk ke portal `idadx.id` disaring otomatis oleh model. Domain dengan probabilitas tinggi langsung dialirkan ke antrean suspensi prioritas darurat, memutus rantai korban penipuan dalam hitungan menit pertama.
 3. **Ekosistem Whitelist Finansial Terpusat**:
    PANDI dapat berkolaborasi dengan Asosiasi Sistem Pembayaran Indonesia (ASPI) dan CSIRT Perbankan untuk memelihara kamus domain resmi terpusat, mempermudah validasi silang otomatis antara sub-domain resmi vs peniru.
 
 ---
 
-## ⚖️ 9. Kepatuhan Regulasi Resmi PeDaS 2026
-- **Python Only (Slide 8 Poin 12)**: 100% ditulis dalam bahasa pemrograman Python murni tanpa dependensi non-standar.
-- **Reproducibility Terjamin (Slide 8 Poin 8)**: Seluruh pemisahan lipatan (*fold*) dan model dikunci pada `RANDOM_STATE = 42`. Hasil notebook Google Colab dijamin identik persis dengan kode GitHub saat diverifikasi oleh Dewan Juri.
-- **Double Blind Ready (Slide 8 Poin 7)**: Repositori dan notebook disusun secara netral tanpa melanggar ketentuan anonimitas institusi.
+## ⚖️ 6. Kepatuhan Regulasi Resmi PeDaS 2026
+- **Python Only (Juknis Pasal 12)**: 100% ditulis dalam bahasa pemrograman Python murni tanpa dependensi GPU atau platform berbayar.
+- **Reproducibility Terjamin**: Seluruh pemisahan lipatan (*fold*) dan model dikunci pada `RANDOM_STATE = 2026`. Hasil notebook Google Colab dijamin identik persis dengan CLI runner.
+- **Double Blind Ready**: Repositori, kode, notebook, dan slide deck disusun secara netral tanpa menyebut identitas universitas/mahasiswa (Identitas: **Tim TIFIS TIFIS** | Solusi: **Tifis-ID**).
 
 ---
-*Dikembangkan untuk Pesta Data Nasional (PeDaS 2026) | Membangun Talenta Digital Nusantara untuk Internet Indonesia yang Aman.*
+*Dikembangkan oleh Tim TIFIS TIFIS untuk Pesta Data Nasional (PeDaS 2026) | Membangun Kedaulatan & Keamanan Internet Indonesia.*

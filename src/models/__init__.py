@@ -1,9 +1,16 @@
-"""Modeling and evaluation modules for PeDaS 2026."""
+"""Tifis-ID Champion Threat Modeling and Classification Components.
 
-from src.models.metrics import calculate_classification_metrics
-from src.models.baseline import BaselineModelTrainer
+PeDaS 2026 Hackathon (PANDI x APTIKOM).
+"""
+
+from src.models.hybrid_blender import HybridProbabilisticBlender
+from src.models.probabilistic_calibrator import MulticlassPlattCalibrator
+from src.models.threshold_optimizer import MulticlassThresholdOptimizer
+from src.models.evidence_guard import EvidenceGuard
 
 __all__ = [
-    "calculate_classification_metrics",
-    "BaselineModelTrainer",
+    "HybridProbabilisticBlender",
+    "MulticlassPlattCalibrator",
+    "MulticlassThresholdOptimizer",
+    "EvidenceGuard",
 ]
