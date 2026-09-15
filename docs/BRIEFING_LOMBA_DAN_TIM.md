@@ -1,4 +1,4 @@
-# 🛡️ SANTARA-SHIELD: Dokumen Briefing Lomba & Panduan Tim PeDaS 2026
+# 🛡️ TIFIS-ID: Dokumen Briefing Lomba & Panduan Tim PeDaS 2026
 > **Dokumen Internal Tim**: Panduan Lengkap Memahami Lomba, Strategi Kemenangan, Arsitektur Model, dan Pembagian Tugas.  
 > **Kompetisi**: Pesta Data Nasional (PeDaS 2026) | APTIKOM Fest 2026 x PANDI  
 > **Kategori**: Deteksi Phishing Domain `.id`  
@@ -11,7 +11,7 @@
 2. [Latar Belakang Masalah: Mengapa Masalah Ini Sangat Krusial?](#2-latar-belakang-masalah-mengapa-masalah-ini-sangat-krusial)
 3. [Format Lomba, Aturan Main, & Kriteria Penilaian](#3-format-lomba-aturan-main--kriteria-penilaian)
 4. [Linimasa (Timeline) Krusial Kompetisi](#4-linimasa-timeline-krusial-kompetisi)
-5. [Bedah Senjata Tim Kita: SANTARA-SHIELD](#5-bedah-senjata-tim-kita-santara-shield)
+5. [Bedah Senjata Tim Kita: TIFIS-ID](#5-bedah-senjata-tim-kita-tifis-id)
 6. [Pembagian Peran & Strategi Kolaborasi Tim](#6-pembagian-peran--strategi-kolaborasi-tim)
 7. [Glosarium Istilah Keren (Dari Bahasa Awam ke Bahasa Juri)](#7-glosarium-istilah-keren-dari-bahasa-awam-ke-bahasa-juri)
 8. [Cara Mencoba & Menjalankan Demo Sistem](#8-cara-mencoba--menjalankan-demo-sistem)
@@ -52,7 +52,7 @@ PANDI saat ini memiliki dua sistem utama:
 1. **IDADX (Indonesia Anti-Phishing Data Exchange)**: Portal tempat bank dan masyarakat melaporkan situs penipuan. Kelemahannya: **Reaktif**. Situs baru ditindak setelah ada korban melapor (biasanya setelah 24 jam penipuan berjalan).
 2. **BIMA AI**: Sistem kecerdasan buatan PANDI yang melakukan perayapan (*deep crawling*) konten web. Kelemahannya: Butuh waktu lama untuk merayapi jutaan domain aktif secara berkala.
 
-### D. Di Mana Posisi Solusi Kita (SANTARA-SHIELD)?
+### D. Di Mana Posisi Solusi Kita (TIFIS-ID)?
 Model kita mengisi celah tersebut dengan bertindak sebagai **"Radar Gerbang Pendaftaran" (Pre-Delegation & First-Line Triage Gatekeeper)**:
 * Begitu ada orang mendaftarkan nama domain baru di Registrar, sistem kita menganalisis struktur URL dan potensi pencatutan brand dalam waktu **kurang dari 1 milidetik** secara *offline*.
 * Domain berbahaya langsung ditahan (*pending delegation*) atau disodorkan ke meja analis manusia PANDI **sebelum domain tersebut sempat online dan memakan korban!**
@@ -68,7 +68,7 @@ Dewan juri menerapkan sistem peninjauan buta ganda (*double-blind review*):
   - Nama universitas / perguruan tinggi
   - Logo kampus / instansi
   pada notebook Google Colab, video pitching, slide presentasi, maupun file repositori.
-* **Gunakan hanya Nama Tim dan Nama Solusi kita**: **SANTARA-SHIELD**.
+* **Gunakan hanya Nama Tim dan Nama Solusi kita**: **TIFIS-ID**.
 * Pelanggaran aturan identitas ini akan berujung pada diskualifikasi langsung!
 
 ### Tahapan Penilaian:
@@ -101,9 +101,9 @@ Dewan juri menerapkan sistem peninjauan buta ganda (*double-blind review*):
 
 ---
 
-## 5. Bedah Senjata Tim Kita: SANTARA-SHIELD
+## 5. Bedah Senjata Tim Kita: TIFIS-ID
 
-Nama solusi kita adalah **SANTARA-SHIELD** (*Nusantara Cyber Shield for .id Phishing Detection*).
+Nama solusi kita adalah **TIFIS-ID** (*Intelligent Cyber Defense for .id Phishing Detection*).
 
 ### A. Metodologi 7-Langkah Machine Learning (CRISP-DM Standard)
 Sistem kita dibangun di atas 7 tahapan resmi data science:
@@ -113,7 +113,7 @@ Sistem kita dibangun di atas 7 tahapan resmi data science:
 4. **EDA & 52 Feature Engineering**: Ekstraksi fitur leksikal, brand YAML, Shannon entropy, dan N-Gram Stacking.
 5. **Model Selection & Multi-GBDT Ensemble**: Melatih LightGBM, CatBoost, dan XGBoost dengan pembobotan SLSQP dan *StratifiedGroupKFold*.
 6. **Evaluation & Tuning**: Menganalisis kurva Precision-Recall dan mengalibrasi ambang batas dinamis $\tau^*$.
-7. **Deployment & Delivery**: Modul interaktif `santara_inspect` dan generator `submission.csv`.
+7. **Deployment & Delivery**: Modul interaktif `tifis_inspect` dan generator `submission.csv`.
 
 ### B. Empat Pilar Keunggulan Teknologi Kita (The 4 Pillars)
 1. **Indonesian Brand Intelligence (Kamus YAML)**:
@@ -126,7 +126,7 @@ Sistem kita dibangun di atas 7 tahapan resmi data science:
 4. **SLSQP Multi-GBDT Ensemble Blending**:
    - Menggabungkan 3 algoritma pohon terbaik dunia (LightGBM + CatBoost + XGBoost) menggunakan kalkulus optimasi bobot agar saling melengkapi.
 
-### C. Statistik Kinerja Nyata SANTARA-SHIELD
+### C. Statistik Kinerja Nyata TIFIS-ID
 * **Tingkat Tangkapan Phishing (Recall)**: **98.01%** (148 dari 151 serangan phishing tertangkap).
 * **Skor Keseimbangan (F1-Macro)**: **0.9772** (Mendekati sempurna).
 * **Resiko Salah Tuduh Domain Legal (FPR)**: **1.64%** (Hanya 1 false positive dari 61 domain legal).
@@ -140,7 +140,7 @@ Agar tim kita tampil solid dan profesional, kita membagi tanggung jawab kerja se
 
 ```mermaid
 flowchart TD
-    subgraph Tim ["Kolaborasi Tim SANTARA-SHIELD"]
+    subgraph Tim ["Kolaborasi Tim TIFIS-ID"]
         A["Abyan (Lead Data & ML Engineer)"]
         B["Rekan Setim (Presentation & Policy Co-Lead)"]
     end
@@ -202,4 +202,4 @@ Untuk mencoba langsung sistem ini bersama rekan setim:
    Ketik nama domain apa saja (misal: `http://bca-klik-layanan-bebas-biaya.my.id/login.php`) lalu jalankan selnya. Anda akan melihat kartu peringatan siber berwarna merah menyala lengkap dengan rincian fitur dan saran tindakan untuk staf PANDI!
 
 ---
-*Dokumen ini disusun untuk kesiapan kemenangan Tim SANTARA-SHIELD pada PeDaS 2026.* 🚀🛡️
+*Dokumen ini disusun untuk kesiapan kemenangan Tim TIFIS-ID pada PeDaS 2026.* 🚀🛡️

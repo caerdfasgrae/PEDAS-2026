@@ -1,5 +1,5 @@
-# 📊 SANTARA-SHIELD: Slide Deck & Naskah Presentasi (10 Slide Master)
-> **Pitch Deck Resmi Tim**: Siap dipakai langsung di PowerPoint (`docs/SANTARA_SHIELD_PRESENTASI.pptx`), Google Slides, atau Canva.  
+# 📊 TIFIS-ID: Slide Deck & Naskah Presentasi (10 Slide Master)
+> **Pitch Deck Resmi Tim**: Siap dipakai langsung di PowerPoint (`docs/TIFIS_ID_PRESENTASI.pptx`), Google Slides, atau Canva.  
 > **Durasi Presentasi**: ~7.5 Menit (Standar Babak Final PeDaS 2026: 7–10 Menit).  
 > **Aturan Khusus**: *Double-Blind Review* (Tanpa nama kampus/identitas anggota tim).
 
@@ -13,7 +13,7 @@
 - **Slide 5**: Empat Pilar Inovasi: Brand Intelligence, N-Gram Stacking, & Anti-Leakage
 - **Slide 6**: Arsitektur Pemodelan: Multi-GBDT Ensemble & SLSQP Blending
 - **Slide 7**: Hasil Evaluasi Empiris: Precision-Recall Curve & Matriks Dampak PANDI
-- **Slide 8**: Implementasi Produk: Live Demo Single-Domain Inspector (`santara_inspect`)
+- **Slide 8**: Implementasi Produk: Live Demo Single-Domain Inspector (`tifis_inspect`)
 - **Slide 9**: Rekomendasi Kebijakan Strategis untuk PANDI & IDADX (*Target Piala Best Analysis*)
 - **Slide 10**: Kesimpulan, Kesiapan Babak Final, & Komitmen Kedaulatan Digital
 
@@ -22,7 +22,7 @@
 ## SLIDE 1: Judul Solusi & Identitas Tim (Double Blind)
 * **Waktu**: 0:00 – 0:30 (30 Detik)
 * **Visual Slide**:
-  - Judul Utama: **SANTARA-SHIELD**
+  - Judul Utama: **TIFIS-ID**
   - Subjudul: *Perisai Kedaulatan Ekosistem Domain .id Berbasis Multi-GBDT Ensemble & Brand Intelligence*
   - Banner Kompetisi: *Pesta Data Nasional (PeDaS 2026) | APTIKOM Fest 2026 x PANDI*
   - Identitas Tim: *Peserta Resmi PeDaS 2026 (Double-Blind Review - Tanpa Identitas Kampus/Nama)*
@@ -31,7 +31,7 @@
   - *Ref: APTIKOM Fest 2026 Panduan Teknis & Registry PANDI 2026.*
 * **Naskah Pembicara (Speaker Script)**:
   > *"Selamat pagi Dewan Juri yang kami hormati, perwakilan PANDI, dan akademisi APTIKOM.  
-  > Hari ini kami mempersembahkan **SANTARA-SHIELD**—sebuah kerangka kerja kecerdasan buatan terpadu untuk deteksi dini domain phishing berbahaya pada ekosistem domain tingkat tinggi `.id`.  
+  > Hari ini kami mempersembahkan **TIFIS-ID**—sebuah kerangka kerja kecerdasan buatan terpadu untuk deteksi dini domain phishing berbahaya pada ekosistem domain tingkat tinggi `.id`.  
   > Solusi kami memadukan arsitektur Multi-GBDT Ensemble dengan kecerdasan ancaman lokal untuk mewujudkan sistem pertahanan siber yang akurat, cepat, dan berkeadilan hukum."*
 
 ---
@@ -57,13 +57,13 @@
 * **Visual Slide**:
   - **Kartu 1 (Merah - IDADX Saat Ini)**: *Pendekatan Reaktif*. Mengandalkan laporan masuk dari korban/bank. Terdapat *jendela bahaya (window of exposure)* 12–24 jam di mana korban sudah terlanjur mentransfer uang sebelum takedown terjadi.
   - **Kartu 2 (Kuning - BIMA AI)**: *Deep Web Crawling Berkala*. Membutuhkan komputasi besar dan waktu perayapan panjang, serta buta terhadap domain yang baru didaftarkan atau menyembunyikan konten di balik login.
-  - **Kartu 3 (Hijau - SANTARA-SHIELD)**: *Pre-Delegation & First-Line Triage Gatekeeper*. Memeriksa struktur URL dan pencatutan brand di gerbang pendaftaran Registrar API dalam **0.94 milidetik**, menghentikan ancaman sebelum domain aktif memakan korban!
+  - **Kartu 3 (Hijau - TIFIS-ID)**: *Pre-Delegation & First-Line Triage Gatekeeper*. Memeriksa struktur URL dan pencatutan brand di gerbang pendaftaran Registrar API dalam **0.94 milidetik**, menghentikan ancaman sebelum domain aktif memakan korban!
 * **Sitasi / Sumber Valid**:
   - *Ref: PANDI IDADX Laporan Tahunan Phishing 2024; Kintis et al., USENIX Security: Understanding and Mitigating Domain Squatting.*
 * **Naskah Pembicara (Speaker Script)**:
   > *"Sistem yang dimiliki PANDI saat ini, seperti IDADX dan BIMA AI, telah bekerja luar biasa. Namun secara metodologis, ada celah waktu kritis yang belum terisi.  
   > IDADX bersifat reaktif—domain baru ditindak setelah ada laporan korban. Di sisi lain, BIMA AI memerlukan waktu merayapi konten web yang luas.  
-  > SANTARA-SHIELD hadir untuk mengisi celah tersebut dengan paradigma baru: **Pre-Delegation Gatekeeper**. Kami memeriksa domain di gerbang pendaftaran dalam hitungan milidetik secara offline. Hasilnya, kita bisa menahan domain berbahaya sebelum mereka sempat aktif didelegasikan ke DNS internet!"*
+  > TIFIS-ID hadir untuk mengisi celah tersebut dengan paradigma baru: **Pre-Delegation Gatekeeper**. Kami memeriksa domain di gerbang pendaftaran dalam hitungan milidetik secara offline. Hasilnya, kita bisa menahan domain berbahaya sebelum mereka sempat aktif didelegasikan ke DNS internet!"*
 
 ---
 
@@ -77,11 +77,11 @@
     4. *Feature Engineering* (52 fitur komprehensif: Leksikal, Brand YAML, Shannon Entropy, N-Gram Stacking).
     5. *Model Selection & Training* (Multi-GBDT Ensemble + StratifiedGroupKFold).
     6. *Model Evaluation & Tuning* (Precision-Recall Curve, Confusion Matrix, Threshold $\tau^*$).
-    7. *Deployment & Decision Support* (API inspeksi `santara_inspect` & Rekomendasi PANDI).
+    7. *Deployment & Decision Support* (API inspeksi `tifis_inspect` & Rekomendasi PANDI).
 * **Sitasi / Sumber Valid**:
   - *Ref: CRISP-DM Standard Process Model; Google Machine Learning Engineering Best Practices.*
 * **Naskah Pembicara (Speaker Script)**:
-  > *"Dalam mengembangkan SANTARA-SHIELD, kami tidak melompat langsung ke pemodelan. Kami mematuhi standar baku 7-Langkah Machine Learning Lifecycle standar industri.  
+  > *"Dalam mengembangkan TIFIS-ID, kami tidak melompat langsung ke pemodelan. Kami mematuhi standar baku 7-Langkah Machine Learning Lifecycle standar industri.  
   > Seluruh tahapan—mulai dari perumusan trade-off bisnis, pembersihan data, ekstraksi 52 fitur, pelatihan bebas kebocoran, hingga penyediaan modul inspeksi interaktif—telah dimodularisasi secara profesional di dalam folder `src/` repositori GitHub kami, siap diaudit baris demi baris."*
 
 ---
@@ -142,7 +142,7 @@
 ## SLIDE 8: Implementasi Produk: Single-Domain Interactive Inspector
 * **Waktu**: 5:30 – 6:15 (45 Detik)
 * **Visual Slide**:
-  - Tangkapan Layar Tampilan Antarmuka `santara_inspect` (Desain *High-Contrast Charcoal Slate SOC Card*):
+  - Tangkapan Layar Tampilan Antarmuka `tifis_inspect` (Desain *High-Contrast Charcoal Slate SOC Card*):
     - Badge Merah Menyala: *BAHAYA TINGGI: TERKONFIRMASI PHISHING (Skor 99.69%)*.
     - Rincian Sinyal: *Mencatut Brand: BCA (TIDAK SAH / COMBO-SQUATTING)*.
     - Deteksi Malware: *Pancingan Berkas APK Malware via WhatsApp*.
@@ -154,7 +154,7 @@
 * **Sitasi / Sumber Valid**:
   - *Ref: PeDaS 2026 Interactive Evaluation Notebook; Colab Runtime Benchmark 2026.*
 * **Naskah Pembicara (Speaker Script)**:
-  > *"SANTARA-SHIELD bukan sekadar kode di atas kertas, melainkan produk yang siap diuji langsung. Di notebook Google Colab, kami menyediakan fungsi `santara_inspect`. Dewan juri dapat memasukkan domain apa saja untuk diuji secara instan.  
+  > *"TIFIS-ID bukan sekadar kode di atas kertas, melainkan produk yang siap diuji langsung. Di notebook Google Colab, kami menyediakan fungsi `tifis_inspect`. Dewan juri dapat memasukkan domain apa saja untuk diuji secara instan.  
   > Dari segi skalabilitas, kami telah melakukan stress-test pada 1.000 URL: seluruh proses ekstraksi 52 fitur dan prediksi selesai dalam waktu 0.94 detik dengan memori hanya 8.4 MB. Sistem ini sangat siap menangani lonjakan puluhan ribu registrasi domain per hari di server PANDI!"*
 
 ---
@@ -171,7 +171,7 @@
 * **Naskah Pembicara (Speaker Script)**:
   > *"Sebagai kontribusi strategis bagi dewan juri dan PANDI, kami merumuskan 3 rekomendasi kebijakan nyata:  
   > Pertama, terapkan Pre-Delegation DNS Gatekeeper pada domain murah .my.id dan .biz.id untuk registran yang terindikasi skor resiko tinggi.  
-  > Kedua, integrasikan SANTARA-SHIELD sebagai sistem triase otomatis di portal IDADX guna memotong waktu respon laporan dari 24 jam menjadi hitungan menit.  
+  > Kedua, integrasikan TIFIS-ID sebagai sistem triase otomatis di portal IDADX guna memotong waktu respon laporan dari 24 jam menjadi hitungan menit.  
   > Ketiga, bangun Whitelist Finansial Terpusat bersama regulator perbankan. Dengan sinergi ini, PANDI tidak lagi hanya memadamkan api penipuan, melainkan mencegah kebakaran sejak percikan pertama!"*
 
 ---
@@ -185,11 +185,11 @@
     - *Skalabilitas Ekstrem*: 0.94 milidetik per URL.
     - *Deterministik 100%*: Terkunci pada `RANDOM_STATE = 42`.
   - Link Terverifikasi: Repositori GitHub & Colab Notebook.
-  - Slogan Penutup: *"SANTARA-SHIELD: Menjaga Integritas Domain .id, Melindungi Masyarakat Indonesia."*
+  - Slogan Penutup: *"TIFIS-ID: Menjaga Integritas Domain .id, Melindungi Masyarakat Indonesia."*
 * **Sitasi / Sumber Valid**:
   - *Ref: Repositori Publik: https://github.com/caerdfasgrae/PEDAS-2026; PeDaS 2026 Finalist Commitment.*
 * **Naskah Pembicara (Speaker Script)**:
-  > *"Sebagai penutup, SANTARA-SHIELD membuktikan bahwa kecerdasan buatan berbasis Multi-GBDT yang dipadukan dengan pemahaman konteks ancaman lokal mampu menjadi benteng tangguh bagi kedaulatan domain nasional.  
+  > *"Sebagai penutup, TIFIS-ID membuktikan bahwa kecerdasan buatan berbasis Multi-GBDT yang dipadukan dengan pemahaman konteks ancaman lokal mampu menjadi benteng tangguh bagi kedaulatan domain nasional.  
   > Seluruh kode kami bersifat deterministik, bebas kebocoran data, dan siap diuji kapan saja. Kami siap berkolaborasi untuk mewujudkan ekosistem internet Indonesia yang bersih, aman, dan berdaulat.  
   > Terima kasih atas perhatian Dewan Juri, kami siap untuk sesi tanya jawab."*
 

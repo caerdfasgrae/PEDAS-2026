@@ -9,7 +9,7 @@
 
 # BAGIAN 1: Pemetaan Scope, Batasan, & Tata Kelola Model (*Governance*)
 
-Untuk menjawab ekspektasi tinggi Dewan Juri PANDI dan Akademisi, ruang lingkup (*scope*) sistem SANTARA-SHIELD dirumuskan secara tegas dan bertanggung jawab:
+Untuk menjawab ekspektasi tinggi Dewan Juri PANDI dan Akademisi, ruang lingkup (*scope*) sistem TIFIS-ID dirumuskan secara tegas dan bertanggung jawab:
 
 ### 1. In-Scope (Kapabilitas Utama Sistem):
 - **Pre-Delegation Early Warning**: Deteksi dini saat pendaftaran domain di level *Registrar API* sebelum nama domain terdaftar aktif di DNS root.
@@ -24,7 +24,7 @@ Untuk menjawab ekspektasi tinggi Dewan Juri PANDI dan Akademisi, ruang lingkup (
 - **Serangan Non-Domain**: Penipuan telepon langsung atau manipulasi SMS biasa tanpa tautan domain `.id`.
 
 ### 3. Prinsip Tata Kelola: Human-in-the-Loop (HITL) AI
-SANTARA-SHIELD dirancang sebagai **Decision Support System (DSS)**, bukan algo pemblokir sepihak:
+TIFIS-ID dirancang sebagai **Decision Support System (DSS)**, bukan algo pemblokir sepihak:
 - **Resiko Tinggi (> 90%)**: Penahanan sementara (*pending delegation*) + Notifikasi darurat ke analis PANDI.
 - **Resiko Sedang (\tau^* s/d 90%)**: Karantina triase + Prioritas perayapan mendalam bagi crawler BIMA AI.
 - **Resiko Rendah (< \tau^*)**: Delegasi DNS aktif normal tanpa hambatan birokrasi.
@@ -37,7 +37,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 4. **EDA & Feature Engineering**: Visualisasi sebaran sektor & perekayasaan 52 fitur komprehensif (Leksikal, Brand YAML, Shannon Entropy, N-Gram Stacking).
 5. **Model Selection & Development**: Pelatihan Multi-GBDT (LightGBM, CatBoost, XGBoost) + validasi anti-bocor *StratifiedGroupKFold* & SLSQP Blending.
 6. **Model Evaluation & Tuning**: Evaluasi komparatif melalui Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis $\tau^*$.
-7. **Deployment & Decision Support**: Pembuatan API inspeksi interaktif `santara_inspect` (SOC Cyber-Card), generator submission otomatis, & rekomendasi kebijakan integrasi PANDI/IDADX.
+7. **Deployment & Decision Support**: Pembuatan API inspeksi interaktif `tifis_inspect` (SOC Cyber-Card), generator submission otomatis, & rekomendasi kebijakan integrasi PANDI/IDADX.
 
 ---
 
@@ -68,13 +68,13 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 
 ## SLIDE 1: Judul Solusi & Identitas Tim (Double Blind)
 - **Visual Slide**:
-  - Judul: **SANTARA-SHIELD: Deteksi Phishing Cerdas Domain (.id) Berbasis Multi-GBDT Ensemble, Local Brand Intelligence, & Human-in-the-Loop Governance**
+  - Judul: **TIFIS-ID: Deteksi Phishing Cerdas Domain (.id) Berbasis Multi-GBDT Ensemble, Local Brand Intelligence, & Human-in-the-Loop Governance**
   - Sub-judul: *Decision Support System untuk Mendukung Kedaulatan & Keamanan Registry PANDI*
   - Identitas: *Peserta Finalis PeDaS 2026 | Aptikom Fest 2026* (Tanpa nama kampus).
 - **Sitasi / Sumber Valid di Pojok Slide**:
   - *Ref: Panduan Teknis & Regulasi PeDaS 2026 (Slide 8 Ketentuan Double Blind), APTIKOM & PANDI, 2026.*
 - **Skrip Pembicara (Durasi: 30 detik)**:
-  > *"Selamat pagi Dewan Juri yang terhormat, perwakilan APTIKOM dan PANDI. Kami mempersembahkan **SANTARA-SHIELD**, sebuah framework deteksi phishing komprehensif yang dirancang sebagai Decision Support System cerdas untuk melindungi ekosistem domain `.id`. Solusi kami mengintegrasikan kecerdasan brand lokal, validasi bebas kebocoran, dan tata kelola Human-in-the-Loop yang siap diterapkan secara nyata di PANDI."*
+  > *"Selamat pagi Dewan Juri yang terhormat, perwakilan APTIKOM dan PANDI. Kami mempersembahkan **TIFIS-ID**, sebuah framework deteksi phishing komprehensif yang dirancang sebagai Decision Support System cerdas untuk melindungi ekosistem domain `.id`. Solusi kami mengintegrasikan kecerdasan brand lokal, validasi bebas kebocoran, dan tata kelola Human-in-the-Loop yang siap diterapkan secara nyata di PANDI."*
 
 ---
 
@@ -115,7 +115,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 - **Sitasi / Sumber Valid di Pojok Slide**:
   - *Ref: Kintis et al., 'Detecting Combosquatting Attacks at Scale', USENIX Security; Shannon, C.E., 'A Mathematical Theory of Communication' (Entropy).*
 - **Skrip Pembicara (Durasi: 60 detik)**:
-  > *"SANTARA-SHIELD mengonstruksi 52 fitur terstruktur yang terbagi dalam tiga pilar. Pertama, Indonesian Brand Intelligence: sistem kami memetakan domain resmi seluruh bank nasional, logistik, dan layanan publik untuk langsung mendeteksi unauthorized brand domain dan combosquatting. Kedua, kami menganalisis keacakan karakter Shannon Entropy dan mendeteksi ekstensi berbahaya seperti file APK. Ketiga, inovasi Character N-Gram Stacking: alih-alih meledakkan dimensi sparse yang merusak pohon keputusan, kami melatih model linier secara Out-of-Fold untuk merangkum gaya bahasa penipu menjadi satu fitur probabilitas teks yang padat dan sangat sensitif."*
+  > *"TIFIS-ID mengonstruksi 52 fitur terstruktur yang terbagi dalam tiga pilar. Pertama, Indonesian Brand Intelligence: sistem kami memetakan domain resmi seluruh bank nasional, logistik, dan layanan publik untuk langsung mendeteksi unauthorized brand domain dan combosquatting. Kedua, kami menganalisis keacakan karakter Shannon Entropy dan mendeteksi ekstensi berbahaya seperti file APK. Ketiga, inovasi Character N-Gram Stacking: alih-alih meledakkan dimensi sparse yang merusak pohon keputusan, kami melatih model linier secara Out-of-Fold untuk merangkum gaya bahasa penipu menjadi satu fitur probabilitas teks yang padat dan sangat sensitif."*
 
 ---
 
@@ -158,16 +158,16 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 
 ---
 
-## SLIDE 8: Explainable AI & Live Demo Inspector (`santara_inspect`)
+## SLIDE 8: Explainable AI & Live Demo Inspector (`tifis_inspect`)
 - **Visual Slide**:
   - Diagram Batang Horizontal Top Feature Importance:
     - `is_unauthorized_brand_domain` (53.8%)
     - `ngram_phish_prob` (18.8%)
-  - Tangkapan layar kartu diagnosis interaktif `santara_inspect` (Vonis, Skor Resiko, & Rekomendasi).
+  - Tangkapan layar kartu diagnosis interaktif `tifis_inspect` (Vonis, Skor Resiko, & Rekomendasi).
 - **Sitasi / Sumber Valid di Pojok Slide**:
   - *Ref: Lundberg & Lee, 'A Unified Approach to Interpreting Model Predictions (SHAP)', Advances in Neural Information Processing Systems (NeurIPS).*
 - **Skrip Pembicara (Durasi: 50 detik)**:
-  > *"Model kami bukan black-box. Berdasarkan analisis Explainable AI, keputusan model 53.8% ditentukan oleh pencatutan brand tidak sah dan 18.8% oleh fitur teks N-gram. Untuk membuktikan kesiapan produk, kami melengkapi notebook dengan fungsi interaktif `santara_inspect`. Hanya dalam 5 milidetik, sistem mampu mengurai URL apa saja yang diuji dewan juri, menampilkan skor probabilitas, sinyal pelanggaran, dan rekomendasi tindakan operasional."*
+  > *"Model kami bukan black-box. Berdasarkan analisis Explainable AI, keputusan model 53.8% ditentukan oleh pencatutan brand tidak sah dan 18.8% oleh fitur teks N-gram. Untuk membuktikan kesiapan produk, kami melengkapi notebook dengan fungsi interaktif `tifis_inspect`. Hanya dalam 5 milidetik, sistem mampu mengurai URL apa saja yang diuji dewan juri, menampilkan skor probabilitas, sinyal pelanggaran, dan rekomendasi tindakan operasional."*
 
 ---
 
@@ -181,7 +181,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 - **Sitasi / Sumber Valid di Pojok Slide**:
   - *Ref: Permenkominfo No. 5 Tahun 2020 tentang PSE Lingkup Privat; Registry-Registrar Agreement (RRA) PANDI; BSSN National CSIRT Framework.*
 - **Skrip Pembicara (Durasi: 50 detik)**:
-  > *"Sebagai penutup, SANTARA-SHIELD siap menjadi perisai kedaulatan domain nasional dengan arsitektur Human-in-the-Loop. Kami merekomendasikan integrasi model ini sebagai radar awal saat pendaftaran domain di Registrar API serta sistem triase cerdas di portal IDADX. Model menyaring ribuan domain pendaftaran baru, lalu menyodorkan domain beresiko tinggi ke meja analis manusia PANDI untuk ditindaklanjuti secara akurat dan sah secara hukum.*  
+  > *"Sebagai penutup, TIFIS-ID siap menjadi perisai kedaulatan domain nasional dengan arsitektur Human-in-the-Loop. Kami merekomendasikan integrasi model ini sebagai radar awal saat pendaftaran domain di Registrar API serta sistem triase cerdas di portal IDADX. Model menyaring ribuan domain pendaftaran baru, lalu menyodorkan domain beresiko tinggi ke meja analis manusia PANDI untuk ditindaklanjuti secara akurat dan sah secara hukum.*  
   > *Kode kami 100% deterministik, open-source di GitHub, dan siap diuji kapan saja. Mari kita wujudkan ruang siber Indonesia yang bersih, aman, dan berdaulat. Terima kasih!"*
 
 ---
@@ -196,7 +196,7 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 ### Pertanyaan 2 (Dari Juri Akademisi APTIKOM):
 *“Apa batasan (scope boundaries) dari model ini? Apakah model ini bisa mendeteksi halaman phishing dinamis yang kontennya baru muncul setelah kita login?”*
 - **Jawaban Anda**:
-  > *"Pertanyaan yang sangat esensial. Secara metodologis, kami memetakan batasan model kami secara jelas: SANTARA-SHIELD fokus pada deteksi dini di tingkat URL leksikal, brand intelligence, dan metadata pendaftaran (Pre-delegation & First-line Triage). Untuk konten dinamis yang tersembunyi di balik login berlapis, itu berada di luar lingkup inspeksi instan 5 milidetik kami dan diserahkan kepada subsistem perayap mendalam berkala seperti BIMA AI milik PANDI. Pembagian tugas ini memastikan sistem kami sangat ringan dan dapat dipasang di gerbang registrasi tanpa membebani server PANDI."*
+  > *"Pertanyaan yang sangat esensial. Secara metodologis, kami memetakan batasan model kami secara jelas: TIFIS-ID fokus pada deteksi dini di tingkat URL leksikal, brand intelligence, dan metadata pendaftaran (Pre-delegation & First-line Triage). Untuk konten dinamis yang tersembunyi di balik login berlapis, itu berada di luar lingkup inspeksi instan 5 milidetik kami dan diserahkan kepada subsistem perayap mendalam berkala seperti BIMA AI milik PANDI. Pembagian tugas ini memastikan sistem kami sangat ringan dan dapat dipasang di gerbang registrasi tanpa membebani server PANDI."*
 
 ### Pertanyaan 3 (Dari Juri Panitia):
 *“Bagaimana Anda menjamin bahwa hasil di Google Colab dan GitHub Anda akan identik saat kami uji ulang?”*
@@ -206,12 +206,12 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 ### Pertanyaan 4 (Dari Juri Akademisi APTIKOM / Software Engineer):
 *“Bisa jelaskan alur kerja metodologis (Machine Learning Lifecycle) yang Anda terapkan dalam riset ini dari hulu ke hilir?”*
 - **Jawaban Anda**:
-  > *"Terima kasih atas pertanyaannya. Riset SANTARA-SHIELD dirancang secara disiplin mengikuti kerangka standar 7-Langkah Machine Learning Lifecycle (CRISP-DM Compliant):*
+  > *"Terima kasih atas pertanyaannya. Riset TIFIS-ID dirancang secara disiplin mengikuti kerangka standar 7-Langkah Machine Learning Lifecycle (CRISP-DM Compliant):*
   > *1. **Problem Framing**: Memetakan trade-off bisnis PANDI antara False Positive (resiko komplain hukum) vs False Negative (resiko rekening korban jebol), dan menetapkan metrik objektif F1-Macro & Recall.*
   > *2. **Data Sourcing**: Mengumpulkan data benchmark representatif 212 URL kasus nyata Indonesia dan menyiapkan slot pipeline data resmi.*
   > *3. **Data Preprocessing & Cleaning**: Normalisasi format skema URL, penanganan format korup, dan audit keabsahan label domain bank resmi.*
   > *4. **EDA & Feature Engineering**: Mengekstrak 52 fitur komprehensif (Leksikal, Brand Spoofing lokal, Shannon Entropy, dan Char N-Gram Stacking).*
   > *5. **Model Development**: Melatih 3 model Multi-GBDT (LightGBM, CatBoost, XGBoost) menggunakan validasi anti-bocor StratifiedGroupKFold dan penggabungan bobot optimal SLSQP.*
   > *6. **Model Evaluation & Tuning**: Validasi mendalam via Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas dinamis tau*.*
-  > *7. **Deployment & Decision Support**: Menyediakan modul interaktif santara_inspect untuk IDADX, generator submission otomatis, serta rekomendasi kebijakan Pre-delegation Gatekeeper untuk PANDI."*
+  > *7. **Deployment & Decision Support**: Menyediakan modul interaktif tifis_inspect untuk IDADX, generator submission otomatis, serta rekomendasi kebijakan Pre-delegation Gatekeeper untuk PANDI."*
 

@@ -1,4 +1,4 @@
-# SANTARA-SHIELD: Deteksi Phishing Cerdas Domain (.id)
+# TIFIS-ID: Deteksi Phishing Cerdas Domain (.id)
 > **Pesta Data Nasional (PeDaS 2026) | APTIKOM Fest 2026 x PANDI**  
 > *Sistem Deteksi Phishing Berbasis Multi-GBDT Ensemble, Local Brand Intelligence, & Anti-Leakage Validation untuk Kedaulatan Internet Indonesia*
 
@@ -12,7 +12,7 @@
 
 ## 🎯 PeDaS 2026: Official Hackathon Submission & 1-Click Live CLI
 
-> **Golden Submission**: [`official/golden_submission_pedas2026.csv`](official/golden_submission_pedas2026.csv) (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 1.500 baris tervalidasi bebas cacat).  
+> **Golden Submission**: [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv) (MD5: `ebd39c0c00675b8cae481251b6da23e5`, 1.500 baris tervalidasi bebas cacat).  
 > **Babak Final Live CLI Runner**: [`run_pedas_pipeline.py`](run_pedas_pipeline.py) (Waktu eksekusi: **12,43 detik** di mesin lokal biasa, SLA Juknis Pasal 12: < 45 detik).  
 > **Arsitektur Utama**: *Explainable Hybrid Probabilistic Blender* (LinearSVC Character N-Grams 60% + LightGBM Domain Lifecycle 40% + Multiclass Platt Scaling + Bayes Thresholds + Evidence Guard).
 
@@ -31,9 +31,9 @@ python run_pedas_pipeline.py --train official/training.csv --predict official/pr
 
 ## 🏆 Ringkasan Eksekutif & Hasil Tolok Ukur (Benchmark Highlights)
 
-**SANTARA-SHIELD** dirancang untuk menjawab tantangan nyata **PANDI** (Pengelola Nama Domain Internet Indonesia) dalam menanggulangi maraknya kejahatan siber berbasis domain `.id`, khususnya eksploitasi Second-Level Domain (SLD) murah seperti `.my.id` dan `.biz.id` untuk phishing perbankan, penipuan dompet digital, dan pancingan malware APK WhatsApp.
+**TIFIS-ID** dirancang untuk menjawab tantangan nyata **PANDI** (Pengelola Nama Domain Internet Indonesia) dalam menanggulangi maraknya kejahatan siber berbasis domain `.id`, khususnya eksploitasi Second-Level Domain (SLD) murah seperti `.my.id` dan `.biz.id` untuk phishing perbankan, penipuan dompet digital, dan pancingan malware APK WhatsApp.
 
-| Metrik Evaluasi | Model Baseline (Default $\tau=0.50$) | **SANTARA-SHIELD (Optimal $\tau^*=0.20$)** | Peningkatan (*Gain*) | Target Industri PANDI |
+| Metrik Evaluasi | Model Baseline (Default $\tau=0.50$) | **TIFIS-ID (Optimal $\tau^*=0.20$)** | Peningkatan (*Gain*) | Target Industri PANDI |
 |---|---|---|---|---|
 | **Recall (Tingkat Tangkap Phishing)** | 0.9735 (97.35%) | **0.9868 (98.68%)** | **+1.33%** | Membabat False Negative ✅ |
 | **F1-Macro Score** | 0.9599 | **0.9711** | **+0.0112** | Keseimbangan Deteksi ✅ |
@@ -91,9 +91,9 @@ flowchart TD
 
 ### 2.1 Metodologi 7-Langkah Machine Learning Lifecycle (Standar Industri & CRISP-DM)
 
-Framework **SANTARA-SHIELD** dibangun di atas kerangka metodologi siklus hidup *machine learning* 7 langkah yang terstruktur, disiplin, dan dapat direproduksi (*fully reproducible*):
+Framework **TIFIS-ID** dibangun di atas kerangka metodologi siklus hidup *machine learning* 7 langkah yang terstruktur, disiplin, dan dapat direproduksi (*fully reproducible*):
 
-| No | Tahapan ML Lifecycle | Implementasi Nyata pada SANTARA-SHIELD | Lokasi Modul / Bukti |
+| No | Tahapan ML Lifecycle | Implementasi Nyata pada TIFIS-ID | Lokasi Modul / Bukti |
 |:---:|---|---|---|
 | **1** | **Problem Definition & Framing** | Merumuskan dilema operasional PANDI (*False Positive* vs *False Negative*), menetapkan batasan scope, dan memilih metrik penentu: **F1-Macro & Recall**. | [`README.md`](#1-urgensi-masalah--studi-kasus-pandi), Slide 2 PPT |
 | **2** | **Data Collection & Ingestion** | Mengumpulkan 212 URL kasus phishing Indonesia (BCA, BRI, PLN, Tilang ETLE, APK WhatsApp) dan menyiapkan slot otomatisasi data resmi PANDI. | [`data/benchmark/`](data/benchmark/), [`data/raw/`](data/raw/) |
@@ -101,7 +101,7 @@ Framework **SANTARA-SHIELD** dibangun di atas kerangka metodologi siklus hidup *
 | **4** | **EDA & Feature Engineering** | Analisis sebaran sektor dan perekayasaan **52 fitur komprehensif** (Leksikal, Brand Spoofing, Entropi Shannon, N-Gram Stacking). | [`src/features/`](src/features/), Notebook Bab 3–5 |
 | **5** | **Model Selection & Training** | Pelatihan 3 model pohon terbaik dunia (**LightGBM, CatBoost, XGBoost**) dengan validasi anti-bocor **StratifiedGroupKFold** dan pembobotan **SLSQP**. | [`src/models/`](src/models/), Notebook Bab 6 |
 | **6** | **Model Evaluation & Tuning** | Evaluasi mendalam metrik F1 (0.9772), Precision-Recall Curve, Confusion Matrix dampak industri, dan kalibrasi ambang batas $\tau^*$. | Notebook Bab 6.1 & 6.2 |
-| **7** | **Deployment & Decision Support** | Penyediaan API inspeksi interaktif `santara_inspect` (SOC Cyber-Card), generator submission otomatis, dan rekomendasi kebijakan PANDI. | Notebook Bab 7 & 8 |
+| **7** | **Deployment & Decision Support** | Penyediaan API inspeksi interaktif `tifis_inspect` (SOC Cyber-Card), generator submission otomatis, dan rekomendasi kebijakan PANDI. | Notebook Bab 7 & 8 |
 
 ---
 
@@ -134,7 +134,7 @@ Model kami bukan *black-box*. Berdasarkan analisis atribusi fitur (*Feature Impo
 
 ## 💻 5. Tech Stack & Ekosistem Teknologi
 
-Sistem **SANTARA-SHIELD** dibangun menggunakan arsitektur perangkat lunak berbasis Python murni (*Python-native stack*) yang dipilih secara presisi untuk menjamin efisiensi inferensi tinggi, kepatuhan regulasi kompetisi, serta stabilitas matematis di tingkat enterprise.
+Sistem **TIFIS-ID** dibangun menggunakan arsitektur perangkat lunak berbasis Python murni (*Python-native stack*) yang dipilih secara presisi untuk menjamin efisiensi inferensi tinggi, kepatuhan regulasi kompetisi, serta stabilitas matematis di tingkat enterprise.
 
 | Kategori Stack | Pustaka / Komponen | Versi | Peran & Alasan Pemilihan Arsitektur |
 |---|---|---|---|
@@ -150,7 +150,7 @@ Sistem **SANTARA-SHIELD** dibangun menggunakan arsitektur perangkat lunak berbas
 | **Data Engine & Math** | **Python** | `3.11 - 3.13` | Bahasa pemrograman utama (100% patuh pada aturan resmi PeDaS 2026 Slide 8 Poin 12: *Python only*). |
 | | **NumPy & Pandas** | `1.26+ / 2.1+` | Manipulasi matriks berkecepatan tinggi, operasi vektorisasi cepat, kalkulasi Shannon Entropy logaritma biner, dan manajemen dataframe. |
 | **Visualisasi & Demo** | **Matplotlib & Seaborn** | `3.8+ / 0.13+` | Pembuatan visualisasi data standar publikasi ilmiah (Diagram Bar EDA, Grouped Bar Threshold, Precision-Recall Curve, dan Matriks Dampak PANDI). |
-| | **IPython / HTML** | `8.0+` | Rendering antarmuka kartu diagnosis visual interaktif `santara_inspect` langsung di lingkungan notebook Jupyter dan Google Colab. |
+| | **IPython / HTML** | `8.0+` | Rendering antarmuka kartu diagnosis visual interaktif `tifis_inspect` langsung di lingkungan notebook Jupyter dan Google Colab. |
 | **Quality Assurance** | **pytest** | `7.4+` | Rangkaian pengujian unit otomatis (10 test cases) yang memverifikasi integritas matematika, fitur leksikal, brand detector, dan GroupKFold dalam < 3 detik. |
 | | **Google Colab** | *Cloud Native* | Lingkungan eksekusi satu-klik tanpa setup rumit, terintegrasi dengan clone repositori GitHub otomatis. |
 | | **Git & GitHub** | *VCS* | Kontrol versi terbuka, audit trail transparan, dan determinisme penuh (`RANDOM_STATE = 42`). |
@@ -170,7 +170,7 @@ PEDAS-2026/
 │   ├── processed/                    # Output prediksi model (oof_predictions.csv & submission.csv)
 │   └── raw/                          # Tempat penyimpanan dataset resmi PANDI (12 September)
 ├── notebooks/
-│   └── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Notebook Colab interaktif lengkap dengan visualisasi EDA, PR-Curve, Generator Submission, & santara_inspect
+│   └── 01_pemanasan_dan_ekstraksi_fitur.ipynb  # Notebook Colab interaktif lengkap dengan visualisasi EDA, PR-Curve, Generator Submission, & tifis_inspect
 ├── src/
 │   ├── features/
 │   │   ├── lexical.py                # 40+ Fitur leksikal, entropi, ekstensi file .apk
@@ -203,7 +203,7 @@ PEDAS-2026/
 Sesuai format pengumpulan PeDaS, seluruh alur kerja dapat dieksekusi secara interaktif di Google Colab:
 1. Klik badge 👉 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/01_pemanasan_dan_ekstraksi_fitur.ipynb)
 2. Klik menu **Runtime -> Run all** (`Ctrl + F9`).
-3. Notebook akan otomatis melakukan *clone* repositori, memasang dependensi, menjalankan ekstraksi fitur, melatih ensemble, menampilkan seluruh diagram batang & kurva evaluasi, serta menyiapkan file submission dan live demo `santara_inspect`.
+3. Notebook akan otomatis melakukan *clone* repositori, memasang dependensi, menjalankan ekstraksi fitur, melatih ensemble, menampilkan seluruh diagram batang & kurva evaluasi, serta menyiapkan file submission dan live demo `tifis_inspect`.
 
 ### Opsi B: Lingkungan Lokal (Terminal / PowerShell)
 ```powershell
