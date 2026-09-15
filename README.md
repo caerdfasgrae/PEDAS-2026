@@ -217,6 +217,16 @@ pytest tests/
 ```
 Output: Memvalidasi integritas matematis, determinisme, dan penanganan nilai kosong dalam waktu ~13 detik (21 passed).
 
+### E. Strategi Portofolio 3x Submisi Resmi (3-Tier Competitive Portfolio)
+Untuk panduan komprehensif mengenai strategi pembagian berkas submisi, silakan pelajari:
+👉 **[`docs/PANDUAN_STRATEGI_3X_SUBMISI.md`](docs/PANDUAN_STRATEGI_3X_SUBMISI.md)**
+- **Submisi 1**: `official/submission_TIFIS_TIFIS.csv` (Safe Golden Anchor — Lantai pengaman skor)
+- **Submisi 2**: `official/submission_TIFIS_TIFIS_v2.csv` (Rare-Class Hunter — Pencetak lonjakan nilai kelas langka)
+- **Submisi 3**: `official/submission_TIFIS_TIFIS_v3.csv` (Semi-Supervised Blend — Perisai adaptasi domain baru)
+
+Setiap berkas telah divalidasi 100% bebas cacat (1.500 valid / 0 invalid) via [`scripts/verify_all_submissions.py`](scripts/verify_all_submissions.py).
+
+
 ---
 
 ## 💡 5. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
