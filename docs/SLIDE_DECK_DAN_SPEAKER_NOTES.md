@@ -124,20 +124,22 @@
 ## SLIDE 7: Hasil Evaluasi Empiris & Stress-Test Generalisasi
 * **Waktu**: 4:35 – 5:30 (55 Detik)
 * **Visual Slide**:
-  - Tabel Perbandingan Validasi:
-    - *Baseline Tunggal (Default Argmax)*: Macro-F1 = `0.5749`.
-    - **Tifis-ID (Hybrid Blender + Bayes Threshold)**: **Macro-F1 = `0.6026`** (+2.77% peningkatan).
-  - Kotak Audit Generalisasi Ekstrem (*Strict Domain Group-KFold*):
-    - *Skor pada 100% Unseen Domains*: **`0.5731`**.
-    - *Generalization Gap*: Hanya **`2.95%`** (Terkunci aman di bawah batas toleransi 3.0%).
-    - Membuktikan model mengenali pola ancaman murni, bukan menghafal nama domain (*no domain memorization*).
-  - Waktu Eksekusi: **10.49 Detik** (Jauh melampaui SLA Juknis PeDaS < 45 Detik).
+  - Tangga Peningkatan Kinerja (5-Fold CV):
+    - *Workshop Starter Baseline (taufiksutanto Sesi 2 Bab 6)*: Macro-F1 = `0.5315`
+    - *Metadata Enrichment (URL + Registrar/Brand Sesi 2 Bab 11)*: Macro-F1 = `0.5650`
+    - *Model Tunggal (LightGBM 0.5819 / LinearSVC 0.5749)*
+    - **Tifis-ID Champion (Hybrid 60:40 + Bayes Calibration)**: **Macro-F1 = `0.6026`** (+7.11% lonjakan performa).
+  - Kotak Metrik Produksi & Audit Generalisasi:
+    - *Akurasi Riil Out-of-Fold (OOF)*: **`96.64%`** (8.118 dari 8.400 baris tepat).
+    - *Skor pada 100% Unseen Domains (Strict Group-KFold)*: **`0.5731`** (Generalization Gap hanya **`2.95%`**, membuktikan model bebas memorisasi domain).
+    - *Kecepatan Inferensi Penuh*: **10.47 Detik** (Jauh melampaui SLA Juknis PeDaS < 45 Detik).
 * **Sitasi / Sumber Valid**:
-  - *Ref: Laporan Evaluasi CV dan Stress-Test Group-KFold Repositori PeDaS 2026.*
+  - *Ref: Repositori Resmi Workshop PeDaS 2026 (taufiksutanto/PeDaS-2026 Sesi 2); Hasil Evaluasi CV dan Stress-Test Group-KFold Repositori TIFIS-ID.*
 * **Naskah Pembicara (Speaker Script)**:
   > *"Mari kita lihat bukti empiris keunggulan Tifis-ID pada Slide 7.  
-  > Pada evaluasi Stratified 5-Fold Cross-Validation, model kami mencatatkan skor Macro-F1 sebesar **0.6026**, unggul signifikan dibanding model baseline.  
-  > Namun bukti terpenting bagi kami adalah **Uji Ketahanan Generalisasi**: Kami menguji model pada skenario Zero Domain Overlap—di mana 100% domain uji adalah domain baru yang belum pernah dilihat sama sekali. Skornya tetap kokoh di 0.5731 dengan gap hanya 2.95%. Ini membuktikan Tifis-ID kebal dari overfitting."*
+  > Kami tidak asal memilih model. Kami bertolak langsung dari model baseline workshop resmi PeDaS 2026 (LinearSVC dengan Macro-F1 0.5315). Melalui pengayaan konteks metadata registrar, kalibrasi Platt probabilitas, perpaduan hybrid 60:40, dan penyesuaian threshold Bayes, kami berhasil melompatkan performa hingga mencapai puncak **Macro-F1 0.6026** dengan akurasi riil **96.64%**.  
+  > Yang terpenting, saat kami uji pada skenario ekstrem Zero Domain Overlap di mana 100% domain uji adalah domain baru, skor tetap kokoh di **0.5731** dengan selisih generalisasi hanya 2.95%. Ini membuktikan model kita benar-benar siap dan aman beroperasi di gerbang PANDI."*
+
 
 ---
 

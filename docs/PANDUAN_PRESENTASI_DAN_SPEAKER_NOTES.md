@@ -143,3 +143,10 @@ Dokumen ini selaras 100% dengan berkas PowerPoint master: [`docs/TIFIS_ID_PRESEN
 *“Bagaimana model Anda mengatasi ketimpangan kelas ekstrem di dataset PANDI, di mana judi ada 5.447 sampel sedangkan fakeshop hanya ada 5 sampel?”*
 - **Jawaban Anda**:
   > *"Jika menggunakan aturan keputusan argmax standar, model secara matematis akan selalu menebak kelas mayoritas dan memusnahkan kelas minoritas (Recall fakeshop menjadi 0%). Solusi metodologis kami adalah menerapkan Teori Keputusan Bayes melalui Cost-Sensitive Decision Thresholding: kami menggeser ambang batas vonis ($\arg\max (P_k + \Delta_k)$) terisolasi strictly di dalam training fold, dengan kelas mayoritas dikunci sebagai jangkar acuan ($\Delta_0 = 0.0$). Pendekatan ini dipadukan dengan Evidence Guard agar pergeseran batas tersebut tidak memicu lonjakan false positive."*
+
+### Pertanyaan 5 (Dari Juri Panitia / Kurator Lomba):
+*“Dari mana dasar pengambilan baseline Anda dan bagaimana Anda membenarkan setiap keputusan metode yang dipilih?”*
+- **Jawaban Anda**:
+  > *"Riset kami berangkat langsung dari materi resmi repositori Workshop PeDaS 2026 (`taufiksutanto/PeDaS-2026`). Di Sesi 2 Bab 6, pemateri mengajarkan model baseline awal: LinearSVC dengan Karakter 3–5 N-Gram (yang mencatatkan Macro-F1 0.5315).  
+  > Dari titik tolak tersebut, kami secara disiplin mengeksekusi rekomendasi pemateri di Bab 11: pertama, memperkaya teks URL dengan metadata registrar dan brand (naik ke 0.5650). Kedua, mengatasi limitasi non-probabilitas LinearSVC yang dicatat di Bab 8 dengan Multiclass Platt Scaling. Ketiga, memadukannya dengan LightGBM tabular (bobot 60:40) dan penyesuaian threshold Bayes. Setiap iterasi dibuktikan dengan angka validasi empiris hingga mencapai puncak Macro-F1 0.6026 dengan waktu eksekusi hanya 10.47 detik."*
+

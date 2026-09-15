@@ -114,6 +114,21 @@ Framework **TIFIS-ID** dibangun di atas kerangka metodologi siklus hidup *machin
 | **6** | **Bayes Thresholds & Evidence Guard** | Optimasi batas potong Bayes ($\arg\max (P_k + \Delta_k)$) terisolasi fold untuk kelas langka, dipagari **Evidence Guard** anti salah vonis. | [`src/models/threshold_optimizer.py`](src/models/threshold_optimizer.py), [`src/models/evidence_guard.py`](src/models/evidence_guard.py) |
 | **7** | **Deployment & Live Tools** | Runner CLI 1-klik (`run.bat`), pemindai bobot (`test_weights.bat`), inspektur ancaman interaktif (`inspect.bat`), dan notebook Colab master. | [`run_pedas_pipeline.py`](run_pedas_pipeline.py), [`scripts/inspect_domain.py`](scripts/inspect_domain.py) |
 
+### 2.2 Pohon Keputusan Metodologis: Dari Baseline Resmi Workshop PeDaS ke Model Juara
+
+Seluruh keputusan arsitektur TIFIS-ID dirumuskan secara sistematis dan bertahap (*evidence-based machine learning*), bertolak dari materi workshop resmi PeDaS 2026 ([`taufiksutanto/PeDaS-2026`](https://github.com/taufiksutanto/PeDaS-2026)):
+
+| Iterasi Model | Arsitektur & Rekayasa Fitur | Macro-F1 OOF | Peningkatan | Dasar Keputusan & Rationale Ilmiah |
+|---|---|:---:|:---:|---|
+| **0. Naive Baseline** | `DummyClassifier(strategy="most_frequent")` | `0.0874` | - | **Sesi 2 Bab 5**: Patokan tebakan acak kelas mayoritas. Membuktikan akurasi tinggi (64.8%) bisa menyesatkan jika Macro-F1 diabaikan. |
+| **1. Workshop Starter Baseline** | Karakter 3–5 N-Gram (10k) + `LinearSVC` (Teks URL murni) | `0.5315` | +0.4441 | **Sesi 2 Bab 6**: Model pembanding awal yang diajarkan kurator resmi. Efektif membaca ruang sparse teks berdimensi tinggi. |
+| **2. Contextual Metadata Enrichment** | Sintesis Teks Komposit: `URL + Brand + SLD + Registrar` | `0.5650` | +0.0335 | **Sesi 2 Bab 11**: Menjawab anjuran pemateri untuk membandingkan URL murni vs URL + metadata (menambah sinyal registrar & sasaran brand). |
+| **3. Single Model Evaluation** | Pure `LightGBM` (56 Tabular) vs Pure `LinearSVC` (15k N-Gram) | `0.5819` vs `0.5749` | +0.0169 | Membandingkan dua paradigma: GBDT unggul membaca interaksi non-linear usia domain, sedangkan SVM unggul membaca manipulasi ketikan. |
+| **4. Hybrid Blending (60:40)** | Convex Blend: $0.60 \times P_{\text{SVC}} + 0.40 \times P_{\text{LGB}}$ | `0.5905` | +0.0086 | Menggabungkan kelebihan kedua dunia; menutupi titik buta masing-masing model secara terukur. |
+| **5. Multiclass Platt Calibration** | Regresi logistik terisolasi fold pada margin keputusan SVM | `0.5950` | +0.0045 | **Sesi 2 Bab 8**: Menjawab catatan kritis pemateri (*"output SVM bukan probabilitas"*), menghasilkan probabilitas valid untuk triase IDADX. |
+| **6. Cost-Sensitive Bayes Thresholding** | Pergeseran ambang vonis $\arg\max (P_k + \Delta_k)$, jangkar $\Delta_0 = 0.0$ | **`0.6026`** | +0.0076 | **Sesi 3 Bab Decision Tuning**: Mengatasi ketimpangan ekstrem agar kelas langka (*fakeshop*, dll.) tertangkap tanpa merusak presisi kelas mayoritas. |
+| **7. Evidence Guardrail** | Verifikasi bukti token teks deterministik pasca-model | **`0.6026`** | Aman | Mencegah halusinasi *false positive* pada kelas langka, menjaga stabilitas operasional sistem DNS Registry. |
+
 ---
 
 ## 🗂️ 3. Struktur Repositori Bersih (*Clean Architecture*)
