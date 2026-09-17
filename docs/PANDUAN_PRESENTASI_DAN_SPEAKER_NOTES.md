@@ -150,3 +150,18 @@ Dokumen ini selaras 100% dengan berkas PowerPoint master: [`docs/TIFIS_ID_PRESEN
   > *"Riset kami berangkat langsung dari materi resmi repositori Workshop PeDaS 2026 (`taufiksutanto/PeDaS-2026`). Di Sesi 2 Bab 6, pemateri mengajarkan model baseline awal: LinearSVC dengan Karakter 3–5 N-Gram (yang mencatatkan Macro-F1 0.5315).  
   > Dari titik tolak tersebut, kami secara disiplin mengeksekusi rekomendasi pemateri di Bab 11: pertama, memperkaya teks URL dengan metadata registrar dan brand (naik ke 0.5650). Kedua, mengatasi limitasi non-probabilitas LinearSVC yang dicatat di Bab 8 dengan Multiclass Platt Scaling. Ketiga, memadukannya dengan LightGBM tabular (bobot 60:40) dan penyesuaian threshold Bayes. Setiap iterasi dibuktikan dengan angka validasi empiris hingga mencapai puncak Macro-F1 0.6026 dengan waktu eksekusi hanya 10.47 detik."*
 
+### Pertanyaan 6 (Dari Juri PANDI / Analis IDADX):
+*“Di portal publik IDADX (`idadx.id/report`), pilihan kategorinya adalah Perjudian, Phishing, Pornografi, Terorisme, SARA, Hak Kekayaan Intelektual, dll. Kenapa di model Anda kategorinya adalah `online gambling`, `brand`, `violence`, `piiexposure`?”*
+- **Jawaban Anda**:
+  > *"Pertanyaan yang luar biasa jeli, Bapak/Ibu Juri. Kami membedakan secara tegas antara **Antarmuka Pelaporan Masyarakat (Frontend)** dengan **Taksonomi Teknis Analis Machine Learning (Backend)**. Portal `idadx.id/report` dirancang untuk kemudahan bahasa masyarakat awam yang merujuk pada pasal hukum UU ITE / Kominfo. Sementara itu, dataset resmi yang diberikan panitia PeDaS 2026 (`official/training.csv`) mengadopsi taksonomi teknis analis siber berbasis standar global (APWG, CleanDNS, ICANN DAAR) dengan 9 kelas kanonikal bahasa Inggris. Keduanya saling berkorespondensi: misalnya, laporan masyarakat 'Hak Kekayaan Intelektual' dipetakan secara teknis leksikal oleh model kami menjadi deteksi `brand` (combo-squatting nama bank/fintech), `violence` mencakup ancaman terorisme & kekerasan, dan `fakeshop` serta `piiexposure` mendeteksi penipuan barang serta pencurian identitas NIK/KTP. Kami mempertahankan 9 kelas kanonikal ini agar berkas submisi patuh 100% terhadap kunci evaluasi autograder panitia."*
+
+### Pertanyaan 7 (Dari Juri Teknis / Dosen Evaluator):
+*“Skrip `run_pedas_pipeline.py` Anda sekali dijalankan langsung menghasilkan file submisi dalam ~10 detik. Bagaimana alur metodologi CRISP-DM sebenarnya berjalan di dalam skrip tersebut?”*
+- **Jawaban Anda**:
+  > *"Skrip `run_pedas_pipeline.py` adalah artefak **Tahap 7 (Deployment Pipeline)** dari metodologi CRISP-DM. Dalam standar MLOps modern, sistem deteksi siber di registry domain tidak boleh dijalankan secara terpisah-pisah lewat klik manual di Jupyter Notebook yang rawan human error dan data leakage. Skrip kami mengorkestrasi seluruh siklus hidup secara otomatis dalam 4 fase:  
+  > 1. Fase `[1/4]` mengeksekusi Data Ingestion & Cleaning (CRISP-DM Tahap 2 & 3) via `src/cleaner.py`.  
+  > 2. Fase `[2/4]` mengeksekusi Feature Engineering, Hybrid Modeling, Platt Calibration, dan Bayes Threshold Optimization (CRISP-DM Tahap 3, 4, 5, 6) via `src/pedas_features.py` dan `src/models/`.  
+  > 3. Fase `[3/4]` mengeksekusi Inferensi Model pada 1.500 data uji dipadukan dengan Evidence Guard leksikal (CRISP-DM Tahap 7).  
+  > 4. Fase `[4/4]` mengeksekusi Quality Gate validasi skema dan ekspor file ber-MD5 resmi.  
+  > Kecepatan ~10 detik tercapai karena kami memilih algoritma C-optimized (LIBLINEAR dan LightGBM C++) yang memiliki throughput >140 domain/detik pada CPU laptop biasa tanpa perlu GPU gemuk, membuktikan solusi ini sangat siap pasang di gateway PANDI BIMA AI."*
+

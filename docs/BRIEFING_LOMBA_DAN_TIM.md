@@ -29,16 +29,27 @@ Kompetisi ini diselenggarakan melalui kolaborasi dua institusi paling berpengaru
 ### Apa Tema & Tantangan Utamanya?
 Tantangannya adalah: **Membangun Model Kecerdasan Buatan (Machine Learning) untuk Mengklasifikasikan 9 Kategori Ancaman Domain pada Ekosistem Domain Tingkat Tinggi Indonesia (`.id`)**.
 
-9 Kategori Resmi IDADX PANDI:
-1. `online gambling` (Judi online / slot gacor)
-2. `phishing` (Pencurian kredensial bank/fintech)
-3. `other` (Domain sah / umum)
-4. `spam` (Penyebaran pesan massal tak diundang)
-5. `malware` (Penyebaran APK/berkas jahat)
-6. `brand` (Pencatutan merek / combosquatting)
-7. `fakeshop` (Toko online penipuan barang)
-8. `violence` (Konten kekerasan / ekstrimisme)
-9. `piiexposure` (Kebocoran data pribadi KTP/KK)
+9 Kategori Kanonikal Dataset PeDaS 2026 (Ground Truth Panitia):
+1. `online gambling` (Judi online / slot gacor / taruhan - 5.447 data latih)
+2. `phishing` (Pencurian kredensial bank/fintech/e-wallet - 2.253 data latih)
+3. `other` (Domain umum / non-ancaman / anomali lain - 284 data latih)
+4. `spam` (Penyebaran pesan sampah / lalu lintas massal - 185 data latih)
+5. `malware` (Penyebaran APK/berkas berbahaya - 179 data latih)
+6. `brand` (Pencatutan nama merek / combosquatting - 45 data latih)
+7. `fakeshop` (Toko online penipuan barang - 5 data latih)
+8. `violence` (Konten kekerasan / ekstrimisme radikal - 1 data latih)
+9. `piiexposure` (Kebocoran data pribadi NIK/KTP/KK - 1 data latih)
+
+> [!NOTE]
+> **Catatan Penting Tim: Mengapa Kategori Berbeda dengan Form Publik `idadx.id/report`?**  
+> Jika teman-teman membuka form pelaporan publik di web `https://idadx.id/report`, kalian akan melihat 10 opsi dropdown berbasis regulasi hukum UU ITE masyarakat (*Perjudian, Phishing, Malware, Pornografi, Terorisme, SARA, Hak Kekayaan Intelektual, Narkoba Ilegal, Lainnya*).  
+> **Namun untuk kompetisi PeDaS 2026**, panitia menyediakan dataset teknis berbasis standar siber internasional (APWG, CleanDNS, ICANN DAAR) dengan 9 label bahasa Inggris di atas.  
+> **Korelasinya:**  
+> - `brand` adalah representasi teknis dari *Hak Kekayaan Intelektual* (pencatutan nama merek bank/instansi).  
+> - `violence` mewakili konten terorisme & kekerasan radikal.  
+> - `fakeshop` dan `piiexposure` adalah bentuk kejahatan siber spesifik (toko penipu & pembocoran identitas).  
+> - Konten pornografi & narkoba dilebur atau difilter panitia agar fokus lomba terpusat pada kejahatan finansial & infrastruktur.  
+> **PANTANGAN:** Berkas submisi kita **HARUS tetap menggunakan 9 label bahasa Inggris** di atas. Jika diubah menjadi bahasa Indonesia, sistem koreksi otomatis panitia akan error (*invalid label*) dan memberi nilai 0!
 
 ---
 
@@ -107,6 +118,14 @@ Solusi kita dibangun dengan nama resmi **Tifis-ID** (*Trustworthy Intelligent Fr
 5. **Probabilistic Calibration**: Menerapkan **Multiclass Platt Scaling** agar output skor margin SVM menjadi probabilitas nyata $[0, 1]$ yang berjumlah pas 1.0.
 6. **Bayes Thresholding & Evidence Guard**: Optimasi pergeseran batas potong Bayes ($\arg\max (P_k + \Delta_k)$) terisolasi fold untuk kelas minoritas, dipagari jaring pengaman **Evidence Guard** anti salah vonis.
 7. **Deployment & Live Tools**: Menyediakan runner 1-klik (`run.bat`), penguji bobot (`test_weights.bat`), inspektur domain langsung (`inspect.bat`), dan notebook master Colab.
+
+#### Bagaimana Skrip `run_pedas_pipeline.py` (atau `run.bat`) Menjalankan Seluruh CRISP-DM di Atas?
+Ketika kita menjalankan `run.bat`, skrip tersebut menjalankan **Tahap 7 (Deployment Pipeline)** yang secara otomatis mengeksekusi Tahap 2 s/d 6 dalam 4 fase terminal:
+* **Fase `[1/4] Ingesting & normalizing data...`** $\rightarrow$ Mengeksekusi Tahap 2 & 3 via `src/cleaner.py` (membersihkan URL dan membuat teks gabungan konteks registrasi).
+* **Fase `[2/4] Training Explainable Hybrid Blender...`** $\rightarrow$ Mengeksekusi Tahap 3, 4, 5, & 6 via `src/pedas_features.py` dan `src/models/` (mengekstrak 15.000 n-gram + 56 fitur tabular, melatih SVC 60% + LGB 40%, kalibrasi Platt, dan optimasi threshold Bayes).
+* **Fase `[3/4] Running inference & applying evidence guards...`** $\rightarrow$ Mengeksekusi Tahap 7 Inferensi via `src/models/evidence_guard.py` (memprediksi 1.500 data uji dan menyaring false positive).
+* **Fase `[4/4] Validating schema and exporting submission...`** $\rightarrow$ Mengeksekusi Tahap 7 Quality Control via `src/submission.py` (memastikan 1.500 baris, 0 NaN, dan menghasilkan `official/submission_TIFIS_TIFIS.csv` dengan MD5: `ebd39c0c00675b8cae481251b6da23e5`).
+* **Kenapa Hanya ~10.5 Detik?** Karena kode kita berbasis algoritma C-optimized (LIBLINEAR & LightGBM C++) dan bebas overhead GPU/deep learning yang boros daya. Ini membuktikan solusi kita sangat ringan dan siap dipasang langsung di server operasional PANDI.
 
 ### B. Empat Pilar Keunggulan Teknologi Kita
 1. **Explainable Hybrid Probabilistic Blender (LinearSVC 60% + LightGBM 40%)**:

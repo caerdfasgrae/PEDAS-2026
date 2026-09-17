@@ -86,6 +86,31 @@ Sebagai *Registry* penanggung jawab kedaulatan domain `.id`, PANDI mengelola jut
 2. **Judi Online & Defacement**: Injeksi massal direktori judi pada website institusi (`.go.id`, `.ac.id`) atau penggunaan domain acak.
 3. **Pancingan APK Malware Berkedok Layanan Publik**: Menggunakan domain `.biz.id` untuk menyebarkan file `.apk` penyadap SMS berkedok surat undangan pernikahan atau surat tilang ETLE kepolisian.
 
+### 1.1 Taksonomi Ancaman: Portal Publik IDADX (`idadx.id/report`) vs Taksonomi Teknis Dataset PeDaS 2026
+
+Bagi tim dan penguji teknis, penting untuk membedakan antara **Antarmuka Pelaporan Masyarakat** dengan **Dataset Pembelajaran Mesin**:
+* **Portal Publik [`idadx.id/report`](https://idadx.id/report)**: Antarmuka ramah publik berbasis hukum UU ITE / Kominfo (menampilkan 10 opsi dropdown seperti *Perjudian*, *Phishing*, *Malware*, *Pornografi*, *Terorisme*, *SARA*, *Hak Kekayaan Intelektual*, *Narkoba Ilegal*, dan *Lainnya*).
+* **Dataset Resmi PeDaS 2026 ([`official/training.csv`](official/training.csv))**: Taksonomi teknis kurasi analis siber PANDI & APTIKOM yang mengadopsi standar global (APWG, CleanDNS, ICANN DAAR) dengan 9 kelas kanonikal bahasa Inggris.
+
+Berikut adalah pemetaan komparatif kedua taksonomi tersebut:
+
+| No | Kategori Dropdown di Web Publik `idadx.id/report` | Kelas Kanonikal Dataset PeDaS 2026 (`official/training.csv`) | Frekuensi Latih | Korelasi & Rasional Teknis |
+|:---:|---|---|:---:|---|
+| 1 | **Perjudian & Ajakan Berjudi** | `online gambling` | 5.447 (64,8%) | **Identik**. Ancaman terbesar domain `.id` (situs slot, gacor, kasino online). |
+| 2 | **Phishing** | `phishing` | 2.253 (26,8%) | **Identik**. Penipuan pencurian kredensial rekening bank, OTP, atau akun instansi. |
+| 3 | **Malware** | `malware` | 179 (2,1%) | **Identik**. Tautan pengunduh berkas berbahaya (APK sadap SMS, ransomware, trojan). |
+| 4 | **Spam** | `spam` | 185 (2,2%) | **Identik**. Domain distributor lalu lintas sampah atau kampanye email tak diundang. |
+| 5 | **Hak Kekayaan Intelektual** | `brand` | 45 (0,5%) | **Terkait Erat**. Pelanggaran merek di ranah nama domain (*brand impersonation* & *combo-squatting*). |
+| 6 | *(Bagian dari Penipuan / HKI)* | `fakeshop` | 5 (0,06%) | **Kelas Langka**. Toko e-commerce palsu penyerap uang konsumen tanpa pengiriman barang. |
+| 7 | **Terorisme** | `violence` | 1 (0,01%) | **Terkait Erat**. Konten ekstremisme dan ancaman kekerasan fisik (*violent extremism*). |
+| 8 | *(Bagian dari Pencurian Identitas)* | `piiexposure` | 1 (0,01%) | **Kelas Langka**. *Personally Identifiable Information Exposure* (pembocoran NIK/KTP/KK). |
+| 9 | **Lainnya** | `other` | 284 (3,4%) | **Identik**. Kategori umum penampung domain anomali atau situs sah yang dilaporkan keliru. |
+| - | *Pornografi, SARA, Narkoba Ilegal* | *(Dilebur ke `other`)* | - | Panitia PeDaS 2026 memfokuskan klasifikasi pada kejahatan siber & finansial berisiko tinggi. |
+
+> [!WARNING]
+> **Kepatuhan Mutlak Format Submisi Panitia:**  
+> Seluruh berkas submisi (`submission_TIFIS_TIFIS.csv`) **wajib menggunakan 9 kelas kanonikal bahasa Inggris** (`online gambling`, `phishing`, `malware`, `spam`, `brand`, `fakeshop`, `violence`, `piiexposure`, `other`). Mengubah keluaran prediksi menjadi istilah bahasa Indonesia pada form web akan menyebabkan penilaian autograder panitia otomatis gagal (*schema rejection*) dan bernilai 0.
+
 ---
 
 ## 🏛️ 2. Arsitektur Solusi & Alur Kerja Framework
@@ -126,6 +151,59 @@ Framework **TIFIS-ID** dibangun di atas kerangka metodologi siklus hidup *machin
 | **5** | **Probabilistic Calibration** | Menerapkan **Multiclass Platt Scaling** agar output skor SVM menjadi probabilitas sejati $[0, 1]$ yang jumlahnya tepat 1.0. | [`src/models/probabilistic_calibrator.py`](src/models/probabilistic_calibrator.py) |
 | **6** | **Bayes Thresholds & Evidence Guard** | Optimasi batas potong Bayes ($\arg\max (P_k + \Delta_k)$) terisolasi fold untuk kelas langka, dipagari **Evidence Guard** anti salah vonis. | [`src/models/threshold_optimizer.py`](src/models/threshold_optimizer.py), [`src/models/evidence_guard.py`](src/models/evidence_guard.py) |
 | **7** | **Deployment & Live Tools** | Runner CLI 1-klik ([`run.bat`](run.bat)), pemindai bobot ([`test_weights.bat`](test_weights.bat)), inspektur ancaman ([`inspect.bat`](inspect.bat)), dan notebook master. | [`run_pedas_pipeline.py`](run_pedas_pipeline.py), [`scripts/inspect_domain.py`](scripts/inspect_domain.py), [`notebooks/02_tifis_id_official_pipeline.ipynb`](notebooks/02_tifis_id_official_pipeline.ipynb) |
+
+### 2.1.1 Orkestrasi Operasional: Bagaimana `run_pedas_pipeline.py` Menjalankan CRISP-DM
+
+Skrip utama [`run_pedas_pipeline.py`](run_pedas_pipeline.py) adalah perwujudan dari **Tahap 7 (Deployment)** yang secara otomatis mengorkestrasikan **Tahap 2 hingga Tahap 6** ke dalam satu kesatuan eksekusi pipeline produksi tanpa intervensi manual:
+
+```mermaid
+flowchart TD
+    subgraph Metodologi ["Siklus Metodologi CRISP-DM 7-Langkah"]
+        M1["1. Problem Understanding<br/>(9 Kelas IDADX, Macro-F1)"]
+        M2["2. Data Understanding<br/>(Audit 8.400 Latih & 1.500 Uji)"]
+        M3["3. Data Preparation & Feat. Eng.<br/>(Composite Text, 15k N-Grams, 56 Tabular)"]
+        M4["4. Hybrid Modeling<br/>(60% LinearSVC + 40% LightGBM)"]
+        M5["5. Probabilistic Calibration<br/>(Multiclass Platt Scaling)"]
+        M6["6. Bayes Thresholds & Guardrails<br/>(Rare Hunter & Evidence Guard)"]
+        M7["7. Deployment & Verification<br/>(1-Click Runner, MD5 Gate)"]
+    end
+
+    subgraph PipelineCLI ["Eksekusi Terminal: run_pedas_pipeline.py (~10.5 Detik)"]
+        P1["[1/4] Ingesting & Normalizing Data<br/>src/cleaner.py (~0.10s)"]
+        P2["[2/4] Training Hybrid Blender & Calibration<br/>src/pedas_features.py + src/models/ (~8.80s)"]
+        P3["[3/4] Inference & Evidence Guards<br/>src/models/evidence_guard.py (~1.40s)"]
+        P4["[4/4] Validating Schema & Exporting<br/>src/submission.py (~0.20s)"]
+    end
+
+    M1 -.->|"Dianalisis Pra-Koding"| PipelineCLI
+    M2 --> P1
+    M3 --> P1 & P2
+    M4 --> P2
+    M5 --> P2
+    M6 --> P2 & P3
+    M7 --> P3 & P4
+```
+
+#### Rincian Kerja 4 Fase Terminal `run_pedas_pipeline.py`:
+1. **`[1/4] Ingesting & normalizing data...` (CRISP-DM Tahap 2 & 3)**:
+   - Memuat data mentah `training.csv` (8.400 baris) dan `predict.csv` (1.500 baris) melalui [`src/cleaner.py`](src/cleaner.py).
+   - Melakukan normalisasi URL leksikal, pembersihan anomali karakter, pengisian nilai kosong (*imputation*) usia domain dari tanggal registrasi, serta sintesis **Composite Text** (`URL + Brand + SLD + Registrar`) agar model memahami konteks registrasi.
+2. **`[2/4] Training Explainable Hybrid Probabilistic Blender...` (CRISP-DM Tahap 3, 4, 5, & 6)**:
+   - Mengekstraksi fitur **Dual-Stream** ([`src/pedas_features.py`](src/pedas_features.py)): 15.000 n-gram karakter teks sub-kata + 56 fitur numerik tabular.
+   - Melatih **LinearSVC (60%)** untuk menangkap pola ketikan teks URL dan **LightGBM (40%)** untuk struktur registrar dan usia domain ([`src/models/hybrid_blender.py`](src/models/hybrid_blender.py)).
+   - Melakukan **Platt Scaling** multiclass ([`src/models/probabilistic_calibrator.py`](src/models/probabilistic_calibrator.py)) untuk mengubah skor jarak margin SVM menjadi probabilitas murni $[0, 1]$.
+   - Mengoptimalkan **Ambang Batas Bayes ($\Delta_k$)** ([`src/models/threshold_optimizer.py`](src/models/threshold_optimizer.py)) agar kelas minoritas langka (*brand*, *fakeshop*, *malware*) tidak tereliminasi oleh dominasi kelas mayoritas.
+3. **`[3/4] Running inference & applying evidence guards on test set...` (CRISP-DM Tahap 7 Inference)**:
+   - Melakukan inferensi terkalibrasi pada 1.500 sampel data uji baru (`predict.csv`).
+   - Menyaring probabilitas menggunakan **Evidence Guard** ([`src/models/evidence_guard.py`](src/models/evidence_guard.py)) sebagai jaring pengaman leksikal deterministik untuk mencegah salah vonis (*false positive*) pada domain legal.
+4. **`[4/4] Validating schema and exporting submission...` (CRISP-DM Tahap 7 Verification)**:
+   - Melakukan audit integritas ketat: tepat 1.500 baris, kolom wajib `id,category`, 0 nilai hilang/NaN.
+   - Menghasilkan berkas resmi `official/submission_TIFIS_TIFIS.csv` dan mencetak sidik jari digital MD5 (`ebd39c0c00675b8cae481251b6da23e5`).
+
+#### Mengapa Bisa Sekali Run Selesai dalam ~10.5 Detik?
+- **Arsitektur MLOps Terpadu (*Stateless Pipeline*)**: Tidak menggunakan pemisahan file CSV perantara yang rawan kebocoran data (*data leakage*) atau kesalahan klik cell notebook manual.
+- **Komputasi Efisien C-Level**: Algoritma LinearSVC (LIBLINEAR C++) dan LightGBM (C++ Histogram GBDT) memiliki efisiensi komputasi tinggi tanpa memerlukan GPU gemuk, menghasilkan throughput **>140 domain/detik** pada CPU lokal standar.
+- **Reproduksibilitas Penuh (*100% Deterministic Seed 2026*)**: Di laptop siapapun skrip ini dieksekusi, hasil yang dikeluarkan identik byte-per-byte (MD5 valid).
 
 ### 2.2 Pohon Keputusan Metodologis: Dari Baseline Resmi Workshop PeDaS ke Model Juara
 
