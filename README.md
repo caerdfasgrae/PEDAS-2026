@@ -6,8 +6,21 @@
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/caerdfasgrae/PEDAS-2026/blob/main/notebooks/02_tifis_id_official_pipeline.ipynb)
 [![Dataset](https://img.shields.io/badge/Dataset-Official%20PANDI%208400-success.svg)](official/)
-[![Validation](https://img.shields.io/badge/Validation-StratifiedGroupKFold-orange.svg)](#-5-metodologi-validasi-bebas-kebocoran-anti-leakage)
+[![Validation](https://img.shields.io/badge/Validation-StratifiedGroupKFold-orange.svg)](#2-stratified-k-fold-stratifikasi-berdasarkan-proporsi-kelas)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## 📌 Navigasi Cepat
+* [🎯 Official Submission & Live CLI](#-pedas-2026-official-submission--1-click-live-cli)
+* [🏆 Ringkasan Eksekutif & Benchmark](#-ringkasan-eksekutif--hasil-tolok-ukur)
+* [📌 1. Urgensi Masalah & Studi Kasus PANDI](#-1-urgensi-masalah--studi-kasus-pandi)
+* [🏛️ 2. Arsitektur Solusi (CRISP-DM Standard)](#-2-arsitektur-solusi--alur-kerja-framework)
+* [🧠 3. Panduan Konseptual & Glosarium Metode (Ramah Mahasiswa IT)](#-3-panduan-konseptual--glosarium-metode-ramah-mahasiswa-it--penguji)
+* [🗂️ 4. Struktur Repositori Bersih](#-4-struktur-repositori-bersih-clean-architecture)
+* [🚀 5. Panduan Menjalankan & Alat Pengujian](#-5-panduan-menjalankan--alat-pengujian-mandiri)
+* [💡 6. Rekomendasi Kebijakan untuk PANDI & IDADX](#-6-rekomendasi-kebijakan-strategis-untuk-pandi--idadx)
+* [⚖️ 7. Kepatuhan Regulasi Resmi PeDaS 2026](#-7-kepatuhan-regulasi-resmi-pedas-2026)
 
 ---
 
@@ -131,7 +144,80 @@ Seluruh keputusan arsitektur TIFIS-ID dirumuskan secara sistematis dan bertahap 
 
 ---
 
-## 🗂️ 3. Struktur Repositori Bersih (*Clean Architecture*)
+## 🧠 3. Panduan Konseptual & Glosarium Metode (Ramah Mahasiswa IT & Penguji)
+
+Bagi mahasiswa ilmu komputer/teknologi informasi yang baru mendalami *data science* dan *machine learning*, banyak istilah teknis dalam repositori ini yang mungkin terdengar abstrak. Bagian ini merangkum dan menguraikan setiap metodologi ke dalam **analogi intuitif**, **alasan saintifik**, dan **tautan kode implementasinya**.
+
+### 1. Data Training vs Validasi vs Prediksi (Try Out vs Ujian Asli, 80/20 vs 100%)
+* **Konsep Formal**: Pemisahan dataset menjadi *training set* untuk pembaruan bobot model, *validation set* untuk evaluasi tanpa bias (*hyperparameter tuning*), dan *test/predict set* untuk inferensi akhir.
+* **Analogi Sederhana**: 
+  * `training.csv` (8.400 baris) adalah **8.400 soal latihan lengkap dengan kunci jawaban**.
+  * `predict.csv` (1.500 baris) adalah **1.500 soal Ujian Resmi Panitia tanpa kunci jawaban**.
+  * **Mengapa ada 80% vs 20%?** Saat tahap riset (5-Fold CV), kita membagi 80% soal untuk belajar dan 20% soal kita simpan di laci untuk simulasi *Try Out*. Tujuannya agar kita tahu nilai asli model kita saat bertemu soal yang belum pernah dihafal.
+  * **Mengapa saat submit kita latih 100% data?** Setelah metode terbukti unggul di try out, saat menghadapi ujian asli panitia (`predict.csv`), model kita dilatih ulang menggunakan **100% dari seluruh 8.400 soal latihan** agar seluruh ilmu dan variasi kata terserap maksimal.
+* **Tautan Kode**: Dimuat via [`src/cleaner.py`](src/cleaner.py) dan dieksekusi 100% di [`run_pedas_pipeline.py`](run_pedas_pipeline.py).
+
+### 2. Stratified K-Fold (Stratifikasi Berdasarkan Proporsi Kelas)
+* **Konsep Formal**: Teknik *cross-validation* yang menjaga persentase kemunculan setiap kelas target sama rata di setiap lipatan (*fold*).
+* **Analogi Sederhana**: Di data latih kita, ada kelas langka seperti `fakeshop` (toko online penipu) yang cuma punya **5 baris data**. Kalau data dibagi acak murni (seperti undian arisan), bisa saja kelima baris itu masuk ke data latihan semua, sehingga saat try out (validasi) tidak ada satu pun soal toko penipu yang diujikan! Dengan *Stratified K-Fold (5-Fold)*, komputer dipaksa membagi secara adil: **tepat 1 baris fakeshop di Fold 1, 1 di Fold 2, 1 di Fold 3, 1 di Fold 4, dan 1 di Fold 5**.
+* **Tautan Kode**: [`src/evaluator.py`](src/evaluator.py) & [`scripts/test_hybrid_cv.py`](scripts/test_hybrid_cv.py).
+
+### 3. Group K-Fold & Anti-Domain Leakage (Mencegah Model "Menyontek")
+* **Konsep Formal**: Mengelompokkan observasi berdasarkan entitas induk (*group identifier*) agar seluruh baris dari entitas yang sama berada pada fold yang sama, mencegah kebocoran data (*data leakage*).
+* **Analogi Sederhana**: Misal ada domain judi `slotgacor123.biz.id` yang memiliki 3 URL berbeda di dataset. Kalau 2 URL masuk ke data latihan dan 1 URL masuk ke try out, model akan dengan mudah menebak URL ketiga sebagai judi **bukan karena dia pintar menganalisis kata, melainkan karena dia sudah hafal nama domain `slotgacor123`**. Ini seperti siswa yang menyontek bocoran soal! Dengan *Group K-Fold*, seluruh URL dari domain yang sama dikunci bersama-sama. Saat try out, model dipaksa menebak domain yang **100% baru dan belum pernah dilihat sebelumnya**.
+* **Tautan Kode**: [`scripts/audit_group_kfold.py`](scripts/audit_group_kfold.py) & [`src/evaluator.py`](src/evaluator.py).
+
+### 4. Generalization Gap (Kesenjangan Generalisasi)
+* **Konsep Formal**: Selisih antara performa model pada data validasi standar (*Stratified CV*) dengan data yang domainnya terisolasi total (*Group-KFold*).
+* **Analogi Sederhana**: Nilai try out biasa siswa kita adalah 60.26%. Saat diuji dengan soal dari sekolah lain yang belum pernah ia lihat (Group-KFold), nilainya adalah 57.31%. Selisihnya hanya **2.95%**! Jika selisihnya besar (misal > 10%), itu tanda model hanya menghafal (*overfitting*). Selisih kecil (< 3.0%) membuktikan model kita benar-benar memahami pola ancaman secara universal.
+* **Tautan Kode**: [`scripts/alternatives/evaluate_alternatives.py`](scripts/alternatives/evaluate_alternatives.py).
+
+### 5. Mengapa Macro-F1, Bukan Akurasi Biasa?
+* **Konsep Formal**: Rata-rata *unweighted* dari F1-score tiap kelas: $\text{Macro-F1} = \frac{1}{C} \sum_{c=1}^C F1_c$.
+* **Analogi Sederhana**: Di data latih 8.400 baris, 64.8% adalah judi online dan 26.8% adalah phishing. Jika seorang mahasiswa membuat model bodoh yang hanya menebak "semuanya judi online!", akurasinya sudah mencapai **64.8%**! Namun, model tersebut sama sekali tidak bisa mendeteksi malware, toko penipu, atau phishing. Metrik **Macro-F1 menuntut keadilan**: kesembilan kelas masing-masing memiliki bobot yang sama persis (11.11%). Menebak benar 1 toko penipu sama berharganya dengan menebak ribuan situs judi!
+* **Tautan Dokumen**: Dijelaskan rinci pada [`docs/BRIEFING_LOMBA_DAN_TIM.md`](docs/BRIEFING_LOMBA_DAN_TIM.md).
+
+### 6. Character N-Grams vs Kata Utuh (Sub-word Parsing)
+* **Konsep Formal**: Tokenisasi teks berbasis potongan karakter sepanjang $N$ huruf berurutan (rentang 3 sampai 5 karakter), alih-alih memotong berdasarkan spasi kata.
+* **Analogi Sederhana**: Pelaku kejahatan siber sering sengaja membuat salah ketik (*typosquatting*) atau menggabungkan kata agar lolos sensor, misalnya `bca-klik` atau `sl0tgac0r`. Model teks biasa yang membaca kata utuh per spasi akan bingung. Namun, dengan *Character 3–5 N-Grams*, kata `gacor` dipecah menjadi potongan: `gac`, `aco`, `cor`, `gaco`, `acor`, `gacor`. Begitu ada penipu menulis `gacor88` atau `supergacor`, model tetap dapat mengenali pola potongan huruf tersebut secara akurat!
+* **Tautan Kode**: [`src/pedas_features.py`](src/pedas_features.py) (dipanggil di [`src/models/hybrid_blender.py`](src/models/hybrid_blender.py)).
+
+### 7. LinearSVC vs LightGBM: Mengapa Dikawinkan 60:40?
+* **Konsep Formal**: Perpaduan (*ensemble blending*) antara pengklasifikasi garis pembatas linier (*Support Vector Classifier*) pada ruang teks berdimensi tinggi dan pohon keputusan bertingkat (*Gradient Boosted Decision Trees*) pada fitur tabular terstruktur.
+* **Analogi Sederhana**: 
+  * `LinearSVC` seperti seorang **ahli bahasa** yang sangat teliti membaca 15.000 kombinasi potongan huruf di URL.
+  * `LightGBM` seperti seorang **detektif data** yang jago membaca tabel angka: berapa usia domainnya, apakah IP-nya Cloudflare, apa registrar-nya, dan berapa jumlah tanda minus di URL-nya.
+  * Dikawinkan dengan bobot **60% Ahli Bahasa + 40% Detektif Data**, keduanya saling menutupi kelemahan rekannya, melesatkan skor dari 0.57 menjadi **0.6026**!
+* **Tautan Kode**: [`src/models/hybrid_blender.py`](src/models/hybrid_blender.py).
+
+### 8. Multiclass Platt Scaling (Kalibrasi Probabilitas)
+* **Konsep Formal**: Transformasi fungsi sigmoid/regresi logistik untuk memetakan margin keputusan mentah model non-probabilistik ($f(x) \in (-\infty, +\infty)$) menjadi probabilitas posterior sejati ($P \in [0, 1]$).
+* **Analogi Sederhana**: Nilai bawaan dari model SVM bukanlah persentase ("90% yakin"), melainkan sekadar angka jarak geometris (misalnya: `-2.4` atau `+1.8`). Kita tidak bisa menggabungkan angka jarak ini dengan probabilitas LightGBM yang bentuknya persentase. *Platt Scaling* bertindak sebagai penerjemah yang mengubah angka jarak mentah tersebut menjadi probabilitas persentase yang jumlah totalnya tepat 100% (1.0).
+* **Tautan Kode**: [`src/models/probabilistic_calibrator.py`](src/models/probabilistic_calibrator.py).
+
+### 9. Cost-Sensitive Bayes Thresholding (Ambang Batas Cerdas)
+* **Konsep Formal**: Menggeser ambang batas keputusan (*decision threshold*) dari aturan standar $\arg\max P_k$ menjadi $\arg\max (P_k + \Delta_k)$ untuk meminimalkan risiko bayes pada kelas dengan frekuensi minoritas.
+* **Analogi Sederhana**: Pada aturan biasa, komputer hanya akan memilih kelas yang probabilitasnya paling tinggi (misal > 50%). Masalahnya, karena kelas minoritas (seperti toko penipu) sangat sedikit, probabilitasnya jarang sekali bisa mencapai 50% melawan kelas raksasa judi online. *Bayes Thresholding* memberikan "keringanan ambang batas" yang terukur secara matematis untuk kelas minoritas: jika kecurigaan toko penipu sudah mencapai 25%, model sudah berani memvonisnya, sehingga kelas langka tidak pernah terabaikan.
+* **Tautan Kode**: [`src/models/threshold_optimizer.py`](src/models/threshold_optimizer.py).
+
+### 10. Evidence Guardrail (Rem Darurat Anti-Halusinasi)
+* **Konsep Formal**: Lapisan verifikasi deterministik pasca-inferensi berbasis aturan domain (*domain heuristics*) untuk mencegah kesalahan klasifikasi positif palsu (*false positive*) pada kelas kritis berisiko tinggi.
+* **Analogi Sederhana**: Ibarat hakim yang memiliki asisten pemeriksa bukti fisik sebelum palu diketuk. Jika model AI mencurigai sebuah situs sebagai "Kekerasan (Violence)" hanya karena membaca kata `eksekusi`, *Evidence Guard* akan mengecek: *"Tunggu dulu, kata 'eksekusi' di URL ini adalah tentang 'lelang sita eksekusi pengadilan KPKNL', bukan kekerasan fisik!"*. Sistem rem darurat ini langsung membatalkan vonis salah tuduh dan mengembalikannya ke kategori yang benar.
+* **Tautan Kode**: [`src/models/evidence_guard.py`](src/models/evidence_guard.py).
+
+### 11. Tabrakan Sensor Bintang (Asterisk Masking Collision)
+* **Konsep Formal**: Ambiguitas string sintetik akibat teknik sensor anonimisasi deterministik yang mengubah nama domain berkarakter sama menjadi pola asterisk yang identik.
+* **Analogi Sederhana**: Panitia menyensor nama domain dengan mengganti huruf menjadi bintang sebanyak panjang hurufnya. Akibatnya, domain toko resmi 7 huruf (misal `samsung.co.id`) dan domain toko penipu 7 huruf (misal `penipuu.co.id`) sama-sama disensor menjadi `*******.co.id`. Di data latihan, URL yang sama persis ini memiliki dua label bertentangan (`brand` vs `fakeshop`). Tim TIFIS-ID adalah satu-satunya tim yang membongkar fenomena ini dan mendokumentasikannya secara transparan.
+* **Tautan Dokumen**: Dibahas tuntas pada [`docs/CHANGELOG_DENOISING_DATA_LATIH.md`](docs/CHANGELOG_DENOISING_DATA_LATIH.md).
+
+### 12. Transductive Pseudo-Labeling (Semi-Supervised pada Submisi 3)
+* **Konsep Formal**: Memanfaatkan data uji (*unlabelled test set*) dengan mengambil prediksi yang memiliki tingkat keyakinan sangat tinggi ($P \ge 0.98$) sebagai data latih tambahan untuk menyesuaikan pergeseran kovariat (*covariate shift*).
+* **Analogi Sederhana**: Saat menghadapi ujian asli (`predict.csv`), ada banyak soal yang polanya sangat jelas dan kita yakin 99% benar (misal URL yang jelas-jelas judi online). Kita "meminjam" soal-soal yang sudah sangat pasti ini untuk dimasukkan kembali ke bahan belajar model, agar model dapat mengenali nama-nama registrar baru yang ada di data ujian tahun 2026.
+* **Tautan Kode**: [`src/alternatives/adaptive_hedge_pipeline.py`](src/alternatives/adaptive_hedge_pipeline.py).
+
+---
+
+## 🗂️ 4. Struktur Repositori Bersih (*Clean Architecture*)
 
 ```text
 PEDAS-2026/
@@ -200,7 +286,7 @@ PEDAS-2026/
 
 ---
 
-## 🚀 4. Panduan Menjalankan & Alat Pengujian Mandiri
+## 🚀 5. Panduan Menjalankan & Alat Pengujian Mandiri
 
 ### A. Menjalankan Pipeline Lengkap (Generate Submission)
 ```powershell
@@ -210,7 +296,7 @@ PEDAS-2026/
 # Atau via Python langsung
 python run_pedas_pipeline.py --train official/training.csv --predict official/predict.csv --output official/submission_TIFIS_TIFIS.csv
 ```
-Output: Berkas [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv) tergenerasi otomatis dalam ~10.5 detik via [`run_pedas_pipeline.py`](run_pedas_pipeline.py) dengan verifikasi skema lengkap terhadap [`official/submission-template.csv`](official/submission-template.csv).
+Output: Berkas [`official/submission_TIFIS_TIFIS.csv`](official/submission_TIFIS_TIFIS.csv) tergenerasi otomatis dalam **~10.5 detik** via [`run_pedas_pipeline.py`](run_pedas_pipeline.py) dengan verifikasi skema lengkap terhadap [`official/submission-template.csv`](official/submission-template.csv) (*Batas Komputasi Wajar Juknis: < 300 detik / 5 menit, Margin Efisiensi: 96.5%*).
 
 ### B. Menguji Bobot Model Secara Empiris (5-Fold CV Scanner)
 ```powershell
@@ -266,7 +352,7 @@ Dokumentasi audit lengkap:
 
 ---
 
-## 💡 5. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
+## 💡 6. Rekomendasi Kebijakan Strategis untuk PANDI & IDADX
 
 Sebagai luaran nyata (*actionable policy insights*), model ini siap diintegrasikan ke dalam operasional **PANDI (Pengelola Nama Domain Internet Indonesia)**:
 
@@ -279,7 +365,7 @@ Sebagai luaran nyata (*actionable policy insights*), model ini siap diintegrasik
 
 ---
 
-## ⚖️ 6. Kepatuhan Regulasi Resmi PeDaS 2026
+## ⚖️ 7. Kepatuhan Regulasi Resmi PeDaS 2026
 - **Python Only (Juknis Pasal 12)**: 100% ditulis dalam bahasa pemrograman Python murni tanpa dependensi GPU atau platform berbayar.
 - **Reproducibility Terjamin**: Seluruh pemisahan lipatan (*fold*) dan model dikunci pada `RANDOM_STATE = 2026`. Hasil notebook Google Colab ([`notebooks/02_tifis_id_official_pipeline.ipynb`](notebooks/02_tifis_id_official_pipeline.ipynb)) dijamin identik persis dengan CLI runner [`run_pedas_pipeline.py`](run_pedas_pipeline.py).
 - **Double Blind Ready**: Repositori, kode, notebook, dan slide deck disusun secara netral tanpa menyebut identitas universitas/mahasiswa (Identitas: **Tim TIFIS TIFIS** | Solusi: **Tifis-ID**).

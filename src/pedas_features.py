@@ -137,9 +137,12 @@ class DomainEnsembleExtractor:
         
     def _extract_raw(self, df: pd.DataFrame) -> pd.DataFrame:
         records = []
-        disc_dt = pd.to_datetime(df["discovered"], errors="coerce")
-        reg_dt = pd.to_datetime(df["registration_date"], errors="coerce")
-        age_days_arr = (disc_dt - reg_dt).dt.days.fillna(0).values
+        if "discovered" in df.columns and "registration_date" in df.columns:
+            disc_dt = pd.to_datetime(df["discovered"], errors="coerce")
+            reg_dt = pd.to_datetime(df["registration_date"], errors="coerce")
+            age_days_arr = (disc_dt - reg_dt).dt.days.fillna(0).values
+        else:
+            age_days_arr = np.zeros(len(df))
         
         for i, (_, row) in enumerate(df.iterrows()):
             raw_u = str(row.get("url", ""))
@@ -193,7 +196,10 @@ class DomainEnsembleExtractor:
             
             # Confidence level
             raw_conf = row.get("confidence_level")
-            conf = 100.0 if pd.isna(raw_conf) else float(raw_conf)
+            try:
+                conf = 100.0 if pd.isna(raw_conf) else float(raw_conf)
+            except (ValueError, TypeError):
+                conf = 100.0
             conf_clipped = min(100.0, max(0.0, conf)) / 100.0
             
             # Domain temporal age (positionally accessed, immune to slice index mismatch)

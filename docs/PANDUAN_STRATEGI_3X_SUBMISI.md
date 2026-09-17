@@ -41,6 +41,9 @@ Bila Abyan ingin menjelaskan strategi ini kepada rekan tim dengan bahasa santai 
 3. **Peluru 3 — Peluru Pelindung Radar (Submisi 3 - Semi-Supervised Adaptor)**:
    - *"Ini peluru adaptif yang menyesuaikan arah angin di medan pertempuran (menyesuaikan domain-domain baru di data uji). Kalau penyerang siber memakai pola baru yang belum pernah ada di data latih, peluru ketiga ini yang melindungi skor tim."*
 
+> 💡 **Panduan Istilah Lengkap untuk Rekan Tim & Mahasiswa IT**:  
+> Jika rekan tim atau penguji menanyakan istilah teknis (*Stratified K-Fold, Group-KFold, Domain Leakage, OOF, Platt Scaling, Bayes Threshold, Character N-Grams*), rujuk **[README.md Seksi 3 (Panduan Konseptual & Glosarium Metode)](../README.md#-3-panduan-konseptual--glosarium-metode-ramah-mahasiswa-it--penguji)** yang telah diuraikan lengkap dengan analogi ramah pemula dan rujukan baris kode.
+
 ---
 
 ## 3. Bedah 3 Berkas Submisi Resmi Tifis-ID
