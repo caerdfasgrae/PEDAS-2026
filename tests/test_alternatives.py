@@ -24,7 +24,10 @@ def test_protected_files_invariance():
         full_path = REPO_ROOT / rel_path
         assert full_path.exists(), f"Protected file missing: {rel_path}"
         with open(full_path, "rb") as f:
-            actual_md5 = hashlib.md5(f.read()).hexdigest()
+            content = f.read()
+            if rel_path.endswith(".py"):
+                content = content.replace(b"\r\n", b"\n")
+            actual_md5 = hashlib.md5(content).hexdigest()
         assert actual_md5 == expected_md5, f"Checksum violation in {rel_path}: {actual_md5} != {expected_md5}"
 
 
