@@ -25,6 +25,19 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+# Auto-relaunch inside .venv if running with system Python that lacks packages
+try:
+    import pandas as _pd_check  # noqa: F401
+    del _pd_check
+except ImportError:
+    import subprocess
+    _candidates = [Path(__file__).resolve().parent, Path(__file__).resolve().parent.parent]
+    for _p in _candidates:
+        _venv_py = _p / ".venv" / "Scripts" / "python.exe"
+        if _venv_py.exists() and Path(sys.executable).resolve() != _venv_py.resolve():
+            sys.exit(subprocess.call([str(_venv_py)] + sys.argv))
+    raise  # .venv not found — let the real ImportError surface
+
 import numpy as np
 import pandas as pd
 
