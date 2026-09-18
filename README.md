@@ -120,7 +120,7 @@ flowchart TD
     A["Raw Domain + Metadata Input"] --> B["src/cleaner.py<br/>URL Normalization & Composite Text Synthesis"]
     
     subgraph FE ["Ekstraksi Fitur Dual-Stream (src/pedas_features.py)"]
-        B --> B1["Stream 1: 56 Tabular Engineered Features<br/>(Lexical, Entropy, Registrar One-Hot, Age, Brand Flags)"]
+        B --> B1["Stream 1: 56 Tabular Engineered Features<br/>(Lexical, Masking Ratios, Registrar One-Hot, Age, Brand Flags)"]
         B --> B2["Stream 2: 15.000 Character N-Grams<br/>(TF-IDF Sub-Word 3-5 N-Grams)"]
     end
     
@@ -204,6 +204,26 @@ flowchart TD
 - **Arsitektur MLOps Terpadu (*Stateless Pipeline*)**: Tidak menggunakan pemisahan file CSV perantara yang rawan kebocoran data (*data leakage*) atau kesalahan klik cell notebook manual.
 - **Komputasi Efisien C-Level**: Algoritma LinearSVC (LIBLINEAR C++) dan LightGBM (C++ Histogram GBDT) memiliki efisiensi komputasi tinggi tanpa memerlukan GPU gemuk, menghasilkan throughput **>140 domain/detik** pada CPU lokal standar.
 - **Reproduksibilitas Penuh (*100% Deterministic Seed 2026*)**: Di laptop siapapun skrip ini dieksekusi, hasil yang dikeluarkan identik byte-per-byte (MD5 valid).
+
+### 2.1.2 Taksonomi & Kamus Lengkap 56 Fitur Tabular (`src/pedas_features.py`)
+
+Seluruh 56 fitur numerik dan kategorikal terstruktur diekstraksi secara offline oleh modul [`DomainEnsembleExtractor`](src/pedas_features.py) untuk melengkapi representasi teks LinearSVC. Fitur-fitur ini dibagi ke dalam 12 gugus analitis yang berakar pada karakteristik nyata dataset resmi PANDI:
+
+| Gugus Fitur | Jumlah | Daftar Nama Fitur | Rationale Saintifik & Peran Empiris pada Dataset Resmi |
+|---|:---:|---|---|
+| **1. Dimensi Panjang URL** | 4 | `url_len`, `path_len`, `query_len`, `host_len` | Membedakan landing page pancingan pendek dengan defacement direktori dalam. `url_len` menempati **Peringkat 2 Feature Importance LightGBM (4.597 split)**. |
+| **2. Karakter Khusus & Masking** | 5 | `num_dots`, `num_hyphens`, `num_slashes`, `num_digits`, `num_asterisks` | Menangkap pola segmentasi URL dan sensor asterisks panitia (`*`). `num_asterisks` menempati **Peringkat 5 Feature Importance (1.669 split)**. |
+| **3. Rasio Kepadatan Simbol** | 2 | `digit_ratio`, `asterisk_ratio` | `asterisk_ratio` menempati **Peringkat 1 Terpenting di LightGBM (4.678 split)**. Memisahkan domain root murni tersensor (`***.id` / `*******.co.id`) dari serangan injeksi subdomain panjang. |
+| **4. Topologi Rute & Root** | 4 | `has_query`, `has_path`, `is_pure_root`, `is_masked_root` | Mendeteksi apakah domain diakses pada root utama atau membawa parameter query backdoor (`?shop=...`, `?site=toto...`). |
+| **5. Protokol URL** | 3 | `is_http`, `is_https`, `has_no_scheme` | Mengidentifikasi kepatuhan sertifikat SSL; mayoritas situs phishing bank/judi murah masih menggunakan `http://` tanpa enkripsi valid. |
+| **6. Indikator Leksikal Ancaman** | 3 | `has_gambling`, `has_phishing`, `has_malware` | Regex biner kata kunci ancaman siber Indonesia (`gacor`, `slot`, `maxwin`, `dana`, `bca`, `apk`, `mediafire`). |
+| **7. Sinyal Brand Intelligence** | 3 | `has_brand`, `brand_is_judi`, `brand_is_tech_bank` | Pemetaan basis pengetahuan [`config/indonesian_brands.yaml`](config/indonesian_brands.yaml) untuk mendeteksi pencatutan merek perbankan/fintech nasional vs label judi. |
+| **8. Sinyal Infrastruktur Jaringan & IP** | 3 | `ip_missing`, `is_cf_ip`, `is_gov_ip` | Mendeteksi IP CDN Cloudflare (`104.*`, `172.67.*`) yang sering dipakai sindikat luar negeri vs IP lokal Indonesia (`103.*`) pada instansi publik. |
+| **9. Metrik Keyakinan Sumber** | 1 | `conf_clipped` | Menormalisasi kolom `confidence_level` dari pelapor IDADX ke rentang $[0.0, 1.0]$. |
+| **10. Siklus Hidup & Usia Temporal Domain** | 3 | `is_future_reg`, `is_aged_domain`, `is_fresh_domain` | Menjawab temuan Pak Taufik Sutanto (Sesi 1 Workshop): `is_future_reg` menandai 812 baris anomali di mana `registration_date > discovered`. `is_fresh_domain` menandai domain berumur $\le 180$ hari. |
+| **11. One-Hot Encoding SLD Resmi (.id)** | 13 | `sld_ac.id`, `sld_biz.id`, `sld_co.id`, `sld_desa.id`, `sld_go.id`, `sld_id`, `sld_mil.id`, `sld_my.id`, `sld_net.id`, `sld_or.id`, `sld_ponpes.id`, `sld_sch.id`, `sld_web.id` | Mengunci 13 Second-Level Domain resmi Indonesia. Membedakan entitas komersial (`.biz.id`, `.co.id`) dari instansi pemerintah (`.go.id`) dan pendidikan (`.ac.id`, `.sch.id`). |
+| **12. One-Hot Encoding Top Registrar Nasional** | 12 | `reg_kementerian komunikasi dan informatika`, `reg_pt digital registra indonesia`, `reg_pt jagat informasi solusi (int)`, `reg_pt cloud hosting indonesia`, `reg_pt jc indonesia`, `reg_pt registrasi nama domain`, `reg_pt web commerce communications`, `reg_pt web media technology indonesia`, `reg_pt dewabisnis digital indonesia`, `reg_pt jagoan hosting indonesia`, `reg_pt radnet digital indonesia`, `reg_other_registrar` | Mengelompokkan registrasi domain ke 11 registrar teratas di Indonesia (ditambah kategori payung `reg_other_registrar`) untuk memetakan konsentrasi registrar sindikat kejahatan siber. |
+| **TOTAL KESELURUHAN** | **56** | *(31 Fitur Numerik/Biner + 13 Fitur SLD + 12 Fitur Registrar)* | **100% Deterministik, Bebas Kebocoran Data (Zero-Leakage), dan Selaras Antara Train dan Test.** |
 
 ### 2.2 Pohon Keputusan Metodologis: Dari Baseline Resmi Workshop PeDaS ke Model Juara
 

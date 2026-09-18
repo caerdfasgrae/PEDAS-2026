@@ -94,13 +94,13 @@
 * **Visual Slide**:
   - Diagram Aliran Dua Sisi:
     - **Stream A (Linguistik & Sub-word)**: TF-IDF 15.000 n-gram karakter (3–5 huruf). Menangkap manipulasi huruf (*typosquatting*) seperti `kl1k`, `b-c-a`, kata pancingan judi (`gacor`, `maxwin`, `deposit`), dan malware (`.apk`).
-    - **Stream B (Infrastruktur & Siklus Hidup)**: 56 fitur terstruktur: Shannon Entropy domain, rasio simbol, kecocokan fuzzy Levenshtein terhadap 30+ brand nasional, usia domain (`domain_age_days`), dan riwayat registrar.
+    - **Stream B (Infrastruktur & Siklus Hidup)**: 56 fitur terstruktur: rasio sensor asterisks (`asterisk_ratio`), rasio digit, pencatutan 30+ brand perbankan/fintech nasional, usia temporal domain (`is_future_reg`, `is_aged_domain`), 13 SLD resmi, dan riwayat top registrar nasional.
 * **Sitasi / Sumber Valid**:
-  - *Ref: Shannon, C. E., Bell System Technical Journal (Entropy); TF-IDF Sub-word Tokenization Standards.*
+  - *Ref: Materi Workshop PeDaS 2026 Sesi 1 & 2 (Taufik Sutanto); ICANN DAAR & APWG Threat Taxonomy.*
 * **Naskah Pembicara (Speaker Script)**:
   > *"Kekuatan model kami terletak pada arsitektur fitur Dual-Stream yang saling melengkapi:  
-  > Stream pertama membaca nuansa teks menggunakan n-gram karakter 3 hingga 5 huruf. Ini memungkinkan model mengenali kamuflase ketikan penipu tanpa terpengaruh kesalahan ejaan.  
-  > Stream kedua mengekstrak 56 fitur tabular siklus hidup domain: mengukur keacakan nama domain hasil Domain Generation Algorithm, mencocokkan pencatutan brand perbankan lokal, serta menganalisis pola usia domain pancingan yang baru berumur beberapa hari."*
+  > Stream pertama membaca nuansa teks menggunakan 15.000 n-gram karakter 3 hingga 5 huruf. Ini memungkinkan model mengenali kamuflase ketikan penipu tanpa terpengaruh kesalahan ejaan.  
+  > Stream kedua mengekstrak 56 fitur tabular siklus hidup domain: mengeksploitasi rasio sensor tanda bintang dan panjang URL yang menjadi pembeda utama pada dataset resmi, mencocokkan pencatutan brand perbankan lokal, mendeteksi IP CDN luar negeri, serta menganalisis pola anomali usia domain yang dicatat pada workshop panitia."*
 
 ---
 
