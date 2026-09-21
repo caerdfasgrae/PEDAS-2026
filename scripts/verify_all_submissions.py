@@ -15,6 +15,9 @@ template_rows = read_csv(str(REPO_ROOT / "official" / "submission-template.csv")
 expected_ids = {r["id"] for r in template_rows if r["id"]}
 
 submissions = [
+    REPO_ROOT / "official" / "TIFIS TIFIS-01.csv",
+    REPO_ROOT / "official" / "TIFIS TIFIS-02.csv",
+    REPO_ROOT / "official" / "TIFIS TIFIS-03.csv",
     REPO_ROOT / "official" / "submission_TIFIS_TIFIS.csv",
     REPO_ROOT / "official" / "submission_TIFIS_TIFIS_v2.csv",
     REPO_ROOT / "official" / "submission_TIFIS_TIFIS_v3.csv",

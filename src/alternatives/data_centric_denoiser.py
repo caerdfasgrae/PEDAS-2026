@@ -143,18 +143,29 @@ class DataCentricDenoiser:
             if "fakeshop" in top_cats:
                 return "fakeshop", "URL lexical evidence: commercial storefront intent"
 
-        # 3. Threat specificity hierarchy (Specific cyber threats > Generic catch-all)
-        threat_hierarchy = ["online gambling", "phishing", "malware", "brand", "fakeshop", "spam", "other"]
+        # 3. Cost-Sensitive Threat Specificity Hierarchy (NIST SP 800-61 / CIS Triage aligned)
+        # Critical severity (data leak, violence) > Targeted crime (fakeshop, brand) > Weaponized (malware, phishing) > Bulk campaigns (spam, gambling) > Generic
+        threat_hierarchy = [
+            "piiexposure",
+            "violence",
+            "fakeshop",
+            "brand",
+            "malware",
+            "phishing",
+            "spam",
+            "online gambling",
+            "other",
+        ]
         for threat in threat_hierarchy:
             if threat in top_cats:
-                return threat, f"Threat hierarchy prioritization ({threat} > generic)"
+                return threat, f"Cost-Sensitive Threat Hierarchy ({threat} prioritized)"
 
         # 4. Fallback: alphabetical deterministic
         sorted_cats = sorted(top_cats)
         return sorted_cats[0], "Deterministic fallback"
 
     def fit_conflict_resolutions(self, df: pd.DataFrame) -> Dict[str, Dict[str, Any]]:
-        """Fits and memorizes conflict resolutions for all conflicting URLs."""
+        """Fits and memorizes conflict resolutions for all conflicting URLs using Cost-Sensitive Hierarchy."""
         if "category_clean" not in df.columns:
             work_df = self.clean_typos(df)
         else:
@@ -166,12 +177,41 @@ class DataCentricDenoiser:
         resolutions = {}
         self.audit_records.clear()
 
+        threat_hierarchy = [
+            "piiexposure",
+            "violence",
+            "fakeshop",
+            "brand",
+            "malware",
+            "phishing",
+            "spam",
+            "online gambling",
+            "other",
+        ]
+
         for u in conflict_urls:
             sub = work_df[work_df["url"] == u]
             counts = sub["category_clean"].value_counts()
             competing = counts.to_dict()
+            has_asterisk = "*" in u
 
-            if counts.iloc[0] > counts.iloc[1]:
+            # Check if competing classes include minority/rare categories
+            has_rare = any(c in competing for c in ["piiexposure", "violence", "fakeshop", "brand"])
+
+            if has_asterisk and has_rare:
+                # Asterisk collision: Different real-world entities collapsed to identical masked string
+                # Prioritize by Cost-Sensitive Threat Hierarchy to protect high-impact rare classes
+                winner = None
+                for threat in threat_hierarchy:
+                    if threat in competing:
+                        winner = threat
+                        rule = f"Threat Hierarchy (Protected rare class '{threat}' from asterisk collision)"
+                        break
+                if winner is None:
+                    winner = counts.index[0]
+                    rule = "Majority fallback"
+            elif counts.iloc[0] > counts.iloc[1]:
+                # If clear majority without destroying rare classes
                 winner = counts.index[0]
                 rule = f"Strict Majority Vote ({counts.iloc[0]} vs {counts.iloc[1]})"
             else:
@@ -183,7 +223,7 @@ class DataCentricDenoiser:
                 "rule": rule,
                 "competing_counts": competing,
                 "total_rows": len(sub),
-                "has_asterisk_collision": "*" in u,
+                "has_asterisk_collision": has_asterisk,
             }
             resolutions[u] = res_entry
             self.audit_records.append(res_entry)

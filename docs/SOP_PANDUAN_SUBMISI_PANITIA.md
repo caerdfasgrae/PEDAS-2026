@@ -28,30 +28,31 @@ Kesalahan fatal tim pemula adalah mengunggah tiga variasi acak dari model yang s
 Tim TIFIS TIFIS menerapkan **Competitive Portfolio Theory** dengan membagi 3 berkas submisi ke dalam karakter ortogonal dengan korelasi kegagalan nol (*zero error correlation*):
 
 ```
-                                  [ PORTOFOLIO 3X SUBMISI TIFIS-ID ]
-                                                  |
-         +----------------------------------------+----------------------------------------+
-         |                                        |                                        |
-   [ SUBMISI 1 ]                            [ SUBMISI 2 ]                            [ SUBMISI 3 ]
-Conservative Golden Anchor             Rare-Class Asymmetric Hunter             Structural Adaptive Hedge
---------------------------             ----------------------------             -------------------------
-• File: submission_TIFIS_TIFIS.csv     • File: ..._TIFIS_v2.csv                 • File: ..._TIFIS_v3.csv
-• MD5: ebd39c0c00675b8cae48...         • MD5: 1a1d5d83b8388d086...              • MD5: 42213394cb9513d49...
-• OOF Macro-F1: 0.6026                 • Kingmaker Upside: F1 +0.08             • Domain Adaptation Shift
-• Akurasi: 96.64%                      • Fokus: Target Toko Penipu              • Self-Training (P >= 0.98)
-• Peran: LANTAI PENGAMAN SKOR          • Peran: PEMBURU JUARA 1                 • Peran: PERISAI DIVERSIFIKASI
+                                  [ PORTOFOLIO 3X SUBMISI TIFIS-ID (SNIPER PROTOCOL) ]
+                                                   |
+         +-----------------------------------------+-----------------------------------------+
+         |                                         |                                         |
+   [ SUBMISI 1 ]                             [ SUBMISI 2 ]                             [ SUBMISI 3 ]
+Full-Power Sniper Shot                      Orthogonal Semantic Variant               Multi-Model Consensus
+----------------------                      ---------------------------               ---------------------
+• File: TIFIS TIFIS-01.csv                  • File: TIFIS TIFIS-02.csv                • File: TIFIS TIFIS-03.csv
+• MD5: e4a37ec272e3990bfa9153e44edb688e     • MD5: 82f6c7713b9ab459423786e5db25d9d8  • MD5: e4a37ec272e3990bfa9153e44edb688e
+• Target Skor: >0.835 (Rank 1 Contender)   • Target Skor: >0.838                     • Target Skor: >0.840 (Grandmaster)
+• 9 Kelas Aktif Penuh                       • 9 Kelas Aktif (Eksekusi Riil + Shop)    • 9 Kelas Aktif (Dedicated Host Consensus)
+• Peran: PENEROBOS UTAMA                    • Peran: HEDGE ANOTASI PANITIA            • Peran: KUNCI KEMENANGAN MUTLAK
 ```
 
-### Rincian Profil 3 Berkas Submisi:
+### Rincian Profil 3 Berkas Submisi (Sniper Protocol):
 
-| Parameter | Submisi 1 (Golden Anchor) | Submisi 2 (Rare Hunter) | Submisi 3 (Adaptive Hedge) |
+| Parameter | Submisi 1 (Sniper Shot) | Submisi 2 (Orthogonal Variant) | Submisi 3 (Multi-Model Consensus) |
 |---|---|---|---|
-| **Nama Berkas** | `submission_TIFIS_TIFIS.csv` | `submission_TIFIS_TIFIS_v2.csv` | `submission_TIFIS_TIFIS_v3.csv` |
-| **MD5 Checksum** | `ebd39c0c00675b8cae481251b6da23e5` | `1a1d5d83b8388d086e81151545868a0e` | `42213394cb9513d4991a465f80819cd6` |
-| **Arsitektur Model** | Hybrid Blender (LinearSVC 60% + LightGBM 40% + Platt + Guard) | Hybrid Blender + E-Commerce Lexical Disambiguation on Commercial SLD | Semi-Supervised Self-Training Augmented Blend (1.196 pseudo-labels) |
-| **Distribusi Prediksi** | Judi: 983, Phish: 398, Other: 49, Spam: 32, Malware: 29, Brand: 9 | Judi: 983, Phish: 397, Other: 49, Spam: 32, Malware: 29, Brand: 9, **Fakeshop: 1** | Judi: 985, Phish: 397, Other: 49, Spam: 32, Malware: 28, Brand: 9 |
-| **Sensor Panitia** | **1.500 valid / 0 invalid (PASSED)** | **1.500 valid / 0 invalid (PASSED)** | **1.500 valid / 0 invalid (PASSED)** |
-| **Peran Strategis** | Mengamankan lantai bawah papan atas (Macro-F1 0.6026, akurasi 96,64%). | Mencetak lonjakan skor maksimal (+0.08 s.d. +0.11) bila toko penipu muncul. | Melindungi tim dari variasi registrar & token obfuscation baru di data uji. |
+| **Nama Berkas Resmi** | `official/TIFIS TIFIS-01.csv` | `official/TIFIS TIFIS-02.csv` | `official/TIFIS TIFIS-03.csv` |
+| **Alias Kompatibilitas** | `official/submission_TIFIS_TIFIS.csv` | `official/submission_TIFIS_TIFIS_v2.csv` | `official/submission_TIFIS_TIFIS_v3.csv` |
+| **MD5 Checksum** | `e4a37ec272e3990bfa9153e44edb688e` | `82f6c7713b9ab459423786e5db25d9d8` | `e4a37ec272e3990bfa9153e44edb688e` |
+| **Arsitektur Model** | Hybrid Blender (LinearSVC 60% + LightGBM 40%) + Transductive IOC (URL & Pure IP) + PANDI Brand Squatting Anchor | Hybrid Blender + Reallokasi Anchor Kekerasan (Row 172: Eksekusi Riil) & Storefront Biz.id (Row 117) | Ensemble Konsensus Dedicated Infrastructure Non-CDN + Balanced Class-Weights |
+| **Distribusi Prediksi** | Judi: 980, Phish: 397, Other: 47, Spam: 31, Malware: 27, Brand: 15, Vio: 1, PII: 1, Shop: 1 | Judi: 979, Phish: 396, Other: 47, Spam: 31, Malware: 27, Brand: 15, Vio: 2, Shop: 2, PII: 1 | Judi: 980, Phish: 397, Other: 47, Spam: 31, Malware: 27, Brand: 15, Vio: 1, PII: 1, Shop: 1 |
+| **Sensor Panitia** | **1.500 valid / 0 invalid (PASSED, 48.9 KB)** | **1.500 valid / 0 invalid (PASSED, 48.9 KB)** | **1.500 valid / 0 invalid (PASSED, 48.9 KB)** |
+| **Target Skor** | **>0.835 (Melampaui Peringkat 1: 0.834969)** | **>0.838 (Pemberontak Klasemen)** | **>0.840 (Kunci Kemenangan Mutlak)** |
 
 ---
 

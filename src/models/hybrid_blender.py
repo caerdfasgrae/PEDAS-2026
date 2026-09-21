@@ -67,6 +67,7 @@ class HybridProbabilisticBlender:
         train_df: pd.DataFrame,
         optimize_thresholds: bool = True,
         search_range: Tuple[float, float] = (-2.0, 2.0),
+        frozen_classes: Optional[List[str]] = None,
     ) -> "HybridProbabilisticBlender":
         """Fits all feature extractors, base classifiers, calibrator, and threshold optimizer."""
         y_str = train_df["category_clean"]
@@ -133,13 +134,17 @@ class HybridProbabilisticBlender:
         blended_probas = self.text_weight * svc_probas + self.gbdt_weight * lgb_probas_canon
 
         # 6. Optimize Bayes Thresholds
-        frozen_classes = [self.class_to_idx[c] for c in ["violence", "piiexposure"]]
+        if frozen_classes is not None:
+            frozen_indices = [self.class_to_idx[c] for c in frozen_classes if c in self.class_to_idx]
+        else:
+            frozen_indices = []
+
         self.threshold_optimizer = MulticlassThresholdOptimizer(
             C=len(CANONICAL_CLASSES),
             search_range=search_range,
             n_steps=81,
             max_iter=3,
-            frozen_classes=frozen_classes,
+            frozen_classes=frozen_indices,
             anchor_class=0,
         )
         if optimize_thresholds:
@@ -155,12 +160,18 @@ class HybridProbabilisticBlender:
         if self.svc_clf is None or self.lgb_clf is None:
             raise ValueError("Blender has not been fitted. Call fit() first.")
 
+        work_df = df
+        if "composite_text" not in work_df.columns:
+            work_df = work_df.copy()
+            from src.cleaner import build_composite_text
+            work_df["composite_text"] = build_composite_text(work_df)
+
         # Tabular features
-        X_tab_raw = self.domain_extractor.transform(df)
+        X_tab_raw = self.domain_extractor.transform(work_df)
         X_tab_scaled = self.scaler.transform(X_tab_raw)
 
         # Text features
-        X_text = self.tfidf.transform(df["composite_text"])
+        X_text = self.tfidf.transform(work_df["composite_text"])
         X_all = hstack([X_text, csr_matrix(X_tab_scaled)])
 
         # LinearSVC probabilities
