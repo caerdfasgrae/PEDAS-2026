@@ -1,0 +1,2755 @@
+{
+  "meta": {
+    "seed": 2026,
+    "text_weight": 0.6,
+    "gbdt_weight": 0.4,
+    "n_canonical_classes": 9,
+    "training_rows_after_denoise": 8290,
+    "training_csv_md5": "207bd8104f0247a69a1dd8a0b2551313",
+    "metric": "unweighted macro-F1 (zero_division=0)",
+    "scope_warning": "Feature importance, n-gram attribution and calibration are IN-SAMPLE diagnostics. Generalization is estimated separately by 5-fold OOF cross-validation."
+  },
+  "lightgbm_feature_importance": {
+    "n_features": 56,
+    "total_gain": 239440.81222315307,
+    "top_gain": [
+      {
+        "feature": "asterisk_ratio",
+        "gain": 41124.94288315246,
+        "gain_pct": 17.17541070017128,
+        "split": 4309
+      },
+      {
+        "feature": "num_hyphens",
+        "gain": 24084.58096705197,
+        "gain_pct": 10.058678277705525,
+        "split": 1022
+      },
+      {
+        "feature": "is_http",
+        "gain": 21675.293672717296,
+        "gain_pct": 9.052464144047608,
+        "split": 616
+      },
+      {
+        "feature": "sld_co.id",
+        "gain": 20189.853767301804,
+        "gain_pct": 8.432085399244865,
+        "split": 721
+      },
+      {
+        "feature": "has_brand",
+        "gain": 16251.496072841896,
+        "gain_pct": 6.787270692055576,
+        "split": 625
+      },
+      {
+        "feature": "num_slashes",
+        "gain": 14586.828445973273,
+        "gain_pct": 6.092039327188173,
+        "split": 1753
+      },
+      {
+        "feature": "path_len",
+        "gain": 14503.132670199493,
+        "gain_pct": 6.057084644652359,
+        "split": 2105
+      },
+      {
+        "feature": "url_len",
+        "gain": 14137.95483404293,
+        "gain_pct": 5.904571865913442,
+        "split": 4889
+      },
+      {
+        "feature": "reg_kementerian komunikasi dan informatika",
+        "gain": 10882.070359612277,
+        "gain_pct": 4.544785100992077,
+        "split": 182
+      },
+      {
+        "feature": "host_len",
+        "gain": 9808.766442596116,
+        "gain_pct": 4.096530725703762,
+        "split": 2502
+      },
+      {
+        "feature": "sld_id",
+        "gain": 8024.325895187842,
+        "gain_pct": 3.351277428723957,
+        "split": 310
+      },
+      {
+        "feature": "has_gambling",
+        "gain": 7168.406955876082,
+        "gain_pct": 2.9938116603093126,
+        "split": 322
+      },
+      {
+        "feature": "num_asterisks",
+        "gain": 6096.812393520019,
+        "gain_pct": 2.546271179467073,
+        "split": 1681
+      },
+      {
+        "feature": "brand_is_tech_bank",
+        "gain": 5215.162665325151,
+        "gain_pct": 2.17805921091879,
+        "split": 111
+      },
+      {
+        "feature": "sld_sch.id",
+        "gain": 3289.2040194437914,
+        "gain_pct": 1.3737023312376389,
+        "split": 245
+      },
+      {
+        "feature": "sld_ac.id",
+        "gain": 3253.117012890639,
+        "gain_pct": 1.3586309629867162,
+        "split": 537
+      },
+      {
+        "feature": "brand_is_judi",
+        "gain": 3135.6408390300785,
+        "gain_pct": 1.3095682435740057,
+        "split": 151
+      },
+      {
+        "feature": "digit_ratio",
+        "gain": 2312.7851366255686,
+        "gain_pct": 0.9659109970233932,
+        "split": 992
+      },
+      {
+        "feature": "num_dots",
+        "gain": 2276.1471317726655,
+        "gain_pct": 0.9506095099825134,
+        "split": 818
+      },
+      {
+        "feature": "query_len",
+        "gain": 1747.6130488221665,
+        "gain_pct": 0.729872669824321,
+        "split": 405
+      }
+    ],
+    "all_features": [
+      {
+        "feature": "asterisk_ratio",
+        "gain": 41124.94288315246,
+        "gain_pct": 17.17541070017128,
+        "split": 4309
+      },
+      {
+        "feature": "num_hyphens",
+        "gain": 24084.58096705197,
+        "gain_pct": 10.058678277705525,
+        "split": 1022
+      },
+      {
+        "feature": "is_http",
+        "gain": 21675.293672717296,
+        "gain_pct": 9.052464144047608,
+        "split": 616
+      },
+      {
+        "feature": "sld_co.id",
+        "gain": 20189.853767301804,
+        "gain_pct": 8.432085399244865,
+        "split": 721
+      },
+      {
+        "feature": "has_brand",
+        "gain": 16251.496072841896,
+        "gain_pct": 6.787270692055576,
+        "split": 625
+      },
+      {
+        "feature": "num_slashes",
+        "gain": 14586.828445973273,
+        "gain_pct": 6.092039327188173,
+        "split": 1753
+      },
+      {
+        "feature": "path_len",
+        "gain": 14503.132670199493,
+        "gain_pct": 6.057084644652359,
+        "split": 2105
+      },
+      {
+        "feature": "url_len",
+        "gain": 14137.95483404293,
+        "gain_pct": 5.904571865913442,
+        "split": 4889
+      },
+      {
+        "feature": "reg_kementerian komunikasi dan informatika",
+        "gain": 10882.070359612277,
+        "gain_pct": 4.544785100992077,
+        "split": 182
+      },
+      {
+        "feature": "host_len",
+        "gain": 9808.766442596116,
+        "gain_pct": 4.096530725703762,
+        "split": 2502
+      },
+      {
+        "feature": "sld_id",
+        "gain": 8024.325895187842,
+        "gain_pct": 3.351277428723957,
+        "split": 310
+      },
+      {
+        "feature": "has_gambling",
+        "gain": 7168.406955876082,
+        "gain_pct": 2.9938116603093126,
+        "split": 322
+      },
+      {
+        "feature": "num_asterisks",
+        "gain": 6096.812393520019,
+        "gain_pct": 2.546271179467073,
+        "split": 1681
+      },
+      {
+        "feature": "brand_is_tech_bank",
+        "gain": 5215.162665325151,
+        "gain_pct": 2.17805921091879,
+        "split": 111
+      },
+      {
+        "feature": "sld_sch.id",
+        "gain": 3289.2040194437914,
+        "gain_pct": 1.3737023312376389,
+        "split": 245
+      },
+      {
+        "feature": "sld_ac.id",
+        "gain": 3253.117012890639,
+        "gain_pct": 1.3586309629867162,
+        "split": 537
+      },
+      {
+        "feature": "brand_is_judi",
+        "gain": 3135.6408390300785,
+        "gain_pct": 1.3095682435740057,
+        "split": 151
+      },
+      {
+        "feature": "digit_ratio",
+        "gain": 2312.7851366255686,
+        "gain_pct": 0.9659109970233932,
+        "split": 992
+      },
+      {
+        "feature": "num_dots",
+        "gain": 2276.1471317726655,
+        "gain_pct": 0.9506095099825134,
+        "split": 818
+      },
+      {
+        "feature": "query_len",
+        "gain": 1747.6130488221665,
+        "gain_pct": 0.729872669824321,
+        "split": 405
+      },
+      {
+        "feature": "sld_my.id",
+        "gain": 1611.588022518708,
+        "gain_pct": 0.6730632123886828,
+        "split": 406
+      },
+      {
+        "feature": "reg_pt digital registra indonesia",
+        "gain": 1544.2970320521572,
+        "gain_pct": 0.6449598202218382,
+        "split": 810
+      },
+      {
+        "feature": "is_aged_domain",
+        "gain": 1506.2183486211607,
+        "gain_pct": 0.6290566485455292,
+        "split": 616
+      },
+      {
+        "feature": "reg_other_registrar",
+        "gain": 966.1314758419961,
+        "gain_pct": 0.40349490417764905,
+        "split": 313
+      },
+      {
+        "feature": "reg_pt jagat informasi solusi (int)",
+        "gain": 684.7742742384733,
+        "gain_pct": 0.28598895396340374,
+        "split": 253
+      },
+      {
+        "feature": "is_gov_ip",
+        "gain": 478.40518367834557,
+        "gain_pct": 0.19980101939868272,
+        "split": 335
+      },
+      {
+        "feature": "num_digits",
+        "gain": 370.60663516508475,
+        "gain_pct": 0.1547800609779457,
+        "split": 295
+      },
+      {
+        "feature": "ip_missing",
+        "gain": 362.6861090635291,
+        "gain_pct": 0.15147213446866958,
+        "split": 354
+      },
+      {
+        "feature": "sld_or.id",
+        "gain": 321.32742510119533,
+        "gain_pct": 0.1341991042035582,
+        "split": 99
+      },
+      {
+        "feature": "sld_go.id",
+        "gain": 316.48184038648685,
+        "gain_pct": 0.13217539543406384,
+        "split": 209
+      },
+      {
+        "feature": "reg_pt jc indonesia",
+        "gain": 262.70249411164895,
+        "gain_pct": 0.10971500291554998,
+        "split": 236
+      },
+      {
+        "feature": "is_cf_ip",
+        "gain": 253.80422267949132,
+        "gain_pct": 0.10599873109474414,
+        "split": 228
+      },
+      {
+        "feature": "reg_pt jagoan hosting indonesia",
+        "gain": 172.44138511327316,
+        "gain_pct": 0.07201837627937961,
+        "split": 178
+      },
+      {
+        "feature": "is_https",
+        "gain": 170.15854579337793,
+        "gain_pct": 0.07106497184564937,
+        "split": 341
+      },
+      {
+        "feature": "is_future_reg",
+        "gain": 159.7861911588678,
+        "gain_pct": 0.06673306429062349,
+        "split": 262
+      },
+      {
+        "feature": "has_phishing",
+        "gain": 109.75428391669672,
+        "gain_pct": 0.045837751257880116,
+        "split": 44
+      },
+      {
+        "feature": "reg_pt registrasi nama domain",
+        "gain": 67.1488216971329,
+        "gain_pct": 0.028044016838095178,
+        "split": 192
+      },
+      {
+        "feature": "sld_net.id",
+        "gain": 67.08656689946656,
+        "gain_pct": 0.02801801676021024,
+        "split": 41
+      },
+      {
+        "feature": "reg_pt cloud hosting indonesia",
+        "gain": 55.53938366571127,
+        "gain_pct": 0.023195454087396723,
+        "split": 100
+      },
+      {
+        "feature": "is_pure_root",
+        "gain": 52.836832058584854,
+        "gain_pct": 0.022066761120632265,
+        "split": 141
+      },
+      {
+        "feature": "reg_pt web commerce communications",
+        "gain": 35.237219090606814,
+        "gain_pct": 0.014716463230907592,
+        "split": 71
+      },
+      {
+        "feature": "has_no_scheme",
+        "gain": 24.22737080997714,
+        "gain_pct": 0.01011831299143682,
+        "split": 42
+      },
+      {
+        "feature": "has_path",
+        "gain": 16.321623051610004,
+        "gain_pct": 0.0068165585056563565,
+        "split": 18
+      },
+      {
+        "feature": "reg_pt web media technology indonesia",
+        "gain": 16.00020812691136,
+        "gain_pct": 0.0066823228581431434,
+        "split": 170
+      },
+      {
+        "feature": "conf_clipped",
+        "gain": 14.480069520711867,
+        "gain_pct": 0.006047452556758282,
+        "split": 147
+      },
+      {
+        "feature": "is_fresh_domain",
+        "gain": 11.983137472470368,
+        "gain_pct": 0.00500463449034009,
+        "split": 149
+      },
+      {
+        "feature": "sld_biz.id",
+        "gain": 7.846870236098766,
+        "gain_pct": 0.0032771648923349264,
+        "split": 16
+      },
+      {
+        "feature": "sld_ponpes.id",
+        "gain": 6.4790132352296,
+        "gain_pct": 0.0027058934419213862,
+        "split": 134
+      },
+      {
+        "feature": "has_query",
+        "gain": 5.386322973296046,
+        "gain_pct": 0.0022495425584658155,
+        "split": 5
+      },
+      {
+        "feature": "sld_web.id",
+        "gain": 3.5119104177661313,
+        "gain_pct": 0.0014667133748665685,
+        "split": 62
+      },
+      {
+        "feature": "sld_desa.id",
+        "gain": 0.6445530156879631,
+        "gain_pct": 0.00026919095775838545,
+        "split": 7
+      },
+      {
+        "feature": "has_malware",
+        "gain": 0.5846628919243813,
+        "gain_pct": 0.0002441784616815823,
+        "split": 6
+      },
+      {
+        "feature": "reg_pt dewabisnis digital indonesia",
+        "gain": 0.19897456588314189,
+        "gain_pct": 8.30996871568003e-05,
+        "split": 17
+      },
+      {
+        "feature": "is_masked_root",
+        "gain": 0.0,
+        "gain_pct": 0.0,
+        "split": 0
+      },
+      {
+        "feature": "sld_mil.id",
+        "gain": 0.0,
+        "gain_pct": 0.0,
+        "split": 0
+      },
+      {
+        "feature": "reg_pt radnet digital indonesia",
+        "gain": 0.0,
+        "gain_pct": 0.0,
+        "split": 0
+      }
+    ]
+  },
+  "linearsvc_ngram_attribution": {
+    "brand": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "our",
+          "field": "url",
+          "coef": 0.6438743707904425
+        },
+        {
+          "ngram": "/docs",
+          "field": "url",
+          "coef": 0.4616247959930983
+        },
+        {
+          "ngram": "docs",
+          "field": "url",
+          "coef": 0.460996002649917
+        },
+        {
+          "ngram": "ocs",
+          "field": "url",
+          "coef": 0.4603732295140263
+        },
+        {
+          "ngram": "/doc",
+          "field": "url",
+          "coef": 0.4579160622879581
+        },
+        {
+          "ngram": "doc",
+          "field": "url",
+          "coef": 0.4303945946044598
+        },
+        {
+          "ngram": "urnal",
+          "field": "url",
+          "coef": 0.39904932439456237
+        },
+        {
+          "ngram": "rnal",
+          "field": "url",
+          "coef": 0.3968233996767766
+        },
+        {
+          "ngram": "urna",
+          "field": "url",
+          "coef": 0.38151507155852726
+        },
+        {
+          "ngram": "afta",
+          "field": "url",
+          "coef": 0.3801160719293829
+        },
+        {
+          "ngram": "aftar",
+          "field": "url",
+          "coef": 0.3801160719293829
+        },
+        {
+          "ngram": "daf",
+          "field": "url",
+          "coef": 0.3801160719293829
+        },
+        {
+          "ngram": "daft",
+          "field": "url",
+          "coef": 0.3801160719293829
+        },
+        {
+          "ngram": "dafta",
+          "field": "url",
+          "coef": 0.3801160719293829
+        },
+        {
+          "ngram": "fta",
+          "field": "url",
+          "coef": 0.3801160719293829
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "y.id/",
+          "field": "url",
+          "coef": -0.904666202899249
+        },
+        {
+          "ngram": "c.id/",
+          "field": "url",
+          "coef": -0.734558213419333
+        },
+        {
+          "ngram": "o.id/",
+          "field": "url",
+          "coef": -0.6163916119776015
+        },
+        {
+          "ngram": "r.id/",
+          "field": "url",
+          "coef": -0.6102984482005849
+        },
+        {
+          "ngram": "id/i",
+          "field": "url",
+          "coef": -0.4465766316184664
+        },
+        {
+          "ngram": ".id/i",
+          "field": "url",
+          "coef": -0.4465766316184664
+        },
+        {
+          "ngram": "ceb",
+          "field": "url",
+          "coef": -0.3810395225814877
+        },
+        {
+          "ngram": "jur",
+          "field": "url",
+          "coef": -0.32600279413944816
+        },
+        {
+          "ngram": "axa",
+          "field": "brand",
+          "coef": -0.3140742169061881
+        },
+        {
+          "ngram": "ara",
+          "field": "registrar",
+          "coef": -0.3000404093574219
+        },
+        {
+          "ngram": "id/t",
+          "field": "url",
+          "coef": -0.29228572238459666
+        },
+        {
+          "ngram": ".id/t",
+          "field": "url",
+          "coef": -0.29228572238459666
+        },
+        {
+          "ngram": ".php",
+          "field": "url",
+          "coef": -0.28108438624540866
+        },
+        {
+          "ngram": "php",
+          "field": "url",
+          "coef": -0.278824810232452
+        },
+        {
+          "ngram": "panel",
+          "field": "url",
+          "coef": -0.2737008503152398
+        }
+      ]
+    },
+    "fakeshop": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "ttp",
+          "field": "url",
+          "coef": 0.37528026600822373
+        },
+        {
+          "ngram": "htt",
+          "field": "url",
+          "coef": 0.37528022527583654
+        },
+        {
+          "ngram": "*.sch",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": ".sch",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": ".sch.",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": "ch.i",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": "ch.id",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": "h.id",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": "sch.",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": "sch.i",
+          "field": "url",
+          "coef": 0.256422244463271
+        },
+        {
+          "ngram": "sch",
+          "field": "url",
+          "coef": 0.25618284433489547
+        },
+        {
+          "ngram": "my.i",
+          "field": "sld",
+          "coef": 0.24827319073283893
+        },
+        {
+          "ngram": "my.id",
+          "field": "sld",
+          "coef": 0.24827319073283893
+        },
+        {
+          "ngram": "y.id",
+          "field": "sld",
+          "coef": 0.24827319073283893
+        },
+        {
+          "ngram": ".co.i",
+          "field": "url",
+          "coef": 0.2453530638483212
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "y.id/",
+          "field": "url",
+          "coef": -1.3734166642371892
+        },
+        {
+          "ngram": "h.id/",
+          "field": "url",
+          "coef": -0.5836808775894043
+        },
+        {
+          "ngram": "o.id/",
+          "field": "url",
+          "coef": -0.36123244313192876
+        },
+        {
+          "ngram": "id/t",
+          "field": "url",
+          "coef": -0.36075945466111115
+        },
+        {
+          "ngram": ".id/t",
+          "field": "url",
+          "coef": -0.36075945466111115
+        },
+        {
+          "ngram": "ics",
+          "field": "brand",
+          "coef": -0.34669550124672266
+        },
+        {
+          "ngram": "omm",
+          "field": "registrar",
+          "coef": -0.2771330607810372
+        },
+        {
+          "ngram": "comm",
+          "field": "registrar",
+          "coef": -0.2771330607810372
+        },
+        {
+          "ngram": " comm",
+          "field": "registrar",
+          "coef": -0.2771330607810372
+        },
+        {
+          "ngram": " com",
+          "field": "registrar",
+          "coef": -0.2771330607810372
+        },
+        {
+          "ngram": "id/ne",
+          "field": "url",
+          "coef": -0.270303550570415
+        },
+        {
+          "ngram": "id/te",
+          "field": "url",
+          "coef": -0.26701711807847744
+        },
+        {
+          "ngram": "d/te",
+          "field": "url",
+          "coef": -0.2664350194492796
+        },
+        {
+          "ngram": "id/n",
+          "field": "url",
+          "coef": -0.2641779464692066
+        },
+        {
+          "ngram": ".id/n",
+          "field": "url",
+          "coef": -0.2641779464692066
+        }
+      ]
+    },
+    "malware": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "o.id/",
+          "field": "url",
+          "coef": 2.45620740712732
+        },
+        {
+          "ngram": "jur",
+          "field": "url",
+          "coef": 1.3334088193981772
+        },
+        {
+          "ngram": "ts/j",
+          "field": "url",
+          "coef": 1.0293364456216552
+        },
+        {
+          "ngram": "id/ca",
+          "field": "url",
+          "coef": 1.0083621897939172
+        },
+        {
+          "ngram": "d/ca",
+          "field": "url",
+          "coef": 1.0057941302318119
+        },
+        {
+          "ngram": "id/ch",
+          "field": "url",
+          "coef": 0.9498722954850093
+        },
+        {
+          "ngram": "ita",
+          "field": "url",
+          "coef": 0.8935344462737604
+        },
+        {
+          "ngram": "/trac",
+          "field": "url",
+          "coef": 0.890274098161941
+        },
+        {
+          "ngram": "file",
+          "field": "url",
+          "coef": 0.8734055671128131
+        },
+        {
+          "ngram": "smi",
+          "field": "url",
+          "coef": 0.8431512381066587
+        },
+        {
+          "ngram": "d/rep",
+          "field": "url",
+          "coef": 0.8347608942527527
+        },
+        {
+          "ngram": "fil",
+          "field": "url",
+          "coef": 0.8278511291436493
+        },
+        {
+          "ngram": "date",
+          "field": "url",
+          "coef": 0.8251710799567746
+        },
+        {
+          "ngram": "itory",
+          "field": "url",
+          "coef": 0.824106555696508
+        },
+        {
+          "ngram": "erj",
+          "field": "url",
+          "coef": 0.8237766325812581
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "c.id/",
+          "field": "url",
+          "coef": -0.9415799177516198
+        },
+        {
+          "ngram": "our",
+          "field": "url",
+          "coef": -0.8825274753136625
+        },
+        {
+          "ngram": "dhl",
+          "field": "brand",
+          "coef": -0.8279998417055153
+        },
+        {
+          "ngram": "oto",
+          "field": "url",
+          "coef": -0.7163799130940793
+        },
+        {
+          "ngram": "toto",
+          "field": "url",
+          "coef": -0.6041107614927705
+        },
+        {
+          "ngram": "tot",
+          "field": "url",
+          "coef": -0.598755060963221
+        },
+        {
+          "ngram": "mpo",
+          "field": "url",
+          "coef": -0.5942236265133434
+        },
+        {
+          "ngram": "id/f",
+          "field": "url",
+          "coef": -0.5592858740206015
+        },
+        {
+          "ngram": ".id/f",
+          "field": "url",
+          "coef": -0.5592858740206015
+        },
+        {
+          "ngram": "id/fi",
+          "field": "url",
+          "coef": -0.5396668351636876
+        },
+        {
+          "ngram": "toto/",
+          "field": "url",
+          "coef": -0.5384583722975673
+        },
+        {
+          "ngram": "/www.",
+          "field": "url",
+          "coef": -0.5339398086565561
+        },
+        {
+          "ngram": "/www",
+          "field": "url",
+          "coef": -0.5331339324666937
+        },
+        {
+          "ngram": "//www",
+          "field": "url",
+          "coef": -0.5331339324666937
+        },
+        {
+          "ngram": "slot",
+          "field": "url",
+          "coef": -0.5328433631930264
+        }
+      ]
+    },
+    "online gambling": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "lot",
+          "field": "url",
+          "coef": 0.8979736125687086
+        },
+        {
+          "ngram": "slot",
+          "field": "url",
+          "coef": 0.8515163842355832
+        },
+        {
+          "ngram": "slo",
+          "field": "url",
+          "coef": 0.8513416537352237
+        },
+        {
+          "ngram": "c.id/",
+          "field": "url",
+          "coef": 0.7776031381735996
+        },
+        {
+          "ngram": "t.id/",
+          "field": "url",
+          "coef": 0.610610268046822
+        },
+        {
+          "ngram": "bet",
+          "field": "url",
+          "coef": 0.5115256405799624
+        },
+        {
+          "ngram": "aco",
+          "field": "url",
+          "coef": 0.4950162009482704
+        },
+        {
+          "ngram": "gac",
+          "field": "url",
+          "coef": 0.4824640444360587
+        },
+        {
+          "ngram": "ang",
+          "field": "url",
+          "coef": 0.47965089843479836
+        },
+        {
+          "ngram": "acor",
+          "field": "url",
+          "coef": 0.4760919626675652
+        },
+        {
+          "ngram": "gaco",
+          "field": "url",
+          "coef": 0.4760919626675652
+        },
+        {
+          "ngram": "gacor",
+          "field": "url",
+          "coef": 0.4760919626675652
+        },
+        {
+          "ngram": "pro",
+          "field": "url",
+          "coef": 0.4612167504747755
+        },
+        {
+          "ngram": "ite",
+          "field": "url",
+          "coef": 0.43883545865112245
+        },
+        {
+          "ngram": "site",
+          "field": "url",
+          "coef": 0.4341762960025778
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "ecu",
+          "field": "url",
+          "coef": -0.9678618972768565
+        },
+        {
+          "ngram": "id/w",
+          "field": "url",
+          "coef": -0.8347503106146701
+        },
+        {
+          "ngram": ".id/w",
+          "field": "url",
+          "coef": -0.8347503106146701
+        },
+        {
+          "ngram": "ell",
+          "field": "url",
+          "coef": -0.8005427565774175
+        },
+        {
+          "ngram": ".com",
+          "field": "url",
+          "coef": -0.7962416668860243
+        },
+        {
+          "ngram": "com",
+          "field": "url",
+          "coef": -0.7026079416519503
+        },
+        {
+          "ngram": "val",
+          "field": "url",
+          "coef": -0.6959920173926969
+        },
+        {
+          "ngram": "aman",
+          "field": "url",
+          "coef": -0.6779227947558939
+        },
+        {
+          "ngram": "kil",
+          "field": "url",
+          "coef": -0.650021708188939
+        },
+        {
+          "ngram": "php",
+          "field": "url",
+          "coef": -0.6443759325558257
+        },
+        {
+          "ngram": "id/v",
+          "field": "url",
+          "coef": -0.6288806809082111
+        },
+        {
+          "ngram": ".id/v",
+          "field": "url",
+          "coef": -0.6288806809082111
+        },
+        {
+          "ngram": "well",
+          "field": "url",
+          "coef": -0.6179973100365791
+        },
+        {
+          "ngram": "wel",
+          "field": "url",
+          "coef": -0.6166450505320649
+        },
+        {
+          "ngram": "com/",
+          "field": "url",
+          "coef": -0.6114285816012888
+        }
+      ]
+    },
+    "other": {
+      "top_positive_ngrams": [
+        {
+          "ngram": ".my.i",
+          "field": "url",
+          "coef": 0.28530574490168886
+        },
+        {
+          "ngram": "my.i",
+          "field": "url",
+          "coef": 0.28530574490168886
+        },
+        {
+          "ngram": "my.id",
+          "field": "url",
+          "coef": 0.28530574490168886
+        },
+        {
+          "ngram": "y.id",
+          "field": "url",
+          "coef": 0.28530574490168886
+        },
+        {
+          "ngram": "bri",
+          "field": "brand",
+          "coef": 0.226600337329957
+        },
+        {
+          "ngram": "pt j",
+          "field": "registrar",
+          "coef": 0.08936655008074199
+        },
+        {
+          "ngram": " jc i",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "c in",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "c ind",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "jc i",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "jc in",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "pt jc",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "t jc",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": "t jc ",
+          "field": "registrar",
+          "coef": 0.07814395531276358
+        },
+        {
+          "ngram": " ang",
+          "field": "registrar",
+          "coef": 0.0691735043662653
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "y.id/",
+          "field": "url",
+          "coef": -0.713357502622752
+        },
+        {
+          "ngram": "htt",
+          "field": "url",
+          "coef": -0.3983752997857507
+        },
+        {
+          "ngram": "ttp",
+          "field": "url",
+          "coef": -0.39837529846841846
+        },
+        {
+          "ngram": "tps:/",
+          "field": "url",
+          "coef": -0.34159960740367495
+        },
+        {
+          "ngram": "tps:",
+          "field": "url",
+          "coef": -0.34159960740367495
+        },
+        {
+          "ngram": "tps",
+          "field": "url",
+          "coef": -0.3415567998177666
+        },
+        {
+          "ngram": "o.id",
+          "field": "sld",
+          "coef": -0.2508728279603368
+        },
+        {
+          "ngram": "go.id",
+          "field": "sld",
+          "coef": -0.19506850572375178
+        },
+        {
+          "ngram": "go.i",
+          "field": "sld",
+          "coef": -0.19506850572375178
+        },
+        {
+          "ngram": "znet ",
+          "field": "registrar",
+          "coef": -0.18002640762945174
+        },
+        {
+          "ngram": "znet",
+          "field": "registrar",
+          "coef": -0.18002640762945174
+        },
+        {
+          "ngram": "zne",
+          "field": "registrar",
+          "coef": -0.18002640762945174
+        },
+        {
+          "ngram": "usant",
+          "field": "registrar",
+          "coef": -0.18002640762945174
+        },
+        {
+          "ngram": "usan",
+          "field": "registrar",
+          "coef": -0.18002640762945174
+        },
+        {
+          "ngram": "usa",
+          "field": "registrar",
+          "coef": -0.18002640762945174
+        }
+      ]
+    },
+    "phishing": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "ecu",
+          "field": "url",
+          "coef": 1.1588926969388833
+        },
+        {
+          "ngram": "y.id/",
+          "field": "url",
+          "coef": 0.9151200347947804
+        },
+        {
+          "ngram": "secu",
+          "field": "url",
+          "coef": 0.7875458838525199
+        },
+        {
+          "ngram": "html?",
+          "field": "url",
+          "coef": 0.7547019060969649
+        },
+        {
+          "ngram": "tml?",
+          "field": "url",
+          "coef": 0.7547019060969649
+        },
+        {
+          "ngram": "sec",
+          "field": "url",
+          "coef": 0.7352404901081371
+        },
+        {
+          "ngram": ".id/w",
+          "field": "url",
+          "coef": 0.7150675033604255
+        },
+        {
+          "ngram": "id/w",
+          "field": "url",
+          "coef": 0.7150675033604255
+        },
+        {
+          "ngram": "well",
+          "field": "url",
+          "coef": 0.7141366957034578
+        },
+        {
+          "ngram": "wel",
+          "field": "url",
+          "coef": 0.7128142615263676
+        },
+        {
+          "ngram": "app",
+          "field": "url",
+          "coef": 0.694594595410279
+        },
+        {
+          "ngram": "php",
+          "field": "url",
+          "coef": 0.6933716490916637
+        },
+        {
+          "ngram": "ell",
+          "field": "url",
+          "coef": 0.6914386540267323
+        },
+        {
+          "ngram": "kil",
+          "field": "url",
+          "coef": 0.6817561950731413
+        },
+        {
+          "ngram": "cha",
+          "field": "url",
+          "coef": 0.6324553789308477
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "bri",
+          "field": "brand",
+          "coef": -0.5369383261263272
+        },
+        {
+          "ngram": "car",
+          "field": "url",
+          "coef": -0.5123405798308036
+        },
+        {
+          "ngram": "ope",
+          "field": "brand",
+          "coef": -0.500574314478036
+        },
+        {
+          "ngram": "lisa",
+          "field": "url",
+          "coef": -0.47084494404752286
+        },
+        {
+          "ngram": "alisa",
+          "field": "url",
+          "coef": -0.47084493259490456
+        },
+        {
+          "ngram": "alis",
+          "field": "url",
+          "coef": -0.47084493259490456
+        },
+        {
+          "ngram": "lot",
+          "field": "url",
+          "coef": -0.46808456226889383
+        },
+        {
+          "ngram": "isa",
+          "field": "url",
+          "coef": -0.4525375520513028
+        },
+        {
+          "ngram": "rac",
+          "field": "url",
+          "coef": -0.4476796848731586
+        },
+        {
+          "ngram": "hal",
+          "field": "url",
+          "coef": -0.4181430083826336
+        },
+        {
+          "ngram": "way",
+          "field": "brand",
+          "coef": -0.41111176655103965
+        },
+        {
+          "ngram": "gan",
+          "field": "url",
+          "coef": -0.4104268532494729
+        },
+        {
+          "ngram": "rum",
+          "field": "url",
+          "coef": -0.4036960902742742
+        },
+        {
+          "ngram": "rack",
+          "field": "url",
+          "coef": -0.4000815376818685
+        },
+        {
+          "ngram": "slot",
+          "field": "url",
+          "coef": -0.39917588577430957
+        }
+      ]
+    },
+    "piiexposure": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "ng-e",
+          "field": "url",
+          "coef": 0.4892622907270254
+        },
+        {
+          "ngram": "edu",
+          "field": "url",
+          "coef": 0.4805529887794001
+        },
+        {
+          "ngram": "sko",
+          "field": "url",
+          "coef": 0.44819738678333004
+        },
+        {
+          "ngram": "ung-",
+          "field": "url",
+          "coef": 0.4475131017710431
+        },
+        {
+          "ngram": "eks",
+          "field": "url",
+          "coef": 0.43849547429425173
+        },
+        {
+          "ngram": "dung",
+          "field": "url",
+          "coef": 0.4327848177687759
+        },
+        {
+          "ngram": "ert",
+          "field": "url",
+          "coef": 0.41730934659790314
+        },
+        {
+          "ngram": "dun",
+          "field": "url",
+          "coef": 0.40760771071851
+        },
+        {
+          "ngram": "lib",
+          "field": "url",
+          "coef": 0.38679829879479133
+        },
+        {
+          "ngram": "kop",
+          "field": "url",
+          "coef": 0.37431788061316096
+        },
+        {
+          "ngram": "d/tag",
+          "field": "url",
+          "coef": 0.3383481824626318
+        },
+        {
+          "ngram": "id/ta",
+          "field": "url",
+          "coef": 0.33326272237191457
+        },
+        {
+          "ngram": "/tag/",
+          "field": "url",
+          "coef": 0.33274574656064115
+        },
+        {
+          "ngram": "/tag",
+          "field": "url",
+          "coef": 0.3327457465302937
+        },
+        {
+          "ngram": "d/ta",
+          "field": "url",
+          "coef": 0.33265556174226174
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "emba",
+          "field": "url",
+          "coef": -0.09352554050105805
+        },
+        {
+          "ngram": "mba",
+          "field": "url",
+          "coef": -0.09164961231141446
+        },
+        {
+          "ngram": "ram",
+          "field": "brand",
+          "coef": -0.07605172044304458
+        },
+        {
+          "ngram": "gram",
+          "field": "brand",
+          "coef": -0.07605172044304458
+        },
+        {
+          "ngram": "gra",
+          "field": "brand",
+          "coef": -0.07605172044304458
+        },
+        {
+          "ngram": "d/tr",
+          "field": "url",
+          "coef": -0.07453994249338838
+        },
+        {
+          "ngram": "rack",
+          "field": "url",
+          "coef": -0.07453994249147161
+        },
+        {
+          "ngram": "/trac",
+          "field": "url",
+          "coef": -0.07311362441430114
+        },
+        {
+          "ngram": "emb",
+          "field": "url",
+          "coef": -0.07252890158077818
+        },
+        {
+          "ngram": "/tra",
+          "field": "url",
+          "coef": -0.07225864683512497
+        },
+        {
+          "ngram": "trac",
+          "field": "url",
+          "coef": -0.07073011263198635
+        },
+        {
+          "ngram": "teleg",
+          "field": "brand",
+          "coef": -0.07044313147093507
+        },
+        {
+          "ngram": "legra",
+          "field": "brand",
+          "coef": -0.07044313147093507
+        },
+        {
+          "ngram": "legr",
+          "field": "brand",
+          "coef": -0.07044313147093507
+        },
+        {
+          "ngram": "leg",
+          "field": "brand",
+          "coef": -0.07044313147093507
+        }
+      ]
+    },
+    "spam": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "apl",
+          "field": "url",
+          "coef": 1.439519475133391
+        },
+        {
+          "ngram": "ime",
+          "field": "url",
+          "coef": 1.2244273545460653
+        },
+        {
+          "ngram": ".id/a",
+          "field": "url",
+          "coef": 1.0918214783637552
+        },
+        {
+          "ngram": "id/a",
+          "field": "url",
+          "coef": 1.0918214783637552
+        },
+        {
+          "ngram": "tim",
+          "field": "url",
+          "coef": 1.063515727342717
+        },
+        {
+          "ngram": "ada",
+          "field": "url",
+          "coef": 0.9407349248543558
+        },
+        {
+          "ngram": "rum",
+          "field": "url",
+          "coef": 0.9232404116927163
+        },
+        {
+          "ngram": "una",
+          "field": "url",
+          "coef": 0.9224720469818155
+        },
+        {
+          "ngram": "oli",
+          "field": "url",
+          "coef": 0.8979318616390809
+        },
+        {
+          "ngram": "elu",
+          "field": "url",
+          "coef": 0.8896164463916154
+        },
+        {
+          "ngram": "jit",
+          "field": "url",
+          "coef": 0.8889390717251553
+        },
+        {
+          "ngram": "s/de",
+          "field": "url",
+          "coef": 0.8381713414480574
+        },
+        {
+          "ngram": "mpan",
+          "field": "url",
+          "coef": 0.8379087510826128
+        },
+        {
+          "ngram": "simp",
+          "field": "url",
+          "coef": 0.829926430837309
+        },
+        {
+          "ngram": "mod",
+          "field": "url",
+          "coef": 0.8233985625809113
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "c.id/",
+          "field": "url",
+          "coef": -1.3528498035271397
+        },
+        {
+          "ngram": "t.id/",
+          "field": "url",
+          "coef": -1.1087693227599686
+        },
+        {
+          "ngram": "o.id/",
+          "field": "url",
+          "coef": -0.9338471675658406
+        },
+        {
+          "ngram": "b.id/",
+          "field": "url",
+          "coef": -0.8109914763187555
+        },
+        {
+          "ngram": "id/ca",
+          "field": "url",
+          "coef": -0.7640792691669576
+        },
+        {
+          "ngram": "d/ca",
+          "field": "url",
+          "coef": -0.7621337033025429
+        },
+        {
+          "ngram": "d/app",
+          "field": "url",
+          "coef": -0.7620259022495832
+        },
+        {
+          "ngram": "/app",
+          "field": "url",
+          "coef": -0.7275952946101547
+        },
+        {
+          "ngram": "h.id/",
+          "field": "url",
+          "coef": -0.7124196024467546
+        },
+        {
+          "ngram": "app",
+          "field": "url",
+          "coef": -0.7023131049348519
+        },
+        {
+          "ngram": "htt",
+          "field": "url",
+          "coef": -0.6408984191938238
+        },
+        {
+          "ngram": "ttp",
+          "field": "url",
+          "coef": -0.6408983029051377
+        },
+        {
+          "ngram": "tps",
+          "field": "url",
+          "coef": -0.5835364936516748
+        },
+        {
+          "ngram": "tps:/",
+          "field": "url",
+          "coef": -0.5594301970222764
+        },
+        {
+          "ngram": "tps:",
+          "field": "url",
+          "coef": -0.5594301970222764
+        }
+      ]
+    },
+    "violence": {
+      "top_positive_ngrams": [
+        {
+          "ngram": "emba",
+          "field": "url",
+          "coef": 0.3960615803825679
+        },
+        {
+          "ngram": "mba",
+          "field": "url",
+          "coef": 0.3545821131813013
+        },
+        {
+          "ngram": "emb",
+          "field": "url",
+          "coef": 0.3011177782764202
+        },
+        {
+          "ngram": "elar",
+          "field": "url",
+          "coef": 0.2964659589159119
+        },
+        {
+          "ngram": "bata",
+          "field": "url",
+          "coef": 0.2784590125106193
+        },
+        {
+          "ngram": "raha",
+          "field": "url",
+          "coef": 0.2695479749625051
+        },
+        {
+          "ngram": "lar",
+          "field": "url",
+          "coef": 0.2688261041277753
+        },
+        {
+          "ngram": "soa",
+          "field": "url",
+          "coef": 0.26751240537079635
+        },
+        {
+          "ngram": "soal",
+          "field": "url",
+          "coef": 0.26751240537079635
+        },
+        {
+          "ngram": "urah",
+          "field": "url",
+          "coef": 0.26601433104459105
+        },
+        {
+          "ngram": "bal",
+          "field": "url",
+          "coef": 0.2648896479946589
+        },
+        {
+          "ngram": "oal",
+          "field": "url",
+          "coef": 0.2639458836054275
+        },
+        {
+          "ngram": "an-j",
+          "field": "url",
+          "coef": 0.25749492616212855
+        },
+        {
+          "ngram": "an-be",
+          "field": "url",
+          "coef": 0.2563530946633802
+        },
+        {
+          "ngram": "elu",
+          "field": "url",
+          "coef": 0.24945751365307814
+        }
+      ],
+      "top_negative_ngrams": [
+        {
+          "ngram": "co.id",
+          "field": "sld",
+          "coef": -0.1424470507594218
+        },
+        {
+          "ngram": "co.i",
+          "field": "sld",
+          "coef": -0.1424470507594218
+        },
+        {
+          "ngram": "o.id",
+          "field": "sld",
+          "coef": -0.0979462369335738
+        },
+        {
+          "ngram": "dhl",
+          "field": "brand",
+          "coef": -0.06226456735863866
+        },
+        {
+          "ngram": "meta",
+          "field": "brand",
+          "coef": -0.06220328349727792
+        },
+        {
+          "ngram": "eta",
+          "field": "brand",
+          "coef": -0.06220328349727792
+        },
+        {
+          "ngram": "met",
+          "field": "brand",
+          "coef": -0.060367245701922194
+        },
+        {
+          "ngram": "ang",
+          "field": "url",
+          "coef": -0.047638360298348136
+        },
+        {
+          "ngram": "go.id",
+          "field": "sld",
+          "coef": -0.04601935575959494
+        },
+        {
+          "ngram": "go.i",
+          "field": "sld",
+          "coef": -0.04601935575959494
+        },
+        {
+          "ngram": "rup",
+          "field": "url",
+          "coef": -0.043874241388958846
+        },
+        {
+          "ngram": "ang-",
+          "field": "url",
+          "coef": -0.04020208691757044
+        },
+        {
+          "ngram": "ttp",
+          "field": "url",
+          "coef": -0.03936141978051498
+        },
+        {
+          "ngram": "htt",
+          "field": "url",
+          "coef": -0.03936141627777276
+        },
+        {
+          "ngram": "www.*",
+          "field": "url",
+          "coef": -0.03840797733759327
+        }
+      ]
+    },
+    "_meta": {
+      "note": "Surrogate field-isolated LinearSVC for interpretability; same feature family as production model (char 3-5 n-gram + balanced class weight).",
+      "field_features": {
+        "url": 8000,
+        "brand": 1091,
+        "sld": 84,
+        "registrar": 1032
+      }
+    }
+  },
+  "oof_generalization": {
+    "n_splits": 5,
+    "oof_macro_f1_argmax": 0.6307555866680474,
+    "oof_macro_f1_offset": 0.6917805731609129,
+    "oof_delta_macro_f1": 0.061024986492865474,
+    "oof_offsets": {
+      "online gambling": 0.0,
+      "phishing": 1.0,
+      "other": -0.1499999999999999,
+      "spam": 0.20000000000000018,
+      "malware": 0.25,
+      "brand": -0.5999999999999999,
+      "fakeshop": 0.0,
+      "violence": 0.0,
+      "piiexposure": 0.0
+    },
+    "oof_top1_ece": 0.0037012104974919226,
+    "oof_top1_accuracy": 0.9820265379975874,
+    "oof_mean_confidence": 0.9841866037009994,
+    "note": "Leak-free StratifiedKFold OOF. This is the honest generalization estimate."
+  },
+  "in_sample_calibration_aux": {
+    "top1_ece": 0.00604489262316543,
+    "top1_bins": [
+      {
+        "lo": 0.0,
+        "hi": 0.1,
+        "count": 0,
+        "avg_conf": null,
+        "accuracy": null
+      },
+      {
+        "lo": 0.1,
+        "hi": 0.2,
+        "count": 0,
+        "avg_conf": null,
+        "accuracy": null
+      },
+      {
+        "lo": 0.2,
+        "hi": 0.30000000000000004,
+        "count": 0,
+        "avg_conf": null,
+        "accuracy": null
+      },
+      {
+        "lo": 0.30000000000000004,
+        "hi": 0.4,
+        "count": 1,
+        "avg_conf": 0.3967226319658791,
+        "accuracy": 0.0
+      },
+      {
+        "lo": 0.4,
+        "hi": 0.5,
+        "count": 7,
+        "avg_conf": 0.47138269412510153,
+        "accuracy": 0.5714285714285714
+      },
+      {
+        "lo": 0.5,
+        "hi": 0.6000000000000001,
+        "count": 32,
+        "avg_conf": 0.5587013450000725,
+        "accuracy": 0.4375
+      },
+      {
+        "lo": 0.6000000000000001,
+        "hi": 0.7000000000000001,
+        "count": 27,
+        "avg_conf": 0.649616912159785,
+        "accuracy": 0.9629629629629629
+      },
+      {
+        "lo": 0.7000000000000001,
+        "hi": 0.8,
+        "count": 25,
+        "avg_conf": 0.7551937747326655,
+        "accuracy": 1.0
+      },
+      {
+        "lo": 0.8,
+        "hi": 0.9,
+        "count": 66,
+        "avg_conf": 0.8561303971100287,
+        "accuracy": 1.0
+      },
+      {
+        "lo": 0.9,
+        "hi": 1.0,
+        "count": 8132,
+        "avg_conf": 0.9971641932810081,
+        "accuracy": 0.999754058042302
+      }
+    ],
+    "per_class": {
+      "online gambling": {
+        "ece": 0.004626988477225613,
+        "prevalence": 0.6533172496984319,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 2818,
+            "avg_conf": 0.002674982585982357,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 29,
+            "avg_conf": 0.14419523350328053,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 4,
+            "avg_conf": 0.2627833518829479,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 6,
+            "avg_conf": 0.3560656666721262,
+            "accuracy": 0.16666666666666666
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 17,
+            "avg_conf": 0.45051930061616946,
+            "accuracy": 0.6470588235294118
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 11,
+            "avg_conf": 0.557728308305034,
+            "accuracy": 0.18181818181818182
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 4,
+            "avg_conf": 0.6397560469759368,
+            "accuracy": 0.75
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 14,
+            "avg_conf": 0.757747317671844,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 19,
+            "avg_conf": 0.8617312756513308,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 5368,
+            "avg_conf": 0.9976686583529161,
+            "accuracy": 0.9996274217585693
+          }
+        ]
+      },
+      "phishing": {
+        "ece": 0.004472532258887536,
+        "prevalence": 0.26839565741857657,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 6022,
+            "avg_conf": 0.0022453881156022652,
+            "accuracy": 0.00033211557622052476
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 21,
+            "avg_conf": 0.1357814750244954,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 7,
+            "avg_conf": 0.24065774810783838,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 7,
+            "avg_conf": 0.35181735913251017,
+            "accuracy": 0.14285714285714285
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 15,
+            "avg_conf": 0.43789149317434306,
+            "accuracy": 0.8
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 14,
+            "avg_conf": 0.5602925258599403,
+            "accuracy": 0.42857142857142855
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 6,
+            "avg_conf": 0.6531840466929968,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 7,
+            "avg_conf": 0.748311873201872,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 27,
+            "avg_conf": 0.8571986327938765,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 2164,
+            "avg_conf": 0.997882275424489,
+            "accuracy": 1.0
+          }
+        ]
+      },
+      "other": {
+        "ece": 0.000576962138872362,
+        "prevalence": 0.030880579010856453,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8029,
+            "avg_conf": 9.28003496046305e-05,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 2,
+            "avg_conf": 0.2706618868478838,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 2,
+            "avg_conf": 0.34523461567394464,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 1,
+            "avg_conf": 0.46140973535393465,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 2,
+            "avg_conf": 0.6235265442791562,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 1,
+            "avg_conf": 0.7824090922381597,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 2,
+            "avg_conf": 0.8694090333478772,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 251,
+            "avg_conf": 0.9955657385204345,
+            "accuracy": 1.0
+          }
+        ]
+      },
+      "spam": {
+        "ece": 0.000959504043791233,
+        "prevalence": 0.019903498190591073,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8113,
+            "avg_conf": 0.0002676538052400128,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 7,
+            "avg_conf": 0.1356277855517008,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 2,
+            "avg_conf": 0.2449888475600074,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 1,
+            "avg_conf": 0.31212420516736233,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 2,
+            "avg_conf": 0.43929911851183273,
+            "accuracy": 0.5
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 2,
+            "avg_conf": 0.5400352024564192,
+            "accuracy": 0.5
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 4,
+            "avg_conf": 0.6531775118236749,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 5,
+            "avg_conf": 0.8382559560184738,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 154,
+            "avg_conf": 0.9893906853151577,
+            "accuracy": 1.0
+          }
+        ]
+      },
+      "malware": {
+        "ece": 0.0011027657962945346,
+        "prevalence": 0.02014475271411339,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8110,
+            "avg_conf": 0.00027636651189581735,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 7,
+            "avg_conf": 0.14942716098037448,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 2,
+            "avg_conf": 0.23892704736887546,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 3,
+            "avg_conf": 0.34287064918390203,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 2,
+            "avg_conf": 0.43429368471730373,
+            "accuracy": 0.5
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 3,
+            "avg_conf": 0.5529885537228152,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 1,
+            "avg_conf": 0.7311858587642737,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 7,
+            "avg_conf": 0.8406536658128415,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 155,
+            "avg_conf": 0.9903777134147629,
+            "accuracy": 1.0
+          }
+        ]
+      },
+      "brand": {
+        "ece": 0.0008665011821370991,
+        "prevalence": 0.005790108564535585,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8232,
+            "avg_conf": 6.126297795952202e-05,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 1,
+            "avg_conf": 0.138154190337243,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 3,
+            "avg_conf": 0.26376335870485074,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 5,
+            "avg_conf": 0.3527659947077723,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 1,
+            "avg_conf": 0.42476915810351545,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 3,
+            "avg_conf": 0.6789557465229059,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 1,
+            "avg_conf": 0.7981059381159059,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 6,
+            "avg_conf": 0.8621125631623204,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 38,
+            "avg_conf": 0.9587214967389963,
+            "accuracy": 1.0
+          }
+        ]
+      },
+      "fakeshop": {
+        "ece": 0.000800819238762885,
+        "prevalence": 0.0013268998793727383,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8270,
+            "avg_conf": 0.00015871517576678811,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 5,
+            "avg_conf": 0.14158594561759033,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 1,
+            "avg_conf": 0.253707758289771,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 3,
+            "avg_conf": 0.3473457353109379,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 2,
+            "avg_conf": 0.5801501102632488,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 6,
+            "avg_conf": 0.6586950375126098,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 1,
+            "avg_conf": 0.721497919379379,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 2,
+            "avg_conf": 0.9217446707880109,
+            "accuracy": 1.0
+          }
+        ]
+      },
+      "violence": {
+        "ece": 9.01658462018852e-05,
+        "prevalence": 0.00012062726176115802,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8289,
+            "avg_conf": 4.333483994371653e-05,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 1,
+            "avg_conf": 0.611727623279838,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          }
+        ]
+      },
+      "piiexposure": {
+        "ece": 9.676971184541112e-05,
+        "prevalence": 0.00012062726176115802,
+        "bins": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 8289,
+            "avg_conf": 4.86452946885871e-05,
+            "accuracy": 0.0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.30000000000000004,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.30000000000000004,
+            "hi": 0.4,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6000000000000001,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.6000000000000001,
+            "hi": 0.7000000000000001,
+            "count": 1,
+            "avg_conf": 0.6009999364752404,
+            "accuracy": 1.0
+          },
+          {
+            "lo": 0.7000000000000001,
+            "hi": 0.8,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 0,
+            "avg_conf": null,
+            "accuracy": null
+          }
+        ]
+      }
+    },
+    "mean_confidence": 0.9919708288899751,
+    "top1_accuracy": 0.996984318455971
+  },
+  "in_sample_bayes_thresholds_aux": {
+    "offsets": {
+      "online gambling": 0.0,
+      "phishing": 0.4500000000000002,
+      "other": 0.0,
+      "spam": 0.0,
+      "malware": -0.19999999999999996,
+      "brand": 0.0,
+      "fakeshop": 0.0,
+      "violence": 0.0,
+      "piiexposure": 0.0
+    },
+    "macro_f1_argmax_in_sample": 0.9978731437343892,
+    "macro_f1_offset_in_sample": 0.9988381631262683,
+    "delta_macro_f1": 0.0009650193918790961,
+    "note": "In-sample diagnostic (training data). Generalization reported via 5-fold OOF in scripts/test_hybrid_cv.py."
+  },
+  "anchor_row_posterior_audit": [
+    {
+      "row_index": 1033,
+      "id": "PEDAS-16188611d3d5",
+      "url": "http://****.co.id",
+      "argmax_class": "fakeshop",
+      "argmax_probability": 0.5686964305214324,
+      "posterior": {
+        "fakeshop": 0.5686964305214324,
+        "brand": 0.42595438067414854,
+        "phishing": 0.0028128612547657886,
+        "spam": 0.0012818845126833993,
+        "online gambling": 0.0007656113797299323
+      }
+    },
+    {
+      "row_index": 1345,
+      "id": "PEDAS-4bfaad6d0acc",
+      "url": "https://www.******.co.id/professionals/online-shop-in-jakarta-yakarta-indonesia",
+      "argmax_class": "online gambling",
+      "argmax_probability": 0.9954407658429896,
+      "posterior": {
+        "online gambling": 0.9954407658429896,
+        "phishing": 0.002584070884997912,
+        "spam": 0.0011189311160877873,
+        "piiexposure": 0.0004186698851859489,
+        "malware": 0.0003277140349321346
+      }
+    },
+    {
+      "row_index": 117,
+      "id": "PEDAS-f696c98c25ae",
+      "url": "http://global-shop.*****.biz.id/",
+      "argmax_class": "phishing",
+      "argmax_probability": 0.9999953239317957,
+      "posterior": {
+        "phishing": 0.9999953239317957,
+        "brand": 2.996910468005831e-06,
+        "online gambling": 1.5854482278400267e-06,
+        "malware": 4.063554235902646e-08,
+        "piiexposure": 1.6167287967980276e-08
+      }
+    },
+    {
+      "row_index": 10,
+      "id": "PEDAS-2881612debfc",
+      "url": "https://***********.id/trapstar-borsello-95693/",
+      "argmax_class": "phishing",
+      "argmax_probability": 0.7298768043656887,
+      "posterior": {
+        "phishing": 0.7298768043656887,
+        "online gambling": 0.2162720679054963,
+        "malware": 0.04111073613209801,
+        "violence": 0.009500264741234148,
+        "piiexposure": 0.002523062673858421
+      }
+    }
+  ],
+  "figures": [
+    "C:\\Users\\SMI-CPU014\\Documents\\Abyan\\PEDAS-2026\\reports\\figures\\xai_lgb_top_features.png",
+    "C:\\Users\\SMI-CPU014\\Documents\\Abyan\\PEDAS-2026\\reports\\figures\\xai_calibration_curve.png",
+    "C:\\Users\\SMI-CPU014\\Documents\\Abyan\\PEDAS-2026\\reports\\figures\\xai_threshold_offsets.png"
+  ]
+}

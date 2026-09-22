@@ -103,7 +103,7 @@ def test_multiclass_threshold_optimizer_improvement():
 
 def test_submission_validation():
     # Validates that the generated submission file matches template constraints
-    sub_path = "official/submission_TIFIS_TIFIS.csv"
+    sub_path = "official/TIFIS TIFIS-01.csv"
     sub_df = pd.read_csv(sub_path)
     # Should not raise any ValueError
     validate_submission(sub_df)

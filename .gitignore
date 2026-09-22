@@ -43,4 +43,5 @@ tmp/
 # Internal Agent Instructions & Competition Slides
 .hermes/
 .agents/
+.opencode/
 *.pdf

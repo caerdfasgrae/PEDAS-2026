@@ -18,9 +18,6 @@ submissions = [
     REPO_ROOT / "official" / "TIFIS TIFIS-01.csv",
     REPO_ROOT / "official" / "TIFIS TIFIS-02.csv",
     REPO_ROOT / "official" / "TIFIS TIFIS-03.csv",
-    REPO_ROOT / "official" / "submission_TIFIS_TIFIS.csv",
-    REPO_ROOT / "official" / "submission_TIFIS_TIFIS_v2.csv",
-    REPO_ROOT / "official" / "submission_TIFIS_TIFIS_v3.csv",
 ]
 
 print("=" * 65)

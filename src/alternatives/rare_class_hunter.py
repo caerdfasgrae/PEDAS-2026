@@ -145,6 +145,8 @@ class RareClassHunter:
         output_path: Optional[str] = "official/submission_TIFIS_TIFIS_v2.csv",
     ) -> pd.DataFrame:
         """Deterministically reproduces official Submission v2 (MD5: 1a1d5d83b8388d086e81151545868a0e)."""
+        if sub1_path == "official/submission_TIFIS_TIFIS.csv" and not Path(sub1_path).exists():
+            sub1_path = "official/TIFIS TIFIS-01.csv"
         sub1_df = pd.read_csv(sub1_path)
         predict_df = pd.read_csv(predict_path)
 

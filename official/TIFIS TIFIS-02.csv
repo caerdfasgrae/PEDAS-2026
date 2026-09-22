@@ -9,7 +9,7 @@ PEDAS-21d4a69584c6,online gambling
 PEDAS-344e9c62f21e,online gambling
 PEDAS-54a6d1898c81,online gambling
 PEDAS-cbb9cd0dbc6a,online gambling
-PEDAS-2881612debfc,violence
+PEDAS-2881612debfc,phishing
 PEDAS-b1a2aaa77d81,online gambling
 PEDAS-9be289808525,phishing
 PEDAS-8d43762b8701,online gambling
@@ -67,7 +67,7 @@ PEDAS-01ba016489b2,phishing
 PEDAS-9271f52d1d6a,online gambling
 PEDAS-236e909eeafa,online gambling
 PEDAS-0728c9879ecb,online gambling
-PEDAS-24764d35fd5c,phishing
+PEDAS-24764d35fd5c,online gambling
 PEDAS-9572d83aded4,online gambling
 PEDAS-70d54dc9b75b,online gambling
 PEDAS-c7bbfdc36925,online gambling
@@ -75,7 +75,7 @@ PEDAS-53192895dc89,online gambling
 PEDAS-c2c194987ece,phishing
 PEDAS-112bd496ae25,brand
 PEDAS-faa9721111bf,online gambling
-PEDAS-e29caed7cd8b,brand
+PEDAS-e29caed7cd8b,spam
 PEDAS-fba58ef34a65,online gambling
 PEDAS-8d72891fcf07,online gambling
 PEDAS-e17791613d84,online gambling
@@ -116,7 +116,7 @@ PEDAS-6991841f9344,online gambling
 PEDAS-56f780107201,online gambling
 PEDAS-8e0c47e203ab,phishing
 PEDAS-5c11426b8a1d,online gambling
-PEDAS-f696c98c25ae,fakeshop
+PEDAS-f696c98c25ae,phishing
 PEDAS-c5d44024842f,online gambling
 PEDAS-e6d60f818592,other
 PEDAS-04114ad83cdf,online gambling
@@ -171,7 +171,7 @@ PEDAS-9071ee3433f2,online gambling
 PEDAS-5b6c944c0965,online gambling
 PEDAS-7e99120ed7ff,online gambling
 PEDAS-008e1c6d9718,online gambling
-PEDAS-3d1326b84054,violence
+PEDAS-3d1326b84054,online gambling
 PEDAS-55bb554d386f,online gambling
 PEDAS-9b7c09551ba1,online gambling
 PEDAS-2108bd852ecd,online gambling
@@ -258,7 +258,7 @@ PEDAS-4b591ff5151d,phishing
 PEDAS-0cdcb6d921bd,online gambling
 PEDAS-8534665b62fb,phishing
 PEDAS-e6ce45e1ea09,online gambling
-PEDAS-e8fa47e797da,brand
+PEDAS-e8fa47e797da,spam
 PEDAS-9934ad861f7c,phishing
 PEDAS-d933219af775,other
 PEDAS-9798570efc72,online gambling
@@ -284,7 +284,7 @@ PEDAS-0ad7f02de27c,online gambling
 PEDAS-57d46d9b3b33,other
 PEDAS-0608753cf9bb,online gambling
 PEDAS-cc3b88770585,online gambling
-PEDAS-a170a970035b,phishing
+PEDAS-a170a970035b,spam
 PEDAS-2ea01e856322,online gambling
 PEDAS-0038820c77ef,online gambling
 PEDAS-21f1f6ff4ccb,online gambling
@@ -317,7 +317,7 @@ PEDAS-ef5f24b603ed,other
 PEDAS-ea3277f0fd60,phishing
 PEDAS-9434c574f278,online gambling
 PEDAS-994055eb0053,online gambling
-PEDAS-52a793dad171,spam
+PEDAS-52a793dad171,other
 PEDAS-15a1ebc07253,phishing
 PEDAS-871a63e94b94,spam
 PEDAS-17d822a249d6,online gambling
@@ -364,7 +364,7 @@ PEDAS-9fbf08d404b0,phishing
 PEDAS-f6795bdf69ae,online gambling
 PEDAS-d6cd529e0692,phishing
 PEDAS-df36a7123190,online gambling
-PEDAS-fe1f49bfe023,other
+PEDAS-fe1f49bfe023,spam
 PEDAS-ca6f38320072,online gambling
 PEDAS-a4af322212df,phishing
 PEDAS-944dac5dc203,online gambling
@@ -475,7 +475,7 @@ PEDAS-e64bb584db93,online gambling
 PEDAS-9480b8998427,online gambling
 PEDAS-ce53f3834bce,phishing
 PEDAS-3062323255f7,online gambling
-PEDAS-260820f3ad7d,online gambling
+PEDAS-260820f3ad7d,phishing
 PEDAS-d7cdf9c7d53a,other
 PEDAS-532dbdc189ea,online gambling
 PEDAS-bf765ffcb37d,phishing
@@ -575,7 +575,7 @@ PEDAS-5983a125bbcf,phishing
 PEDAS-61ae56039e47,phishing
 PEDAS-3a3fe7b1a711,phishing
 PEDAS-6cffc59dfdae,online gambling
-PEDAS-c1368a9cb2aa,piiexposure
+PEDAS-c1368a9cb2aa,spam
 PEDAS-ef327da149d3,online gambling
 PEDAS-62459b9dbb8a,phishing
 PEDAS-cd7522f1d73c,online gambling
@@ -620,11 +620,11 @@ PEDAS-a151cadcd60e,online gambling
 PEDAS-5fcc55d45abb,online gambling
 PEDAS-be24eb8f1803,online gambling
 PEDAS-38d19fe7c0de,online gambling
-PEDAS-9b626504bc4c,spam
+PEDAS-9b626504bc4c,phishing
 PEDAS-2b4874238220,online gambling
 PEDAS-3ec8a35b1e18,online gambling
 PEDAS-80e8dd75410f,online gambling
-PEDAS-b090064392ba,phishing
+PEDAS-b090064392ba,online gambling
 PEDAS-9fcad9502886,online gambling
 PEDAS-2df5d0620936,online gambling
 PEDAS-9700edc913d1,online gambling
@@ -686,7 +686,7 @@ PEDAS-e7594dec503a,online gambling
 PEDAS-4868080ee1cc,phishing
 PEDAS-4034b940a1fb,online gambling
 PEDAS-9ccfd1ae3f07,phishing
-PEDAS-81a2a14e8088,online gambling
+PEDAS-81a2a14e8088,phishing
 PEDAS-56d419f91c8d,online gambling
 PEDAS-d05340b6971c,malware
 PEDAS-ddb3eee1ab40,online gambling
@@ -838,7 +838,7 @@ PEDAS-2c90b08e300e,online gambling
 PEDAS-9bbeb87fd1c7,online gambling
 PEDAS-2b60d4ed2fbb,phishing
 PEDAS-490fdfb9f4c6,online gambling
-PEDAS-58cd28a45c36,spam
+PEDAS-58cd28a45c36,malware
 PEDAS-4c4b2dc081de,online gambling
 PEDAS-f47d12de1118,online gambling
 PEDAS-d123db653f5b,online gambling
@@ -977,7 +977,7 @@ PEDAS-df43cdc22567,phishing
 PEDAS-7742e36a7df4,online gambling
 PEDAS-f359a57fd3a4,brand
 PEDAS-e8dbc0b7ad30,online gambling
-PEDAS-844be2405af8,phishing
+PEDAS-844be2405af8,online gambling
 PEDAS-68007b4210ac,online gambling
 PEDAS-9e1860aa1f6a,online gambling
 PEDAS-5b03c97a409c,online gambling
@@ -1145,7 +1145,7 @@ PEDAS-b6b1715a872b,spam
 PEDAS-8cb2dac01454,phishing
 PEDAS-277927867f87,phishing
 PEDAS-d014ef8f3e75,online gambling
-PEDAS-d03db2f484ac,phishing
+PEDAS-d03db2f484ac,online gambling
 PEDAS-04f5d2f1fc7b,online gambling
 PEDAS-3d6997d021aa,online gambling
 PEDAS-0bafa497f56e,online gambling
@@ -1153,7 +1153,7 @@ PEDAS-d031f933a9e3,online gambling
 PEDAS-ad9be87e7ee9,online gambling
 PEDAS-640505905c74,phishing
 PEDAS-db315aec5091,online gambling
-PEDAS-49d582fc1326,phishing
+PEDAS-49d582fc1326,malware
 PEDAS-5d5c12828667,online gambling
 PEDAS-539dc2500e72,malware
 PEDAS-460e83bd1514,online gambling
@@ -1251,7 +1251,7 @@ PEDAS-c0273a19dfa3,online gambling
 PEDAS-adf9a424418b,online gambling
 PEDAS-6c7901a4a620,online gambling
 PEDAS-001da05a8dda,online gambling
-PEDAS-7f20076847f4,online gambling
+PEDAS-7f20076847f4,spam
 PEDAS-af55c5c75b63,online gambling
 PEDAS-ae497ff77218,online gambling
 PEDAS-205166f5b220,online gambling
@@ -1312,7 +1312,7 @@ PEDAS-4159f74e9e0a,online gambling
 PEDAS-3013f59167bf,online gambling
 PEDAS-0dfe6537f0e1,online gambling
 PEDAS-8c879f90579c,online gambling
-PEDAS-5b1ff358da78,brand
+PEDAS-5b1ff358da78,online gambling
 PEDAS-875211d6d42e,online gambling
 PEDAS-10c642ccedc5,online gambling
 PEDAS-ece0d54ca44f,online gambling
@@ -1344,7 +1344,7 @@ PEDAS-cabe67c59a00,online gambling
 PEDAS-e9b44cebaa5b,phishing
 PEDAS-7397d884f8b3,online gambling
 PEDAS-bf683e2cc454,malware
-PEDAS-4bfaad6d0acc,fakeshop
+PEDAS-4bfaad6d0acc,online gambling
 PEDAS-5b1295178644,brand
 PEDAS-e456cc0b821d,online gambling
 PEDAS-ca6f4d7e7b5c,online gambling
@@ -1471,10 +1471,10 @@ PEDAS-2c29329cc194,brand
 PEDAS-b30e7573fff3,online gambling
 PEDAS-5fe2d6e03de3,online gambling
 PEDAS-da75007d9f62,online gambling
-PEDAS-963c6dfdfd2b,brand
+PEDAS-963c6dfdfd2b,online gambling
 PEDAS-69af507ec3a1,online gambling
 PEDAS-3d5b6ff323be,online gambling
-PEDAS-90c67e87c860,online gambling
+PEDAS-90c67e87c860,phishing
 PEDAS-f9ec971127a1,online gambling
 PEDAS-2427238b8b3c,phishing
 PEDAS-810ceaa29acc,malware

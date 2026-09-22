@@ -18,7 +18,7 @@ def test_protected_files_invariance():
     protected = {
         "src/models/hybrid_blender.py": "fceda634cee92b33ad2a357fd1a7c983",
         "run_pedas_pipeline.py": "7e839b15852507cbc39ca95935020505",
-        "official/submission_TIFIS_TIFIS.csv": "e4a37ec272e3990bfa9153e44edb688e",
+        "official/TIFIS TIFIS-01.csv": "e4a37ec272e3990bfa9153e44edb688e",
     }
     for rel_path, expected_md5 in protected.items():
         full_path = REPO_ROOT / rel_path
