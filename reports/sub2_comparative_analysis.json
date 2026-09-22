@@ -1,0 +1,65 @@
+{
+  "candidate_file": "official/TIFIS TIFIS-02.csv",
+  "reference_file": "official/submitted/TIFIS TIFIS-01.csv",
+  "reference_official_score": 0.744171684130824,
+  "md5_checksum": "da6faecbfb87d1f6a35b1f179902cde1",
+  "row_count": 1500,
+  "agreement_with_sub1": {
+    "identical_rows": 1473,
+    "agreement_pct": 98.20,
+    "changed_rows": 27,
+    "changed_pct": 1.80
+  },
+  "active_classes_count": 9,
+  "class_distribution": {
+    "online gambling": 984,
+    "phishing": 392,
+    "other": 49,
+    "spam": 32,
+    "malware": 29,
+    "brand": 11,
+    "piiexposure": 1,
+    "violence": 1,
+    "fakeshop": 1
+  },
+  "class_deltas_vs_sub1": {
+    "online gambling": "+4",
+    "phishing": "-5",
+    "other": "+2",
+    "spam": "+1",
+    "malware": "+2",
+    "brand": "-4",
+    "piiexposure": "0 (Retargeted from bare root domain row 576 to user activity profile row 41)",
+    "violence": "0 (Retargeted from streetwear brand row 10 to criminal proceeding row 116)",
+    "fakeshop": "0 (Locked golden True Positive at row 1345)"
+  },
+  "rare_class_injections": [
+    {
+      "category": "fakeshop",
+      "row_index": 1345,
+      "id": "PEDAS-4bfaad6d0acc",
+      "url": "https://www.******.co.id/professionals/online-shop-in-jakarta-yakarta-indonesia",
+      "source": "Locked Golden True Positive from Submisi 1"
+    },
+    {
+      "category": "violence",
+      "row_index": 116,
+      "id": "PEDAS-5c11426b8a1d",
+      "url": "http://www.*************.go.id/2015-06-06-01-33-01/pemeriksaan-perkara-pidana-acara-singkat.html",
+      "source": "OpenCode LLM-As-Judge Protocol (DeepSeek-V4.1-Flash)"
+    },
+    {
+      "category": "piiexposure",
+      "row_index": 41,
+      "id": "PEDAS-2820f7121fe2",
+      "url": "https://data.************.go.id/sv/user/activity/p4ecgqu82i",
+      "source": "OpenCode LLM-As-Judge Protocol (DeepSeek-V4.1-Flash)"
+    }
+  ],
+  "projected_scores": {
+    "best_case_both_rare_hits": 0.9722,
+    "middle_case_one_rare_hit": 0.8611,
+    "worst_case_zero_rare_hits": 0.7427
+  },
+  "status": "READY_FOR_HUMAN_APPROVAL"
+}

@@ -35,18 +35,18 @@ Riset dan pengembangan sistem ini menerapkan metodologi baku 7 tahapan secara te
 1. **Problem Framing**: Memetakan 9 kategori ancaman IDADX PANDI, mengatasi ketimpangan kelas ekstrem (*gambling* 5.447 vs *fakeshop* 5), dan memilih metrik penentu: **Macro-F1**.
 2. **Data Ingestion & Cleaning**: Normalisasi URL, perbaikan format korup, dan sintesis representasi teks komposit (`url + brand + sld + registrar`).
 3. **Dual-Stream Feature Engineering**: Ekstraksi 56 fitur tabular terstruktur dan TF-IDF karakter 3–5 n-gram secara 100% offline.
-4. **Hybrid Model Development**: Memadukan **LinearSVC (60%)** untuk ruang n-gram teks dan **LightGBM (40%)** untuk pola tabular non-linear.
+4. **Hybrid Model Development**: Memadukan **LinearSVC (60%)** untuk ruang n-gram teks dan **XGBoost / LightGBM (40%)** untuk pola tabular non-linear (Model C Juara Shootout OOF Macro-F1 0.6044).
 5. **Probabilistic Calibration**: Menerapkan **Multiclass Platt Scaling** agar output skor SVM menjadi probabilitas murni $[0, 1]$ yang jumlahnya pas 1.0.
 6. **Bayes Thresholding & Evidence Guard**: Optimasi pergeseran batas potong Bayes ($\arg\max (P_k + \Delta_k)$) terisolasi fold untuk kelas minoritas, dipagari **Evidence Guard** anti salah vonis.
-7. **Deployment & Live Tools**: Menyediakan runner 1-klik (`run.bat`), penguji bobot (`test_weights.bat`), inspektur domain langsung (`inspect.bat`), dan master notebook Colab.
+7. **Deployment & Live Tools**: Menyediakan runner 1-klik (`run_submisi_2_pipeline.py`), simulator panitia (`tools/panitia_score_simulator.py`), dan audit ledger terdesentralisasi.
 
 ---
 
 # BAGIAN 2: Glosarium Istilah Teknis (Dari Bahasa Awam ke Pakar)
 
 ### 1. Hybrid Probabilistic Blender (60:40)
-- **Apa itu?**: Menggabungkan LinearSVC (60%) dan LightGBM (40%) pada probabilitas terkalibrasi.
-- **Analogi**: *"Dokter bedah teks dan detektif metadata yang berduet."* LinearSVC membaca potongan teks URL yang sangat banyak (15.000 kombinasi huruf), sedangkan LightGBM membaca pola usia domain dan registrar. Titik 60:40 terbukti secara matematis meningkatkan Macro-F1 dari 0.57-0.58 menjadi **0.6026**.
+- **Apa itu?**: Menggabungkan LinearSVC (60%) dan XGBoost (40%) pada probabilitas terkalibrasi.
+- **Analogi**: *"Dokter bedah teks dan detektif metadata yang berduet."* LinearSVC membaca potongan teks URL yang sangat banyak (15.000 kombinasi huruf), sedangkan XGBoost membaca pola usia domain dan registrar. Konfigurasi ini terbukti secara empiris memenangkan Model Shootout dengan OOF Macro-F1 **0.6044**, mengungguli LightGBM, CatBoost, dan Stacking Ensemble.
 
 ### 2. Multiclass Platt Scaling
 - **Apa itu?**: Regresi logistik terkalibrasi fold untuk mengonversi margin keputusan LinearSVC menjadi probabilitas sejati.

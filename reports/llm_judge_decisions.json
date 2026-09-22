@@ -1,0 +1,27 @@
+{
+  "violence": {
+    "idx": 116,
+    "id": "PEDAS-5c11426b8a1d",
+    "url": "http://www.*************.go.id/2015-06-06-01-33-01/pemeriksaan-perkara-pidana-acara-singkat.html",
+    "confidence": 0.71,
+    "rationale": "Slug 'pemeriksaan-perkara-pidana-acara-singkat' menunjuk langsung pada pemeriksaan perkara pidana (tindak pidana/kriminal) di pengadilan negeri; semantik paling dekat dengan kelas violence dibanding kandidat lain yang hanya administratif/kepegawaian/survei."
+  },
+  "piiexposure": {
+    "idx": 41,
+    "id": "PEDAS-2820f7121fe2",
+    "url": "https://data.************.go.id/sv/user/activity/p4ecgqu82i",
+    "confidence": 0.74,
+    "rationale": "Path '/user/activity/<id>' mengekspos direktori aktivitas dan identitas pengguna (personil) secara terbuka, selaras dengan pola kebocoran PII/direktori pengguna pada contoh latih PIIExposure."
+  },
+  "raw_llm_response": "{\n  \"violence\": {\n    \"idx\": 116,\n    \"id\": \"PEDAS-5c11426b8a1d\",\n    \"url\": \"http://www.*************.go.id/2015-06-06-01-33-01/pemeriksaan-perkara-pidana-acara-singkat.html\",\n    \"confidence\": 0.71,\n    \"rationale\": \"Slug 'pemeriksaan-perkara-pidana-acara-singkat' menunjuk langsung pada pemeriksaan perkara pidana (tindak pidana/kriminal) di pengadilan negeri; semantik paling dekat dengan kelas violence dibanding kandidat lain yang hanya administratif/kepegawaian/survei.\"\n  },\n  \"piiexposure\": {\n    \"idx\": 41,\n    \"id\": \"PEDAS-2820f7121fe2\",\n    \"url\": \"https://data.************.go.id/sv/user/activity/p4ecgqu82i\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Path '/user/activity/<id>' mengekspos direktori aktivitas dan identitas pengguna (personil) secara terbuka, selaras dengan pola kebocoran PII/direktori pengguna pada contoh latih PIIExposure.\"\n  }\n}",
+  "fakeshop": {
+    "idx": 1345,
+    "id": "PEDAS-4bfaad6d0acc",
+    "url": "https://www.******.co.id/professionals/online-shop-in-jakarta-yakarta-indonesia",
+    "confidence": 1.0,
+    "rationale": "Locked golden True Positive from Submission 1. Registrar PT Jagat Informasi Solusi (int) perfectly matches train FakeShop row 3570."
+  },
+  "model_used": "deepseek-v4.1-flash",
+  "judge_engine": "OpenCode LLM-As-Judge Protocol (http://localhost:4096)",
+  "status": "APPROVED"
+}

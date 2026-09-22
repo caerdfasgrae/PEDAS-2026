@@ -1,0 +1,70 @@
+{
+  "Model A: LinearSVC + LightGBM": {
+    "gbdt_type": "lightgbm",
+    "runtime_seconds": 46.73,
+    "mean_fold_f1": 0.6022,
+    "overall_oof_f1": 0.603,
+    "per_class_f1": {
+      "online gambling": 0.9881,
+      "phishing": 0.9757,
+      "other": 0.9784,
+      "spam": 0.8411,
+      "malware": 0.8397,
+      "brand": 0.8039,
+      "fakeshop": 0.0,
+      "violence": 0.0,
+      "piiexposure": 0.0
+    }
+  },
+  "Model B: LinearSVC + CatBoost": {
+    "gbdt_type": "catboost",
+    "runtime_seconds": 49.44,
+    "mean_fold_f1": 0.5974,
+    "overall_oof_f1": 0.5991,
+    "per_class_f1": {
+      "online gambling": 0.9869,
+      "phishing": 0.9719,
+      "other": 0.9805,
+      "spam": 0.8323,
+      "malware": 0.8243,
+      "brand": 0.7959,
+      "fakeshop": 0.0,
+      "violence": 0.0,
+      "piiexposure": 0.0
+    }
+  },
+  "Model C: LinearSVC + XGBoost": {
+    "gbdt_type": "xgboost",
+    "runtime_seconds": 44.9,
+    "mean_fold_f1": 0.6022,
+    "overall_oof_f1": 0.6044,
+    "per_class_f1": {
+      "online gambling": 0.9879,
+      "phishing": 0.9753,
+      "other": 0.9824,
+      "spam": 0.8344,
+      "malware": 0.8435,
+      "brand": 0.8163,
+      "fakeshop": 0.0,
+      "violence": 0.0,
+      "piiexposure": 0.0
+    }
+  },
+  "Model D: Super-Learner Stacking (All 3 GBDTs)": {
+    "gbdt_type": "stacking",
+    "runtime_seconds": 60.57,
+    "mean_fold_f1": 0.5988,
+    "overall_oof_f1": 0.6003,
+    "per_class_f1": {
+      "online gambling": 0.9878,
+      "phishing": 0.9753,
+      "other": 0.9805,
+      "spam": 0.8272,
+      "malware": 0.8397,
+      "brand": 0.7921,
+      "fakeshop": 0.0,
+      "violence": 0.0,
+      "piiexposure": 0.0
+    }
+  }
+}

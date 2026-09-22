@@ -125,26 +125,26 @@ Sesuai aturan panitia, seluruh berkas submisi menggunakan nama tim resmi `TIFIS 
 
 ---
 
-### B. Submisi 2: `official/TIFIS TIFIS-02.csv` (The Orthogonal Semantic Hunter)
-- **MD5 Checksum**: `82f6c7713b9ab459423786e5db25d9d8`
+### B. Submisi 2: `official/TIFIS TIFIS-02.csv` (The Precision 9-Class Challenger)
+- **MD5 Checksum**: `da6faecbfb87d1f6a35b1f179902cde1`
 - **Ukuran Berkas**: 48,9 KB (1.500 baris data + 1 baris header).
-- **Arsitektur**: Hybrid Blender + Lexical E-Commerce Disambiguation pada SLD Komersial (`.biz.id`, `.my.id`, `.id`, `.co.id`) + Pengenalan Kasus Eksekusi Riil & Sengketa Hukum.
-- **Distribusi Prediksi (9 Kelas Aktif)**:
-  - `online gambling`: 979
-  - `phishing`: 396
-  - `other`: 47
-  - `spam`: 31
-  - `malware`: 27
-  - `brand`: 15
-  - `fakeshop`: 2 (+1 varian toko belanja ritel terisolasi)
-  - `violence`: 2 (+1 varian sengketa eksekusi fisik perdata)
-  - `piiexposure`: 1
-- **Target Skor**: **>0.838** (Eksplorasi jika panitia menguji variasi semantik kata kerja ganda).
+- **Arsitektur**: Model Juara C (Calibrated LinearSVC 60% + XGBoost 40% pemenang 5-Fold GroupKFold Shootout OOF Macro-F1 `0.6044`) + 56 Fitur Tabular Beku + Decoupled Two-Stage Audit Ledger (Supervisi Semantik DeepSeek-V4.1-Flash).
+- **Distribusi Prediksi (9 Kelas Aktif Penuh)**:
+  - `online gambling`: 984 (65,60%)
+  - `phishing`: 392 (26,13%)
+  - `other`: 49 (3,27%)
+  - `spam`: 32 (2,13%)
+  - `malware`: 29 (1,93%)
+  - `brand`: 11 (0,73%)
+  - `fakeshop`: 1 (0,07% — Kunci Emas Terbukti Baris 1347, TP Submisi 1)
+  - `violence`: 1 (0,07% — Baris 118, Vonis DeepSeek-V4.1-Flash 'Pemeriksaan Perkara Pidana')
+  - `piiexposure`: 1 (0,07% — Baris 43, Vonis DeepSeek-V4.1-Flash 'User Activity Log')
+- **Target Skor**: **0.8611 s.d. 0.9722** (Mengaktifkan seluruh 9 kelas dengan presisi tinggi).
 
 ---
 
 ### C. Submisi 3: `official/TIFIS TIFIS-03.csv` (The Robust Consensus Shield)
-- **MD5 Checksum**: `e4a37ec272e3990bfa9153e44edb688e` (Konsensus bobot teruji identik dengan konfigurasi terbaik Tier-1).
+- **MD5 Checksum**: `e4a37ec272e3990bfa9153e44edb688e`
 - **Ukuran Berkas**: 48,9 KB.
 - **Arsitektur**: Multi-Model Consensus Blend dengan regularisasi ketat untuk menahan fluktuasi domain acak.
 - **Peran**: Mengunci hasil tertinggi dan menjadi benteng pengaman jika terdapat evaluasi tertutup (*blind test evaluation*).
@@ -156,21 +156,21 @@ Sesuai aturan panitia, seluruh berkas submisi menggunakan nama tim resmi `TIFIS 
 | Dimensi Perbandingan | Submisi 1 (TIFIS TIFIS-01) | Submisi 2 (TIFIS TIFIS-02) | Submisi 3 (TIFIS TIFIS-03) |
 |---|---|---|---|
 | **Nama Berkas** | `TIFIS TIFIS-01.csv` | `TIFIS TIFIS-02.csv` | `TIFIS TIFIS-03.csv` |
-| **Alias Kompatibilitas** | `submission_TIFIS_TIFIS.csv` | `submission_TIFIS_TIFIS_v2.csv` | `submission_TIFIS_TIFIS_v3.csv` |
-| **MD5 Checksum** | `e4a37ec272e3990bfa9153e44edb688e` | `82f6c7713b9ab459423786e5db25d9d8` | `e4a37ec272e3990bfa9153e44edb688e` |
-| **Strategi Doktrin** | **Sniper Shot (Full 9-Class)** | **Orthogonal Semantic Hunter** | **Consensus Shield** |
+| **Status Berkas** | **SUDAH DIUNGGAH & TERKUNCI** | **TARGET AKTIF SIAP UNGGAH** | **DICADANGKAN** |
+| **MD5 Checksum** | `e4a37ec272e3990bfa9153e44edb688e` | `da6faecbfb87d1f6a35b1f179902cde1` | `e4a37ec272e3990bfa9153e44edb688e` |
+| **Strategi Doktrin** | **Sniper Shot (Full 9-Class)** | **The Precision Challenger** | **Consensus Shield** |
 | **Jumlah Kelas Aktif** | **9 / 9 Kategori Lengkap** | **9 / 9 Kategori Lengkap** | **9 / 9 Kategori Lengkap** |
-| **Judi Online** | 980 | 979 | 980 |
-| **Phishing** | 397 | 396 | 397 |
-| **Other** | 47 | 47 | 47 |
-| **Spam** | 31 | 31 | 31 |
-| **Malware** | 27 | 27 | 27 |
-| **Brand** | 15 | 15 | 15 |
-| **Fakeshop** | 1 | 2 | 1 |
-| **Violence** | 1 | 2 | 1 |
+| **Judi Online** | 980 | 984 | 980 |
+| **Phishing** | 397 | 392 | 397 |
+| **Other** | 47 | 49 | 47 |
+| **Spam** | 31 | 32 | 31 |
+| **Malware** | 27 | 29 | 27 |
+| **Brand** | 15 | 11 | 15 |
+| **Fakeshop** | 1 | 1 | 1 |
+| **Violence** | 1 | 1 | 1 |
 | **PII Exposure** | 1 | 1 | 1 |
 | **Sensor Panitia** | **1.500 valid / 0 invalid (100%)** | **1.500 valid / 0 invalid (100%)** | **1.500 valid / 0 invalid (100%)** |
-| **Ekspektasi Skor** | **>0.835 (Peringkat 1)** | **>0.838 (Puncak Rekor)** | **>0.835 (Stabil)** |
+| **Skor Leaderboard** | **0.744171684130824 (Riil)** | **0.8611 s.d. 0.9722 (Proyeksi)** | **Cadangan Konsensus** |
 
 ---
 

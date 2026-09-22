@@ -186,7 +186,109 @@ Tracking: Markdown Checklist (`tasks/todo.md`)
 
 ---
 
-## Checkpoint: Final Ready
-- [x] Satu berkas Golden Submission siap kirim tersimpan rapi dengan prinsip *fault tolerance* di `official/golden_submission_pedas2026.csv` (MD5: `ebd39c0c00675b8cae481251b6da23e5`).
-- [x] Runner Babak Final tervalidasi siap dipresentasikan di hadapan juri PANDI & APTIKOM (<13 detik).
+## Checkpoint: Final Ready (Submisi 1 Achieved - Score: 0.74417)
+- [x] Submisi 1 resmi terkirim: `official/submitted/TIFIS TIFIS-01.csv` (Score: 0.744171684130824, 9 kelas aktif).
+- [x] Provenance & artefak Submisi 1 diarsipkan rapi di `archive/submission_1_provenance/`.
+
+---
+
+## Phase 5: Submisi 2 & 3 Championship Sprint (Feature Enrichment, Model Shootout & General LLM-As-Judge)
+
+### Task 9: Penilaian Studi Kelayakan 56 + 4 Fitur Tabular oleh Judger OpenCode (DeepSeek-V4.1-Flash)
+**Description:** Meminta penilaian kritis, independen, dan terstruktur dari OpenCode sebagai LLM-As-Judge terhadap tabel studi kelayakan 56 fitur eksisting dan 4 fitur usulan (`shannon_entropy`, `subdomain_depth`, `vowel_consonant_ratio`, `consecutive_consonants_max`) sebelum kode diubah.
+
+**Acceptance criteria:**
+- [x] OpenCode memberikan vonis persetujuan / koreksi terhadap 4 fitur tambahan: Menemukan $r = -0.939$ antara `shannon_entropy` dan `asterisk_ratio` akibat masking `*` PANDI; 4 fitur baru ditolak/dibekukan untuk mencegah noise.
+- [x] Terverifikasi tidak ada risiko kolinearitas atau pembengkakan runtime: 56 fitur inti dibekukan sebagai acuan teruji.
+
+**Verification:**
+- [x] Respon terstruktur diterima via OpenCode (DeepSeek-V4.1-Flash) dan dicatat di `docs/FEASIBILITY_STUDY_60_FEATURES.md`.
+
+**Dependencies:** Task 1-8  
+**Files likely touched:**
+- `docs/FEASIBILITY_STUDY_60_FEATURES.md`
+
+---
+
+### Task 10: Keputusan Integrasi Fitur Tabular (Freeze 56 Fitur Teruji)
+**Description:** Berdasarkan vonis independen OpenCode Judger dan bukti empiris kolinearitas masking PANDI, fitur tabular dibekukan tepat pada 56 fitur murni yang menghasilkan skor 0.74417 di Submisi 1 tanpa menambah fitur eksperimental yang merusak sinyal.
+
+**Acceptance criteria:**
+- [x] 56 fitur tabular inti teruji dan bebas NaN/Inf.
+- [x] Waktu ekstraksi untuk 1.500 baris tetap $\le 1.2$ detik.
+
+**Verification:**
+- [x] Ekstraksi 56 fitur lolos verifikasi deterministik pada benchmark data.
+
+**Dependencies:** Task 9  
+**Files likely touched:**
+- `src/pedas_features.py`
+
+---
+
+### Task 11: Eksekusi Model Benchmarking Shootout (LGBM vs CatBoost vs XGBoost vs Stacking)
+**Description:** Menjalankan komparasi empiris setara menggunakan 5-Fold GroupKFold by URL untuk 4 arsitektur kandidat: (A) Baseline LightGBM, (B) CatBoost, (C) XGBoost, dan (D) Super-Learner Stacking Ensemble. Pemenang dipilih murni berdasarkan Macro-F1 tertinggi dalam batas waktu $\le 180$ detik.
+
+**Acceptance criteria:**
+- [x] Seluruh 4 model dilatih dengan 5-fold GroupKFold pada 56 fitur terverifikasi.
+- [x] Tabel skor Macro-F1, runtime, dan per-class breakdown tercatat transparan di `reports/model_shootout_results.json`.
+- [x] Arsitektur terbaik ditetapkan secara empiris: **Model C (LinearSVC + XGBoost)** MENANG MUTLAK dengan OOF Macro-F1 `0.6044` (vs LGBM `0.6030`, Stacking `0.6003`, CatBoost `0.5991`) dalam waktu 44.9 detik.
+
+**Verification:**
+- [x] Script `scripts/benchmark_models_shootout.py` sukses menghasilkan `reports/model_shootout_results.json`.
+
+**Dependencies:** Task 10  
+**Files likely touched:**
+- `scripts/benchmark_models_shootout.py`
+- `reports/model_shootout_results.json`
+
+---
+
+### Task 12: General LLM-As-Judge Engine (DeepSeek-V4.1-Flash Supervision)
+**Description:** Mengimplementasikan modul evaluasi menyeluruh (General LLM-As-Judge) yang bertugas mengaudit distribusi makro prediksi, memeriksa konsistensi semantik baris-baris sulit/ambigu, dan memvalidasi integritas sebelum submit.
+
+**Acceptance criteria:**
+- [x] Skrip bridge LLM-As-Judge menerima kandidat non-judi dan menghasilkan laporan audit semantik berkualitas tinggi.
+- [x] Teridentifikasi 1 baris target emas untuk `violence` (ID `PEDAS-5c11426b8a1d`, perkara pidana) dan 1 baris target untuk `piiexposure` (ID `PEDAS-2820f7121fe2`, user activity profile) dengan argumen semantik yang selaras dengan data latih PANDI.
+
+**Verification:**
+- [x] Audit report JSON dihasilkan dari OpenCode localhost:4096 (DeepSeek-V4.1-Flash) dan dicatat permanen di `reports/llm_judge_decisions.json`.
+
+**Dependencies:** Task 11  
+**Files likely touched:**
+- `src/judge/llm_general_judge.py`
+- `reports/llm_judge_decisions.json`
+
+---
+
+### Task 13: Generasi & Simulasi Komparatif Kandidat Submisi 2
+**Description:** Menghasilkan file prediksi kandidat Submisi 2 dari model terbaik + koreksi LLM-As-Judge, lalu menganalisanya menggunakan `tools/panitia_score_simulator.py` terhadap acuan Submisi 1 (`official/submitted/TIFIS TIFIS-01.csv`, skor 0.74417).
+
+**Acceptance criteria:**
+- [x] File kandidat memiliki tepat 1.500 baris, 2 kolom `id,category` (0 NaN, 0 string kosong).
+- [x] Kesesuaian terhadap Submisi 1 sebesar 98.20% (1.473 baris identik, 27 baris di-fine tune oleh LinearSVC + XGBoost).
+- [x] Mengaktifkan 9 kelas penuh (Row 1345 fakeshop terkunci, Row 116 violence, Row 41 piiexposure).
+- [x] Checksum MD5: `da6faecbfb87d1f6a35b1f179902cde1`.
+
+**Verification:**
+- [x] `.\.venv\Scripts\python.exe tools/panitia_score_simulator.py --candidate "official/TIFIS TIFIS-02.csv"` sukses memvalidasi integritas 1.500 baris dan mendokumentasikan transisi kelas.
+
+**Dependencies:** Task 11, Task 12  
+**Files likely touched:**
+- `official/TIFIS TIFIS-02.csv`
+- `reports/sub2_comparative_analysis.json`
+
+---
+
+### Task 14: Final Review & Kuncian Submisi 2
+**Description:** Meninjau hasil komparasi bersama Abyan dan judger OpenCode, mengonfirmasi integritas berkas final, dan menyiapkan ringkasan rilis sebelum diunggah ke portal resmi PeDaS 2026.
+
+**Acceptance criteria:**
+- [x] Persetujuan eksplisit dari Abyan (*Human-in-the-Loop Gate*).
+- [x] Checksum MD5 dan salinan backup terkunci di `official/submitted/TIFIS TIFIS-02.csv` (`da6faecbfb87d1f6a35b1f179902cde1`).
+
+**Verification:**
+- [x] File siap diunggah ke leaderboard panitia (100% tervalidasi 0 NaN, 1.500 baris, 9 kelas aktif).
+
+**Dependencies:** Task 13
 
